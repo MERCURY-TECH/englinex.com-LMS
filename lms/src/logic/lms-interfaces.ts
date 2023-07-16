@@ -65,7 +65,15 @@ export interface serviceRoutes {
   actions: Array<serviceAction>
 }
 
-
+export interface ICourse {
+  tags ?:Array<String>,
+  coverimage ?: String,
+  title:String,
+  description:String,
+  isPublic: boolean,
+  content:String[],
+  createdBy:string
+}
 
 export interface IUser {
   username: any;

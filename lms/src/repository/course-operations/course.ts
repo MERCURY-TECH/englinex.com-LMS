@@ -1,7 +1,10 @@
 
 
-import { ILogic, IUser } from "../IOperations";
-import User from "../models/User";
+
+import { ICourse } from "../../logic/lms-interfaces";
+import Course from "../../models/course-models/course";
+import { ILogic } from "../IOperations";
+
 
 //create course
 // create course sections
@@ -9,37 +12,49 @@ import User from "../models/User";
 // update course
 // delete course
 
-const registerUsers:ILogic = {
-    name: "registerUsers",
-    callback: async function (collection: Array<IUser>) {
-       return await User.insertMany(collection);
+// course management operations
+const createCourse:ILogic = {
+    name: "createCourse",
+    callback: async function (collection: Array<ICourse>) {
+       return await Course.insertMany(collection);
     },
     error: function (err: any): void {console.log(err.message)}
 }
 
-const findUserByID:ILogic = {
-    name: "findUserByID",
-    callback: async function (userId:String) {
-       return await User.findOne({_id:userId});
+const findCourseByID:ILogic = {
+    name: "findCourseByID",
+    callback: async function (courseId:String) {
+       return await Course.findOne({_id:courseId});
     },
     error: function (err: any): void {console.log(err.message)}
 }
-const getAllUsers:ILogic = {
-    name: "getAllUsers",
+const getAllCourses:ILogic = {
+    name: "getAllCourses",
     callback: async function () {
-       return await User.find().select(['-biometry', "-isActive",
-       "-isSuspended","-votingsSessionsRegisteredFor"]);
+       return await Course.find();
     },
     error: function (err: any): void {console.log(err.message)}
 }
 
 
-const activateUser:ILogic = {
-    name: "activateUser",
-    callback: async function (collection:{biometricString: string, username: string}) {
-        return await User.findOneAndUpdate({username:collection.username.trim().toLowerCase()},{biometry:collection.biometricString, isActive:true}).select(['-biometry'])
+const updateCourse:ILogic = {
+    name: "updateCourse",
+    callback: async function (collection:{filter:{_id:string}, update:ICourse}) {
+        return await Course.findOneAndUpdate({_id:collection.filter._id},collection.update);
     },
     error: function (err: any): void {console.log(err.message)}
 }
 
-export default [getAllUsers,registerUsers,findUserByID,findUsersPerVoteType,activateUser]
+const deleteCourse:ILogic = {
+    name: "deleteCourse",
+    callback: async function (collection:{filter:{_id:string}}) {
+        return await Course.findByIdAndDelete({_id:collection.filter._id});
+    },
+    error: function (err: any): void {console.log(err.message)}
+}
+
+// course section operations
+
+
+
+export default [createCourse, findCourseByID, getAllCourses, updateCourse,deleteCourse]

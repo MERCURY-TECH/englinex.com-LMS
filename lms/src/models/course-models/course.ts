@@ -9,13 +9,16 @@
 import mongoose from "mongoose";
 const CourseSchema = new mongoose.Schema({
   
-  tags :[{ type: mongoose.Schema.Types.ObjectId,ref: 'Tag', required:[true,'please provide User ID'] }],
+  tags :[{ type: mongoose.Schema.Types.ObjectId,ref: 'Tag' }],
   coverimage : String,
   title :{type:String, required:[true,'please provide a valid course title']},
   description:{type:String, required:[true,'please provide a valid course description']},
-  isPublic:{type:Boolean, default:true, required:true},
-  content:[{ type: mongoose.Schema.Types.ObjectId,ref: 'CourseSection', required:[true,'please provide User ID'] }]
+  isPublic:{type:Boolean, default:false, required:true},
+  content:[{ type: mongoose.Schema.Types.ObjectId,ref: 'CourseSection' }],
+  createdBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required:[true,'please provide User ID'] }
 });
+
+
 
 // CourseSchema.pre("remove", function(next:any){
 

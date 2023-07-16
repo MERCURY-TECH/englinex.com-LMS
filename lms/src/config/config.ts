@@ -1,6 +1,6 @@
 const dbSettings = {
-  db: process.env.DB || 'CamBar',
-  dbName : process.env.DB || 'Baro-Vote',
+  db: process.env.DB || 'englinex-lms',
+  dbName : process.env.DB || 'englinex-lms',
   // servers: (process.env.DB_SERVERS) ? process.env.DB_SERVERS.split(' ') : [ '127.0.0.1:27017'],
   servers: ['barovote:barovote@cluster0.cou3jw2.mongodb.net/?retryWrites=true&w=majority'],
   autoIndex :false,
@@ -12,8 +12,8 @@ const dbSettings = {
 }
 
 const serverSettings = {
-  port: 80,
-  // port: process.env.NODE_ENV ? 80 :3000,
+  port: 3000,
+  // port: process.env.NODE_ENV ? 802 :3000,
 }
 
 export { dbSettings, serverSettings };
