@@ -9,6 +9,5 @@
 export interface ILogic {
     name: string,
     callback: (collection: any) => any,
-    error: (err: any) => void,
 }
 

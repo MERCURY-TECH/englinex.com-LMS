@@ -8,6 +8,8 @@
 
 import mongoose from "mongoose";
 
+
+
 const TagSchema = new mongoose.Schema({
     title: { type: String,  unique:[true,'Only one instance of a tag with same title can exist'] ,required: [true, 'please provide a title for this tag'] }
 });

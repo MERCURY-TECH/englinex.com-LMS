@@ -6,13 +6,11 @@
 * @email `ngumbukafon@gmail.com`
 */
 
-enum CourseMaterialType {
-    "richText" = 'rich-text',
-    "phonetic" = 'phonetic',
-}
+
 
 //CourseSectionMaterialMaterial
 import mongoose from "mongoose";
+import { CourseMaterialType } from "../../logic/lms-interfaces";
 
 
 function makePhoneticFieldsRequired(){
@@ -20,8 +18,9 @@ function makePhoneticFieldsRequired(){
     return this.materialType == CourseMaterialType.phonetic
 }
 
+
 const CourseSectionMaterialSchema = new mongoose.Schema({
-    parent: { type: mongoose.Schema.Types.ObjectId, ref: 'CourseSectionMaterial' },
+    sectionId: { type: mongoose.Schema.Types.ObjectId, ref: 'CourseSection', required:[true,'material must have a related parent section'] },
     materialType: { type: String, enum: [...Object.values(CourseMaterialType)], require:[true,'you must provide the material type']},
     displayBGColor: { type: mongoose.Schema.Types.ObjectId, ref: 'CourseMaterialColor' },
     title: { type: String, required: [true, 'please provide a Course Section Material title'] },
@@ -34,7 +33,7 @@ const CourseSectionMaterialSchema = new mongoose.Schema({
         required : makePhoneticFieldsRequired
     },
     description: { type: String, required: [true, 'please provide a Course Section Material description'] },
-    content: { type: String, required: [true, 'please provide a Course Section Material description'] },
+    content: { type: String, required: [true, 'please provide a Course Section Material content'] },
 });
 const CourseSectionMaterial = mongoose.model('CourseSectionMaterial', CourseSectionMaterialSchema);
 

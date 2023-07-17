@@ -29,6 +29,11 @@ export interface ILogic{
   error:(err:any)=>void,
 }
 
+export interface ICourseContentlevel{
+  ranking:number,
+  title:string
+}
+
 interface serviceAction {
   actionName: String,
   route: String,
@@ -65,6 +70,43 @@ export interface serviceRoutes {
   actions: Array<serviceAction>
 }
 
+export enum AccountType{
+  "student"="student",
+  "lecturer" = "lecturer",
+  "admin"="admin"
+}
+
+export enum CourseMaterialType {
+  "richText" = 'rich-text',
+  "phonetic" = 'phonetic',
+}
+export interface ICourseMaterial {
+  sectionId:string,
+  materialType:CourseMaterialType,
+  displayBGColor:string,
+  title:string,
+  sound:string,
+  englishText:string,
+  description:string,
+  content:string
+}
+
+export interface ITag{
+  title:string
+}
+
+export interface ICourseSection{
+  parent?:string,
+  coverimage?:string,
+  contentLevel?:String,
+  title:string,
+  description:string,
+  material:string[],
+  courseId:string,
+  createdBy?:string,
+  lastUpdatedBy?:string
+}
+
 export interface ICourse {
   tags ?:Array<String>,
   coverimage ?: String,
@@ -76,6 +118,8 @@ export interface ICourse {
 }
 
 export interface IUser {
+  accountType: any;
+  password: string;
   username: any;
   phonenumber: any;
   adress: any;
@@ -93,4 +137,10 @@ export interface IUser {
   description?: String,
   isActive?: Boolean,
   isSuspended?: Boolean
+}
+
+
+export interface ICourseMaterialColor{
+  colorCode:string,
+  title:string
 }

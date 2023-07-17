@@ -10,8 +10,8 @@ import multer = require("multer");
 const storageEngine = multer.diskStorage({
     destination:path.join(__dirname,'../../images'),
     filename: (req: any, file: any, callback: any) => {
-        req.uploadedImageURI = path.join('/images',Date.now()+req.authenticatedUser._doc._id+path.extname(file.originalname));
-        callback(null, Date.now()+req.authenticatedUser._doc._id+path.extname(file.originalname));
+        req.uploadedImageURI = path.join('/images',+Date.now()+path.extname(file.originalname));
+        callback(null,Date.now()+path.extname(file.originalname));
     },
 });
 

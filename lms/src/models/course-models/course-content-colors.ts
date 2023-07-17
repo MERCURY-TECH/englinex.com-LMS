@@ -8,6 +8,8 @@
 
 import mongoose from "mongoose";
 
+
+
 const CourseMaterialColorSchema = new mongoose.Schema({
     colorCode: {type:String, require:[true, 'you must provide the color code']},
     title: { type: String,  unique:[true,'Only one instance of a color with same title can exist'] ,required: [true, 'please provide a title for this colors'] }

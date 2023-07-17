@@ -7,6 +7,13 @@
 * @email `ngumbukafon@gmail.com`
 */
 
+
+import colors from "./course-operations/colors";
+import course from "./course-operations/course";
+import courseContentLevelOperations from "./course-operations/course-content-level-operations";
+import courseMaterial from "./course-operations/course-material";
+import courseSection from "./course-operations/course-section";
+import tags from "./course-operations/tags";
 import permission_operations from "./permission-operations/permission_operations";
 import userManagementOperations from "./user-operations/user-management-operations";
 
@@ -16,12 +23,19 @@ import userManagementOperations from "./user-operations/user-management-operatio
 interface ILogic{
     name:string,
     callback:(collection: any) =>any,
-    error:(err:any)=>void,
   }
+// create an application life cycle
+
 
 
 const Operations:Array<ILogic> = [
     ...userManagementOperations,
     ...permission_operations,
+    ...course,
+    ...courseSection,
+    ...courseMaterial,
+    ...courseContentLevelOperations,
+    ...tags,
+    ...colors
 ]
 export default Operations;

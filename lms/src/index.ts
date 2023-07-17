@@ -4,6 +4,7 @@ import server from './server/server';
 import Repository from './repository/Repository';
 import config from "./config";
 import Operations from './repository/Operations';
+import InitSystem from "./logic/system-operations/InitSystem";
 
 const mediator = new EventEmitter();
 
@@ -23,10 +24,10 @@ mediator.on('db.ready', async (db:any) => {
   let disconnect_operation:any;
   let repository = new Repository(db.connection);
       repository.setOperationList(Operations);
-
   let database_operations = await repository.connect();
       console.log('Connected. Starting Server')
       disconnect_operation = database_operations.disconnect
+      await InitSystem.initializeRootUser(database_operations);
       server.start({
         port: config.serverSettings.port,
         // ssl: config.serverSettings.ssl,

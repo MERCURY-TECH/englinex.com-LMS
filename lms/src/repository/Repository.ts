@@ -63,17 +63,9 @@ export default class Repository{
    * @returns {Object} Returns and objec that contains callback functions for API request
    */
   operations():Object {
-    const opsObj:{[key: string]: any} = {};
+    const opsObj:{[key: string]: Function} = {};
     this.operationList.forEach(element => {
-      opsObj[element.name] = ():Promise<any>=>{
-        return new Promise((resolve, reject) =>{
-          try {
-            resolve(element.callback)
-          } catch (error:any) {
-            reject(element.error(error));
-          }
-        })
-      }
+      opsObj[element.name] = element.callback
     });
     const disconnect = () => {
       mongoose.connection.close()

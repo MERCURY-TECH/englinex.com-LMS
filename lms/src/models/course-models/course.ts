@@ -15,14 +15,10 @@ const CourseSchema = new mongoose.Schema({
   description:{type:String, required:[true,'please provide a valid course description']},
   isPublic:{type:Boolean, default:false, required:true},
   content:[{ type: mongoose.Schema.Types.ObjectId,ref: 'CourseSection' }],
-  createdBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required:[true,'please provide User ID'] }
+  createdBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required:[true,'please provide User ID'] },
+  lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User' }
 });
 
-
-
-// CourseSchema.pre("remove", function(next:any){
-
-// })
 
 // TODO ::  Add cascade deletion to services
 

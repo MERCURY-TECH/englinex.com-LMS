@@ -26,6 +26,7 @@ export default class AuthorizationManager {
             try {
                 if (!req.headers.authorization) throw new Error('Please provide authorization token')
                 let authenticatedUser = getAuthenticatedUser(req.headers.authorization.split(' ')[1].trim());
+                req.authenticatedUser = authenticatedUser;
                 if (authenticatedUser.isSuspended) throw new Error('User is suspended and can not proceed');
                 if (authenticatedUser.isActive) throw new Error('User account is not activated yet, you need activation to proceed');
                 let userPermission =await UserPermission.findOne({UserID:(authenticatedUser as any)._doc._id});
@@ -47,10 +48,9 @@ export default class AuthorizationManager {
 
     async createSystemPermissionStructure() {
         let service = this.routePermissionStructure;
-        let createPermissionStructure = await this.database_operations.createPermissionStructure();
         let serviceActions = service.actions.map((actionItem: any) => {
             return { name: actionItem.actionName, scope: actionItem.actionScope }
         })
-        await createPermissionStructure({ version: service.version, actions: serviceActions });
+        await this.database_operations.createPermissionStructure({ version: service.version, actions: serviceActions });
     }
 }

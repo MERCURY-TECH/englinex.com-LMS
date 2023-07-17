@@ -14,8 +14,11 @@ const UserPermissionSchema = new mongoose.Schema({
     ref: 'Role',
     required:[true,'please provide User ID']
   }
-})
+});
+
 const UserPermission = mongoose.model('UserPermission', UserPermissionSchema);
+
+
 
 
 export default UserPermission;

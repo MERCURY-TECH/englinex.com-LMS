@@ -9,7 +9,6 @@ var ObjectId = require('mongoose').Types.ObjectId;
 interface ILogic{
     name:string,
     callback:(collection: {[key: string]: any}) =>any,
-    error:(err:any)=>void,
   }
 
 export function serializeUserDataResponse(user: IUser) {
@@ -24,6 +23,7 @@ export function serializeUserDataResponse(user: IUser) {
     typeof user._id == undefined ? '' : response._id = user._id
     typeof user.isActive == undefined ? '' : response.isActive = user.isActive
     typeof user.isSuspended == undefined ? '' : response.isSuspended = user.isSuspended
+    typeof user.accountType == undefined ? '' : response.accountType = user.accountType
     return response;
 }
 
@@ -49,11 +49,11 @@ export let verifyToken = function (bearerToken: string, secret: string): Partial
    * @param {string} password ERP user password
    * @returns {IUser} User Object
 **/
-export const connectUser = async function (username: any, biometry: string) {
-    const user: IUser = (await User.findOne({ username: username })) as IUser;
+export const connectUser = async function (username: any, password: string) {
+    const user: IUser = (await User.findOne({ username: username })) as  IUser;
     if (user) {
         if (user?.isSuspended) throw new Error('User account suspended');
-        const auth = await bcrypt.compare(biometry, user.biometry as string)
+        const auth = await bcrypt.compare(password, user.password as string)
         if (auth) return user
         throw Error('Incorrect username or password')
     }
@@ -97,10 +97,10 @@ export function authorizeUserMiddleWare(req: any, res: any, next: any) {
     }
 }
 
-export async function encrytpUserBiometry(biometry: string) {
+export async function encrytpUserPassword(password: string) {
     const salt = await bcrypt.genSalt();
-    if (!(biometry != undefined && biometry != null)) throw new Error('Please provice user credentials');
-    return await bcrypt.hash(biometry as string, salt)
+    if (!(password != undefined && password != null)) throw new Error('Please provice user credentials');
+    return await bcrypt.hash(password as string, salt)
 }
 
 export function isDate(dateToTest: any) {
@@ -125,7 +125,7 @@ export async function checkIfRecordExist(filter: Object, recordModel: any): Prom
  * @param recordModel 
  * @returns 
  */
-export async function findRecordForModel(filter: Array<Object>, recordModel: any): Promise<any> {
+async function findRecordForModel(filter: Array<Object>, recordModel: any): Promise<any> {
     return await recordModel.findOne().and(filter);
 }
 
@@ -134,10 +134,12 @@ export async function findRecordForModel(filter: Array<Object>, recordModel: any
  * @param id Random Object ID
  * @returns {Boolean} `true` if object is a valid ID or `false` otherwise.
  */
-export function isValidateObjectID(id: string) : boolean{
+function isValidateObjectID(id: string) : boolean{
     return ObjectId.isValid(id)
 }
 
-export { IUser, ILogic };
+
+
+export { IUser, ILogic,isValidateObjectID,findRecordForModel };
 
 

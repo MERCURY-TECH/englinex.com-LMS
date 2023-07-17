@@ -55,8 +55,8 @@ const createPermissionStructure = {
     callback: async function (collection: IPermissionStructure) {
         let serviceVersion = await PermissionStructure.findOne({}, {}, { sort: { 'created_at' : -1 } });
         if(serviceVersion){
-            serviceVersion.version = collection.version,
-            serviceVersion.actions = collection.actions;
+            serviceVersion.version = collection?.version,
+            serviceVersion.actions = collection?.actions;
             return await serviceVersion.save();
         }
         let serviceEventRouteAndPERMStructure = await new PermissionStructure(collection).save();
@@ -102,11 +102,19 @@ const updatePermissionRole={
     },
     error: function (err: any): void { console.log(err.message) }
 }
+const getRoleBySID={
+    name: "getRoleBySID",
+    callback: async function (Sid:string) {
+        return await Role.findOne({Sid});
+    },
+    error: function (err: any): void { console.log(err.message) }
+}
 
 const assignRoleToUser = {
     name: "assignRoleToUser",
     callback: async function (collection: {userID:string, Role:string}) {
         await UserPermission.findOneAndDelete({UserID:collection.userID})
+        console.log('ran ==== >>> ')
         return await new UserPermission({UserID:collection.userID, Role:collection.Role}).save();
     },
     error: function (err: any): void { console.log(err.message) }
@@ -122,4 +130,4 @@ const getActionList = {
 
 
 
-export default [ updateRole, deletePermissionRole, createPermissionStructure,createRole, assignRoleToUser,updatePermissionRole, deleteRole,getActionList]
+export default [ updateRole, deletePermissionRole, createPermissionStructure,createRole, assignRoleToUser,updatePermissionRole, deleteRole,getActionList, getRoleBySID]
