@@ -30,6 +30,7 @@ jobs:
         DB: "englinex-lms"
       run: |
         cd lms
+        pm2 delete LMS
         npm install --production=false
         npm run build-run
         pm2 save --force
