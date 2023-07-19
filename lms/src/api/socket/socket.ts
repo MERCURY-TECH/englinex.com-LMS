@@ -2,11 +2,11 @@ const { Server } = require("socket.io");
 // const io = new Server(server);
 // import { io, Socket } from "socket.io-client";
 
-export default class RealTimeVoteCommunicator{
+export default class RealTimeCommunicator{
     io:any;
-    static instance:RealTimeVoteCommunicator;
+    static instance:RealTimeCommunicator;
     constructor(server?:any){
-        if(RealTimeVoteCommunicator.instance) return RealTimeVoteCommunicator.instance
+        if(RealTimeCommunicator.instance) return RealTimeCommunicator.instance
         if(!server) throw new Error('please provide a server');
         this.io = new Server(server, {
             cors: {
@@ -14,7 +14,7 @@ export default class RealTimeVoteCommunicator{
               methods: ["GET", "POST"]
             }
           });      
-        RealTimeVoteCommunicator.instance = this;
+        RealTimeCommunicator.instance = this;
     }
 
     onUserConnection(){

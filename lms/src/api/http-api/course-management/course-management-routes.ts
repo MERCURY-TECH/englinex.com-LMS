@@ -45,13 +45,34 @@ export default function(repository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    // check if content is provided and create it at once
                     let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
                     let courses:any = [...req.body];
                     for(let course of courses){
                         course['createdBy'] = user._doc._id
                     }
                     message.message = { courses : await repository.createCourse(courses) }
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
+            actionName: 'mass import courses',
+            actionScope: routeSecurityLevel.forbiden,
+            routeDescription: 'Route used to import whole courses a single or multiple courses in the system',
+            method: httpverbs.post,
+            route: '/import-course',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
+                    let courses:any = [...req.body];
+                    for(let course of courses){
+                        course['createdBy'] = user._doc._id;
+                    }
+                    message.message = { courses : await repository.importCourse(courses) }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -68,7 +89,6 @@ export default function(repository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    // check if content is provided and create it at once
                     let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
                     if(!req.params.courseID) throw new Error('Please provide the course ID')
                     let course=await repository.findCourseByID(req.params.courseID);

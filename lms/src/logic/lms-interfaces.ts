@@ -1,18 +1,3 @@
-export type vote = "president-de-lassembler" | "vice-president-de-lassembler" | "membre-du-consceille-de-lordre" | "le-batonier" | "none";
-export enum voteTypeList {
-  "presidentdelassembler" = "president-de-lassembler",
-  "vicepresidentdelassembler" = "vice-president-de-lassembler",
-  "membreduconsceilledelordre" = "membre-du-consceille-de-lordre",
-  "lebatonier" = "le-batonier",
-  "none" = "none"
-};
-
-export enum voteObjectTypeEnum {
-  "resolution" ="resolution" , 
-  "lawyer"= "lawyer"
-}
-export type voteObjectType =  "resolution" | "lawyer";
-
 
 export type routeType = 'public' | 'protected' | 'forbiden';
 
@@ -27,11 +12,6 @@ export interface ILogic{
   name:string,
   callback:(collection: any) =>any,
   error:(err:any)=>void,
-}
-
-export interface ICourseContentlevel{
-  ranking:number,
-  title:string
 }
 
 interface serviceAction {
@@ -80,10 +60,33 @@ export enum CourseMaterialType {
   "richText" = 'rich-text',
   "phonetic" = 'phonetic',
 }
+
+export interface ICourse {
+  tags ?:Array<String> | Array<ITag>,
+  coverimage ?: String,
+  title:String,
+  description:String,
+  isPublic: boolean,
+  content:String[] | Array<ICourseSection>,
+  createdBy:string
+}
+
+export interface ICourseSection{
+  parent?:string,
+  coverimage?:string,
+  contentLevel?:String | ICourseContentlevel,
+  title:string,
+  description:string,
+  material:string[] | Array<ICourseMaterial>,
+  courseId:string,
+  createdBy?:string,
+  lastUpdatedBy?:string
+}
+
 export interface ICourseMaterial {
   sectionId:string,
   materialType:CourseMaterialType,
-  displayBGColor:string,
+  displayBGColor:string | ICourseMaterialColor,
   title:string,
   sound:string,
   englishText:string,
@@ -91,30 +94,16 @@ export interface ICourseMaterial {
   content:string
 }
 
+export interface ICourseMaterialColor{
+  colorCode:string,
+  title:string
+}
 export interface ITag{
   title:string
 }
-
-export interface ICourseSection{
-  parent?:string,
-  coverimage?:string,
-  contentLevel?:String,
-  title:string,
-  description:string,
-  material:string[],
-  courseId:string,
-  createdBy?:string,
-  lastUpdatedBy?:string
-}
-
-export interface ICourse {
-  tags ?:Array<String>,
-  coverimage ?: String,
-  title:String,
-  description:String,
-  isPublic: boolean,
-  content:String[],
-  createdBy:string
+export interface ICourseContentlevel{
+  ranking:number,
+  title:string
 }
 
 export interface IUser {
@@ -140,7 +129,3 @@ export interface IUser {
 }
 
 
-export interface ICourseMaterialColor{
-  colorCode:string,
-  title:string
-}

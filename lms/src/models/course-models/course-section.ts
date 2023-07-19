@@ -8,13 +8,15 @@
 
 import mongoose from "mongoose";
 const CourseSectionSchema = new mongoose.Schema({
+    // uuid:{ type: String, required: [true, 'please provide a valid unique identifier for the course section'], unique:[true,"please make sure the UUID is unique"] },
     parent: { type: mongoose.Schema.Types.ObjectId, ref: 'CourseSection' },
     coverimage: String,
-    // contentLevel:{ type: mongoose.Schema.Types.ObjectId, ref: 'CourseContentlevel', required: [true, 'please provide the course section level'] },
+    contentLevel:{ type: mongoose.Schema.Types.ObjectId, ref: 'CourseContentlevel', required: [true, 'please provide the course section level'] },
     title: { type: String, required: [true, 'please provide a valid course section title'] },
     description: { type: String, required: [true, 'please provide a valid course section description'] },
     material: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CourseSectionMaterial'}],
-    courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required:[true,'please provide the course ID']},
+    courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', 
+},
     createdBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required:[true,'please provide User ID'] },
     lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User' }
 });

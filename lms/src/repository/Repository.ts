@@ -15,7 +15,7 @@ export default class Repository{
   /**
    * database live connection
    */
-  private connection: any;
+  public connection: any;
 
   /**
    * @description database collection to access

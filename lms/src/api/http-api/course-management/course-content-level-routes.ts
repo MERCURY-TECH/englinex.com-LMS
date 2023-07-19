@@ -6,12 +6,9 @@
 * @email `ngumbukafon@gmail.com`
 */
 
-import path from "path";
-import fs from "fs"
+
 // import RealTimeVoteCommunicator from "../socket/socket";
 import httpverbs from '../HTTPVERB';
-import { getAuthenticatedUser } from "../../../logic";
-import { upload } from "../../../logic/image-upload";
 import { routeSecurityLevel } from "../../../logic/lms-interfaces";
 
 

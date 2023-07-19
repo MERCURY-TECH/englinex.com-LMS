@@ -10,10 +10,10 @@
 export default class InitSystem{
     static async initializeRootUser(operations:any, rootUserRecord?:any){
         try {
-            console.log()
             let rootUser = await operations.findUserByField({username:'root'});
+            let rootRole = await operations.getRoleBySID('root');
             if(!rootUser){
-                let createdRootUser  = (await operations.registerUsers([{
+                let rootUser  = (await operations.registerUsers([{
                     accountType: 'admin',
                     firstname:process.env.ROOT_FIRST_NAME || "root",
                     lastname:process.env.ROOT_LAST_NAME || "root",
@@ -24,9 +24,10 @@ export default class InitSystem{
                     isSuspended:false,
                     isRoot:true,
                 }]))[0];
-                let rootRole = await operations.getRoleBySID('root');
-                await operations.assignRoleToUser({userID:createdRootUser._id, Role:rootRole._id})
+                
+                await operations.assignRoleToUser({userID:rootUser._id, Role:rootRole._id})
             }
+            await operations.assignRoleToUser({userID:rootUser._id, Role:rootRole._id})
         } catch (error) {
             
         }

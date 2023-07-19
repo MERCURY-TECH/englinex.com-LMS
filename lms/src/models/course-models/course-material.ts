@@ -20,7 +20,7 @@ function makePhoneticFieldsRequired(){
 
 
 const CourseSectionMaterialSchema = new mongoose.Schema({
-    sectionId: { type: mongoose.Schema.Types.ObjectId, ref: 'CourseSection', required:[true,'material must have a related parent section'] },
+    sectionId: { type: mongoose.Schema.Types.ObjectId, ref: 'CourseSection' },
     materialType: { type: String, enum: [...Object.values(CourseMaterialType)], require:[true,'you must provide the material type']},
     displayBGColor: { type: mongoose.Schema.Types.ObjectId, ref: 'CourseMaterialColor' },
     title: { type: String, required: [true, 'please provide a Course Section Material title'] },

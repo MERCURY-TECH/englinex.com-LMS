@@ -114,7 +114,6 @@ const assignRoleToUser = {
     name: "assignRoleToUser",
     callback: async function (collection: {userID:string, Role:string}) {
         await UserPermission.findOneAndDelete({UserID:collection.userID})
-        console.log('ran ==== >>> ')
         return await new UserPermission({UserID:collection.userID, Role:collection.Role}).save();
     },
     error: function (err: any): void { console.log(err.message) }

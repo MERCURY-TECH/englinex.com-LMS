@@ -5,11 +5,10 @@ import API from '../api/http-api/API';
 import { Server } from 'http';
 import http from "http";
 import bodyParser from 'body-parser';
-import {config as configDotenv} from 'dotenv';
+import {config as configDotenv} from 'dotenv'
 import path from 'path';
 import RealTimeVoteCommunicator from '../api/socket/socket';
 import cors from 'cors';
-// import VoteSessionManager from '../logic/subscription-manager/vote-session-manager';
 
 
 export default class server{
@@ -21,7 +20,7 @@ export default class server{
       if (!options.port) {
         reject(new Error('The server must be started with an available port'))
       }
-      configDotenv()
+      configDotenv({path: '../.env'})
       const app = express()
       app.use('/images',express.static(path.join(__dirname, "../../images")));
       app.use(morgan('dev'))
@@ -32,11 +31,10 @@ export default class server{
       app.use((err:any, req:any, res:any, next:any) => {
         reject(new Error('Something went wrong!, err:' + err))
         res.status(500).send('Something went wrong!')
-      })
+      });
       new API(app, options.database_operations);
       const httpserver = http.createServer(app);
       new RealTimeVoteCommunicator(httpserver);
-      // new VoteSessionManager(options.database_operations);
       const server:Server = httpserver.listen(options.port, () => resolve(server))
     })
   }
