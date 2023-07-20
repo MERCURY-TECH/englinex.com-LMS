@@ -26,10 +26,11 @@ export default class InitSystem{
                 }]))[0];
                 
                 await operations.assignRoleToUser({userID:rootUser._id, Role:rootRole._id})
+                return;
             }
             await operations.assignRoleToUser({userID:rootUser._id, Role:rootRole._id})
-        } catch (error) {
-            
+        } catch (error:any) {
+           console.log(error.message) 
         }
     }
 }
