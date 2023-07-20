@@ -6,8 +6,7 @@
 * @email `ngumbukafon@gmail.com`
 */
 
-import { ICourse, ICourseContentlevel, ICourseMaterial, ICourseMaterialColor, ICourseSection } from "../../logic/lms-interfaces";
-import Tag from "../../models/course-models/Tag";
+import { ICourseContentlevel, ICourseMaterial, ICourseMaterialColor, ICourseSection } from "../../logic/lms-interfaces";
 import Course from "../../models/course-models/course";
 import CourseMaterialColor from "../../models/course-models/course-content-colors";
 import CourseContentlevel from "../../models/course-models/course-content-level";
@@ -33,11 +32,33 @@ const createCourseSections: ILogic = {
 
 const findCourseSectionByID: ILogic = {
     name: "findCourseSectionByID",
-    callback: async (courseSectionId: String) => await CourseSection.findOne({ _id: courseSectionId })
+    callback: async (courseSectionId: String) => await CourseSection.findOne({ _id: courseSectionId }).populate(['material', 'contentLevel'])
+    .populate({
+        path:'material',
+        populate: 'displayBGColor' 
+    })
 }
 const getAllCourseSectionPerCourseId: ILogic = {
     name: "getAllCourseSectionPerCourseId",
-    callback: async (courseId: string) => await CourseSection.find({ courseId: courseId })
+    callback: async (courseId: string) => {
+    return (await Course.findOne({ _id: courseId })
+    .populate('content')
+    .populate({
+        path:'content',
+        populate: { path: 'material' }
+    })
+    .populate({
+        path:'content',
+        populate: { path: 'contentLevel' }
+    })
+    .populate({
+        path:'content',
+        populate: { 
+            path:'material',
+            populate: 'displayBGColor' 
+        }
+    }))?.content
+}
 }
 
 const updateCourseSection: ILogic = {

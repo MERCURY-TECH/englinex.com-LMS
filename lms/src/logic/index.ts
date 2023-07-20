@@ -56,14 +56,6 @@ export const connectUser = async function (username: any, password: string) {
     throw Error("Incorrect username or password")
 }
 
-/**
- * @param  {String} voteSession 
- * @param {String}  candidate 
- * @param  {String} voter 
- * @param {String}  voteType 
- * @returns { hasVoted: true, votedFor:candidateToVoteFor } { hasVoted: true, votedFor:candidateToVoteFor }
- */
-
 
 /**
  * @param {String} authorizationToken 

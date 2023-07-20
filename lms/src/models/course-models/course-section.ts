@@ -21,7 +21,6 @@ const CourseSectionSchema = new mongoose.Schema({
     lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User' }
 });
 
-
 const CourseSection = mongoose.model('CourseSection', CourseSectionSchema);
 
 export default CourseSection;

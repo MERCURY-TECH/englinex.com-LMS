@@ -37,6 +37,23 @@ export default function(repository:any){
             }
         },
         {
+            actionName: 'get a single course',
+            actionScope: routeSecurityLevel.public,
+            routeDescription: 'Route used to get a course in the system',
+            method: httpverbs.get,
+            route: '/get-course/:courseId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    message.message = { courses : await repository.findCourseByID(req.params.courseId) }
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
             actionName: 'create courses',
             actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'Route used to create a single or multiple courses in the system',

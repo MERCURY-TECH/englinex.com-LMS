@@ -24,9 +24,6 @@ export default class InitSystem{
                     isSuspended:false,
                     isRoot:true,
                 }]))[0];
-                
-                await operations.assignRoleToUser({userID:rootUser._id, Role:rootRole._id})
-                return;
             }
             await operations.assignRoleToUser({userID:rootUser._id, Role:rootRole._id})
         } catch (error:any) {

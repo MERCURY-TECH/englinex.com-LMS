@@ -34,6 +34,23 @@ export default function(repository:any){
             }
         },
         {
+            actionName: 'get-course-sections-per-section-ID',
+            actionScope: routeSecurityLevel.public,
+            routeDescription: 'Route used to get all course sections in the system',
+            method: httpverbs.get,
+            route: '/section/:sectionId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    message.message = { sections : await repository.findCourseSectionByID(req.params.sectionId) }
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
             actionName: 'create-course-section',
             actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'Route used to create a single or multiple courses in the system',

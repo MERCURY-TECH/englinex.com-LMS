@@ -79,7 +79,13 @@ export interface ICourseSection{
   material:string[] | Array<ICourseMaterial>,
   courseId:string,
   createdBy?:string,
-  lastUpdatedBy?:string
+  lastUpdatedBy?:string,
+  uuid?:string
+}
+export interface IStudentLecturerRelationShip {
+  student:string,
+  lecturer:string,
+  course:string
 }
 
 export interface ICourseMaterial {
