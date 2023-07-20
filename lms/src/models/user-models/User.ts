@@ -59,7 +59,9 @@ let userSchema = new mongoose.Schema({
     password:{
         type:String,
         require:[true, 'please provide a password']
-    }
+    },
+    registeredCourses:[{type: mongoose.Schema.Types.ObjectId,ref: 'Course'}],
+    currentSubcription: {type: mongoose.Schema.Types.ObjectId,ref: 'Subscription'}
 })
 
 userSchema.pre('validate', async function (next: any) {

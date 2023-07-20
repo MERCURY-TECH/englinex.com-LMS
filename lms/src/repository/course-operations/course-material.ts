@@ -29,12 +29,13 @@ const createCourseSectionMaterial: ILogic = {
 
 const findCourseSectionMaterialByID: ILogic = {
     name: "findCourseSectionMaterialByID",
-    callback: async (courseSectionMaterialId: String) => await CourseSectionMaterial.findOne({ _id: courseSectionMaterialId })
+    callback: async (courseSectionMaterialId: String) => await CourseSectionMaterial.findOne({ _id: courseSectionMaterialId }).populate('displayBGColor')
 }
 
 const getAllSectionMaterialPerSectionId: ILogic = {
     name: "getAllSectionMaterialPerSectionId",
-    callback: async (sectionId: string) => await CourseSectionMaterial.find({ sectionId })
+    callback: async (sectionId: string) => (await CourseSection.findOne({ _id: sectionId })
+        .populate({path: 'material',populate: 'displayBGColor'}))?.material
 }
 
 const updateCourseSectionMaterial: ILogic = {

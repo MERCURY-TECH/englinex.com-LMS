@@ -50,4 +50,14 @@ const getAllUsersPerAccountType:ILogic = {
     }
 }
 
-export default [getAllUsers,registerUsers,findUserByID, findUserByField,getAllUsersPerAccountType];
+
+const createTeacherAccount:ILogic = {
+    name: "createTeacherAccount",
+    callback: async function (collection:IUser) {
+       collection.isActive = false;
+       collection.accountType = AccountType.lecturer
+       return await new User(collection).save()//.select(['-password', "-isRoot","-isSuspended"]);
+    }
+}
+
+export default [getAllUsers,createTeacherAccount,registerUsers,findUserByID, findUserByField,getAllUsersPerAccountType];
