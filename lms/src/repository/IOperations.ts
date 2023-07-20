@@ -8,6 +8,6 @@
 
 export interface ILogic {
     name: string,
-    callback: (collection: any) => any,
+    callback: Function,
 }
 

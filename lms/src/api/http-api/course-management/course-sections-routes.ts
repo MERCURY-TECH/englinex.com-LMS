@@ -126,5 +126,27 @@ export default function(repository:any){
                 message.success ? res.status(200).json(message) : res.status(403).json(message);
             }
         },
+        {
+            actionName: 'mass-import-course-sections',
+            actionScope: routeSecurityLevel.forbiden,
+            routeDescription: 'Route used to import whole courses a single or multiple courses in the system',
+            method: httpverbs.post,
+            route: '/import-sections/:courseId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
+                    let sections:any = [...req.body];
+                    for(let section of sections){
+                        section['createdBy'] = user._doc._id;
+                    }
+                    message.message = { sections : await repository.importCourseSection(sections, req.params.courseId) }
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
     ]
 }
