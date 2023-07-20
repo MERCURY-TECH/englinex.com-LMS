@@ -36,6 +36,24 @@ export default function(respository:any){
             }
         },
         {
+            actionName: 'register-or-signup-teacher',
+            actionScope: routeSecurityLevel.public,
+            method: httpverbs.post,
+            routeDescription: 'route used for the registration of teachers, this route is only available to all users. req.body : {firstname, lastname, email, telephone, password}, be aware that the username is the email',
+            route: '/signup-teacher',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    let lecturer = await respository.createTeacherAccount(req.body as IUser)
+                    message.message = { lecturer };
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
             actionName: 'get all user per account type',
             actionScope: routeSecurityLevel.forbiden,
             method: httpverbs.get,
@@ -46,7 +64,8 @@ export default function(respository:any){
                 try {
                     let accountType = req.params.accountType;
                     let users = await respository.getAllUsersPerAccountType(accountType);
-                    message.message = { users };
+                    message.message = {} as any;
+                    message.message[accountType+'s'] = users
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -145,6 +164,7 @@ export default function(respository:any){
                 message.success ? res.status(200).json(message) : res.status(403).json(message);
             }
         },
+
 
     ]
 }
