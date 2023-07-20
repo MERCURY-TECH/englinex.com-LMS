@@ -19,6 +19,7 @@ import courseMaterialRoutes from './course-management/course-material-routes';
 import courseContentLevelRoutes from './course-management/course-content-level-routes';
 import tagRoutes from './course-management/tag-routes';
 import colorRoutes from './course-management/color-routes';
+import studentLecturersRoutes from './student-lecturers-routes';
 
 
 let serviceRouteDocumentation = (repository: any) => {
@@ -52,7 +53,8 @@ let serviceRouteDocumentation = (repository: any) => {
           ...courseMaterialRoutes(repository),
           ...courseContentLevelRoutes(repository),
           ...tagRoutes(repository),
-          ...colorRoutes(repository)
+          ...colorRoutes(repository),
+          ...studentLecturersRoutes(repository)
         ]
     } as serviceRoutes
 }
