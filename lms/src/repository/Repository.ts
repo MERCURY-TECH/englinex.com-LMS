@@ -7,7 +7,7 @@
 */
 
 import mongoose from "mongoose";
-import { ILogic } from "../logic";
+import { ILogic } from "./IOperations";
 
 
 export default class Repository{

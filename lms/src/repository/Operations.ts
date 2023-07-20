@@ -8,6 +8,7 @@
 */
 
 
+import { ILogic } from "./IOperations";
 import colors from "./course-operations/colors";
 import course from "./course-operations/course";
 import courseContentLevelOperations from "./course-operations/course-content-level-operations";
@@ -20,11 +21,6 @@ import userManagementOperations from "./user-operations/user-management-operatio
 /**
  * The logic Interface for a database operation
  */
-interface ILogic{
-    name:string,
-    callback:(collection: any) =>any,
-  }
-// create an application life cycle
 
 
 

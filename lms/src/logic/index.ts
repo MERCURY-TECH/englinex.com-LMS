@@ -6,10 +6,6 @@ import { IUser } from './lms-interfaces';
 var ObjectId = require('mongoose').Types.ObjectId;
 
 
-interface ILogic{
-    name:string,
-    callback:(collection: {[key: string]: any}) =>any,
-  }
 
 export function serializeUserDataResponse(user: IUser) {
     let response: any = {};
@@ -140,6 +136,6 @@ function isValidateObjectID(id: string) : boolean{
 
 
 
-export { IUser, ILogic,isValidateObjectID,findRecordForModel };
+export { IUser,isValidateObjectID,findRecordForModel };
 
 

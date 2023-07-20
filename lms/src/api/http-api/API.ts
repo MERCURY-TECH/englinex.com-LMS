@@ -1,7 +1,7 @@
 
-import { ILogic, authorizeUserMiddleWare } from "../../logic";
+import {  authorizeUserMiddleWare } from "../../logic";
 import AuthorizationManager from "../../logic/authorization-manager/AuthorizationManager";
-import { routeSecurityLevel } from "../../logic/lms-interfaces";;
+import { ILogic, routeSecurityLevel } from "../../logic/lms-interfaces";;
 import routes from './Routes';
 /**
  * @description Handles all service specific API's
