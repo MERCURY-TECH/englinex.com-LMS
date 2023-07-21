@@ -76,6 +76,7 @@ export default function(respository:any){
                 let message: any = { success: true };
                 try {
                     let links = await respository.getLinkedStudentAndLecturersPerCourse(req.params.courseId);
+                    console.log(req.params.courseId)
                     message.message = {links}
                 } catch (error: any) {
                     message.errorMessage = error.message;

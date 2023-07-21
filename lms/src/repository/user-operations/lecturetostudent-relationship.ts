@@ -45,7 +45,7 @@ const getLinkedStudentAndLecturers:ILogic = {
 const getLinkedStudentAndLecturersPerCourse:ILogic = {
     name: "getLinkedStudentAndLecturersPerCourse",
     callback: async function (courseId:string) {
-       return await StudentLecturerRelationShip.find({_id:courseId}).populate(['student', 'lecturer', 'course']);
+       return await StudentLecturerRelationShip.find({course:courseId}).populate(['student', 'lecturer', 'course']);
     }
 }
 

@@ -87,6 +87,18 @@ export interface IStudentLecturerRelationShip {
   lecturer:string,
   course:string
 }
+export interface IBundle {
+  title:string,
+  constraints:{
+      durationInMonths: number,
+      unitCostInFCFAPerMonths:number,
+      totalCost:number,
+      isActive:boolean,
+      percentageDiscount:number,
+      numberOfClassHours:number,
+  },
+  description:string
+}
 
 export interface ICourseMaterial {
   sectionId:string,

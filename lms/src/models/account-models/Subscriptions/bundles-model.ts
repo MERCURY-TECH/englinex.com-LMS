@@ -8,8 +8,10 @@
 
 import mongoose from "mongoose";
 
+
 const BundleSchema = new mongoose.Schema({
-    title: {type: String, require:[true, 'you must provide the bundle title ID']},
+    title: {type: String, required:[true, 'you must provide the bundle title ID']},
+    uuid:{type:String, required:[true,'please provide a bundle unique identifier'], unique:[true,'Unique identifier already exist']},
     constraints:{
         durationInMonths:{type:Number, max:[12,'please the maximum number of months is 12'], require:[true,'Please provide the duration of the bundle in months']},
         unitCostInFCFAPerMonths:{type:Number, require:[true,'Please provide the cost in FCFA of the bundle per months']},
@@ -18,7 +20,8 @@ const BundleSchema = new mongoose.Schema({
         percentageDiscount:{type:Number, default:0},
         numberOfClassHours:{type:Number, required:[true,'please you must provide the number of class hours this bundle authorizes']}
     },
-    desription: {type:String, required:[true,'please provide a description for this bundle']},
+    description: {type:String, required:[true,'please provide a description for this bundle']},
+    // allocations
 });
 
 BundleSchema.pre('save',function(next:any){

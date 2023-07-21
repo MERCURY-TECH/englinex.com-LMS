@@ -9,6 +9,7 @@
 
 
 import { ILogic } from "./IOperations";
+import bundleOperations from "./bundle-operations/bundle-operations";
 import colors from "./course-operations/colors";
 import course from "./course-operations/course";
 import courseContentLevelOperations from "./course-operations/course-content-level-operations";
@@ -16,6 +17,7 @@ import courseMaterial from "./course-operations/course-material";
 import courseSection from "./course-operations/course-section";
 import tags from "./course-operations/tags";
 import permission_operations from "./permission-operations/permission_operations";
+import lecturetostudentRelationship from "./user-operations/lecturetostudent-relationship";
 import userManagementOperations from "./user-operations/user-management-operations";
 
 /**
@@ -32,6 +34,8 @@ const Operations:Array<ILogic> = [
     ...courseMaterial,
     ...courseContentLevelOperations,
     ...tags,
-    ...colors
+    ...colors,
+    ...lecturetostudentRelationship,
+    ...bundleOperations
 ]
 export default Operations;
