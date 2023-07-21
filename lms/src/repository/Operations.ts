@@ -11,6 +11,7 @@
 import { ILogic } from "./IOperations";
 import bundleOperations from "./bundle-operations/bundle-operations";
 import subscriptionOperations from "./bundle-operations/subscription-operations";
+import classSchedulingOperations from "./class/class-scheduling-operations";
 import colors from "./course-operations/colors";
 import course from "./course-operations/course";
 import courseContentLevelOperations from "./course-operations/course-content-level-operations";
@@ -38,6 +39,7 @@ const Operations:Array<ILogic> = [
     ...colors,
     ...lecturetostudentRelationship,
     ...bundleOperations,
-    ...subscriptionOperations
+    ...subscriptionOperations,
+    ...classSchedulingOperations
 ]
 export default Operations;

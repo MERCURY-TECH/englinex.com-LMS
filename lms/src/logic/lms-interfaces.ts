@@ -13,6 +13,14 @@ export interface ILogic{
   callback:Function
 }
 
+export interface IClassSchedule {
+  datetime:Date,
+  course:string,
+  student:string,
+  isConfirmed:boolean
+
+}
+
 interface serviceAction {
   actionName: String,
   route: String,

@@ -8,9 +8,13 @@
 import mongoose from "mongoose";
 
 
+
 const ClassScheduleSchema = new mongoose.Schema({
-    Datetime: {type:Date, require:[true, 'you must provide the time']},
-    course: { type: mongoose.Schema.Types.ObjectId,ref: 'Course', required:[true,'please provide User ID'] }
+    datetime: {type:Date, required:[true, 'you must provide the time']},
+    course: { type: mongoose.Schema.Types.ObjectId,ref: 'Course', required:[true,'please provide course ID'] },
+    student: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required:[true,'please provide student ID'] },
+    isConfirmed: {type:Boolean, default:false},
+    classUrl:String
 });
 const ClassSchedule = mongoose.model('ClassSchedule', ClassScheduleSchema);
 
