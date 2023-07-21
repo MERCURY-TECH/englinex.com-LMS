@@ -100,6 +100,14 @@ export interface IBundle {
   description:string
 }
 
+export interface ISubscription{
+  bundle:string,
+  student:string,
+  numberOfClassHoursConsumed:string,
+  isActive:boolean,
+  isExpired:boolean
+}
+
 export interface ICourseMaterial {
   sectionId:string,
   materialType:CourseMaterialType,

@@ -11,11 +11,15 @@ import mongoose from "mongoose";
 
 const SubscriptionSchema = new mongoose.Schema({
     bundle: {type: mongoose.Schema.Types.ObjectId,ref: 'Bundle', require:[true, 'you must provide the bundle ID']},
-    student: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required: [true, 'please provide the students ID '] },
-    numberOfClassHoursConsumed: {Type:Number, default:0},
+    startDate: {type:Date, default:new Date()},
+    student: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required: [true, 'please provide the students ID ']},
+    numberOfClassHoursConsumed: {Type:Number},
     isActive:{type:Boolean, default:true},
     isExpired:{type:Boolean, default:false}
 });
+
 const Subscription = mongoose.model('Subscription', SubscriptionSchema);
+
+
 
 export default Subscription;

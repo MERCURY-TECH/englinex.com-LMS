@@ -21,6 +21,7 @@ import tagRoutes from './course-management/tag-routes';
 import colorRoutes from './course-management/color-routes';
 import studentLecturersRoutes from './student-lecturers-routes';
 import bundelRoutes from './bundle-and-subscription-management/bundel-routes';
+import subscriptionRoutes from './bundle-and-subscription-management/subscription-routes';
 
 
 let serviceRouteDocumentation = (repository: any) => {
@@ -56,7 +57,8 @@ let serviceRouteDocumentation = (repository: any) => {
           ...tagRoutes(repository),
           ...colorRoutes(repository),
           ...studentLecturersRoutes(repository),
-          ...bundelRoutes(repository)
+          ...bundelRoutes(repository),
+          ...subscriptionRoutes(repository)
         ]
     } as serviceRoutes
 }
