@@ -6,10 +6,9 @@
 * @email `ngumbukafon@gmail.com`
 */
 
-// middleware:[subscriptionWorker],
 
-import { getAuthenticatedUser, subscriptionWorker } from '../../../logic';
-import { IClassSchedule, routeSecurityLevel } from '../../../logic/lms-interfaces';
+import { subscriptionWorker } from '../../../logic';
+import { routeSecurityLevel } from '../../../logic/lms-interfaces';
 import httpverbs from '../HTTPVERB';
 
 
@@ -17,15 +16,35 @@ export default function(repository:any){
     return [
         
         {
-            actionName: 'get-all-schedules',
+            actionName: 'get-all-scheduled-live-classes',
             actionScope: routeSecurityLevel.forbiden,
-            routeDescription: 'Route used to get all available upcoming schedules',
+            routeDescription: 'Route used to get all available upcoming schedules live classes',
             method: httpverbs.get,
-            route: '/schedules/valid',
+            route: '/live/classes',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    message.message = { schedules : await repository.getAllValidSchedules() }
+
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        
+        {
+            actionName: 'start-live-class',
+            actionScope: routeSecurityLevel.forbiden,
+            routeDescription: 'Route used to start a live class per schedule ID',
+            method: httpverbs.get,
+            route: '/live/:scheduleId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    // make sure its lecturer
+                    // keep user waiting if lecturer is not online
+                    // create room for schedule
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -34,33 +53,12 @@ export default function(repository:any){
             }
         },
         {
-            actionName: 'create-a-schedule',
-            actionScope: routeSecurityLevel.protected,
-            routeDescription: 'Route used to create a user schedule',
-            method: httpverbs.post,
-            middleware:[subscriptionWorker],
-            route: '/schedules/create',
-            callback: async function (req: any, res: any, next: any) {
-                let message: any = { success: true };
-                try {
-                    let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
-                    let schedule = req.body as IClassSchedule
-                    schedule.student = req.body.student ? req.body.student : user._doc._id
-                    message.message = { schedule : await repository.createSchedule(schedule) }
-                } catch (error: any) {
-                    message.errorMessage = error.message;
-                    message.success = false
-                }
-                message.success ? res.status(200).json(message) : res.status(403).json(message);
-            }
-        },
-        {
-            actionName: 'get-schedule-by-course',
+            actionName: 'join-live-class',
             actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'Route used to get user schedule per course ID',
             middleware:[subscriptionWorker],
             method: httpverbs.get,
-            route: '/schedules/course/:courseId',
+            route: '/live/join/:scheduleId',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
@@ -73,75 +71,21 @@ export default function(repository:any){
             }
         },
         {
-            actionName: 'get-schedule-by-student',
-            actionScope: routeSecurityLevel.protected,
-            routeDescription: 'Route used to get user schedule per student ID',
-            middleware:[subscriptionWorker],
-            method: httpverbs.get,
-            route: '/schedules/student/:studentId',
-            callback: async function (req: any, res: any, next: any) {
-                let message: any = { success: true };
-                try {
-                    message.message = { schedule : await repository.getSchedulesByStudent(req.params.studentId) }
-                } catch (error: any) {
-                    message.errorMessage = error.message;
-                    message.success = false
-                }
-                message.success ? res.status(200).json(message) : res.status(403).json(message);
-            }
-        },
-        {
-            actionName: 'get-schedule-by-lecturer',
+            actionName: 'terminate-live-class',
             actionScope: routeSecurityLevel.protected,
             routeDescription: 'Route used to get lecturer schedule for courses he teaches',
-            middleware:[subscriptionWorker],
             method: httpverbs.get,
-            route: '/schedules/lecturer/:lecturerId',
+            route: '/live/stop/:scheduleId',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    message.message = { schedule : await repository.getScheduleAssociatedTolecturer(req.params.lecturerId) }
+
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
                 }
                 message.success ? res.status(200).json(message) : res.status(403).json(message);
             }
-        },
-        {
-            actionName: 'cancel-class-schedule',
-            actionScope: routeSecurityLevel.protected,
-            routeDescription: 'Route used to cancel a schedule per student ID',
-            middleware:[subscriptionWorker],
-            method: httpverbs.get,
-            route: '/schedules/cancel/:scheduleId',
-            callback: async function (req: any, res: any, next: any) {
-                let message: any = { success: true };
-                try {
-                    await repository.cancelSchedule(req.params.scheduleId)
-                } catch (error: any) {
-                    message.errorMessage = error.message;
-                    message.success = false
-                }
-                message.success ? res.status(200).json(message) : res.status(403).json(message);
-            }
-        },
-        {
-            actionName: 'comfirm-class-schedule',
-            actionScope: routeSecurityLevel.forbiden,
-            routeDescription: 'Route used to comfirm a schedule per student ID',
-            method: httpverbs.get,
-            route: '/schedules/comfirm/:scheduleId',
-            callback: async function (req: any, res: any, next: any) {
-                let message: any = { success: true };
-                try {
-                    message.message = { schedule : await repository.comfirmSchedule(req.params.scheduleId) }
-                } catch (error: any) {
-                    message.errorMessage = error.message;
-                    message.success = false
-                }
-                message.success ? res.status(200).json(message) : res.status(403).json(message);
-            }
-        },
+        }
     ]
 }

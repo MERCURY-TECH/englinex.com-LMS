@@ -7,6 +7,12 @@ export enum routeSecurityLevel {
   forbiden = "forbiden",
 }
 
+export enum SubscriptionEvents {
+  'newSubscription'='new-subscription',
+  'updateSubscription' = 'update-subscription',
+  'subscriptionEnded' = 'subscription-ended',
+  'validSubscriptionPayment' = 'validSubscriptionPayment'
+}
 
 export interface ILogic{
   name:string,
@@ -109,8 +115,11 @@ export interface IBundle {
 }
 
 export interface ISubscription{
-  bundle:string,
-  student:string,
+  _id?: any;
+  bundle:any,
+  student:any,
+  startDate ?:Date,
+  endDate ?:Date,
   numberOfClassHoursConsumed:string,
   isActive:boolean,
   isExpired:boolean

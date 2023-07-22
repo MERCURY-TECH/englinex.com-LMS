@@ -7,6 +7,7 @@
 */
 
 import { IClassSchedule } from "../../logic/lms-interfaces";
+import Subscription from "../../models/account-models/Subscriptions/subscriptions-model";
 import StudentLecturerRelationShip from "../../models/account-models/class-models/StudentLecturerAssignment";
 import ClassSchedule from "../../models/account-models/class-models/schedules-class-model";
 import CourseMaterialColor from "../../models/course-models/course-content-colors";
@@ -23,9 +24,20 @@ const createSchedule: ILogic = {
         let schedule = new Date(collection.datetime);
         let today: Date = new Date();
         today.setHours(today.getHours() + 8);
-
+        // get user associated subscription and add time
         if (!(today < schedule)) throw new Error('Class needs to be scheduled at least 8 hours ahead of time')
-        return await new ClassSchedule(collection).save().then(t => t.populate(['student', 'course'])).then(t => t);
+        // get User subscription and check if user still has time left
+        let subscription:any =  await Subscription.findOne({student:collection.student}).populate('bundle');
+        if(subscription){
+            subscription.numberOfClassHoursConsumed = subscription.numberOfClassHoursConsumed + 2;
+            if(!((subscription.numberOfClassHoursConsumed as number) <=  subscription.bundle?.constraints.numberOfClassHours))
+            throw new Error('You have used your total number of allocated time, you do not more have available time');
+        }
+        return await new ClassSchedule(collection).save().then(async (t) => 
+            {  
+                await subscription.save()
+                return t.populate(['student', 'course'])
+            }).then(t => t);
     }
 }
 
@@ -66,6 +78,11 @@ const cancelSchedule: ILogic = {
         let scheduledTime = new Date(schedule.datetime as Date);
         let today: Date = new Date();
         if (!((today.getHours() - scheduledTime.getHours()) <= 8)) throw new Error('Class scheduled can only be cnacelled 8 hours ahead of time')
+        let subscription:any =  await Subscription.findOne({student:schedule.student}).populate('bundle');
+        if(subscription){
+            subscription.numberOfClassHoursConsumed = subscription.numberOfClassHoursConsumed - 2;
+            await subscription.save();
+        }
         return await ClassSchedule.findByIdAndDelete(scheduleId);
     }
 }
@@ -80,6 +97,7 @@ const comfirmSchedule: ILogic = {
             let today: Date = new Date();
             if (!(scheduleTime > today)) throw new Error('Time has alredy passed, class can not more be comfirmed')
             schedule.isConfirmed = true;
+            schedule.classUrl = '/live/'+schedule._id
         }
         return await schedule.save().then(t => t.populate(['student', 'course'])).then(t => t);
     }

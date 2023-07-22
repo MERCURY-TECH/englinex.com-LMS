@@ -9,6 +9,7 @@ import {config as configDotenv} from 'dotenv'
 import path from 'path';
 import RealTimeVoteCommunicator from '../api/socket/socket';
 import cors from 'cors';
+import SubscriptionManager from '../logic/subscription-manager/subscription-manager';
 
 
 export default class server{
@@ -33,6 +34,7 @@ export default class server{
         res.status(500).send('Something went wrong!')
       });
       new API(app, options.database_operations);
+      new SubscriptionManager(options.database_operations).startWorker();
       const httpserver = http.createServer(app);
       new RealTimeVoteCommunicator(httpserver);
       const server:Server = httpserver.listen(options.port, () => resolve(server))

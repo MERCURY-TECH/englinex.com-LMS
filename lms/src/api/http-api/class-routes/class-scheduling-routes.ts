@@ -57,7 +57,6 @@ export default function(repository:any){
             actionName: 'get-schedule-by-course',
             actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'Route used to get user schedule per course ID',
-            middleware:[subscriptionWorker],
             method: httpverbs.get,
             route: '/schedules/course/:courseId',
             callback: async function (req: any, res: any, next: any) {

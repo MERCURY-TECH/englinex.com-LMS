@@ -23,6 +23,7 @@ import studentLecturersRoutes from './student-lecturers-routes';
 import bundelRoutes from './bundle-and-subscription-management/bundel-routes';
 import subscriptionRoutes from './bundle-and-subscription-management/subscription-routes';
 import classSchedulingRoutes from './class-routes/class-scheduling-routes';
+import liveClassRoutes from './class-routes/live-class-routes';
 
 
 let serviceRouteDocumentation = (repository: any) => {
@@ -60,7 +61,8 @@ let serviceRouteDocumentation = (repository: any) => {
           ...studentLecturersRoutes(repository),
           ...bundelRoutes(repository),
           ...subscriptionRoutes(repository),
-          ...classSchedulingRoutes(repository)
+          ...classSchedulingRoutes(repository),
+          ...liveClassRoutes(repository)
         ]
     } as serviceRoutes
 }

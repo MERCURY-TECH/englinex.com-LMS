@@ -1,7 +1,8 @@
 let jwt = require('jsonwebtoken');
 import bcrypt from 'bcrypt';
 import User from '../models/user-models/User';
-import { IUser } from './lms-interfaces';
+import { AccountType, IUser } from './lms-interfaces';
+import SubscriptionManager from './subscription-manager/subscription-manager';
 
 var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -126,10 +127,14 @@ function isValidateObjectID(id: string): boolean {
     return ObjectId.isValid(id)
 }
 
-export function subscriptionWorker(req: any, res: any, next: any) {
+export async function subscriptionWorker(req: any, res: any, next: any) {
     let message: any = { success: true };
     try {
-        // throw new Error('testing error fallback')
+        // check user account type
+        let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
+        console.log(user._doc)
+        if(user._doc.accountType == AccountType.admin) return next();
+        if(!(new SubscriptionManager()).subscriptionValidator(user._doc._id)) throw new Error('User has no valid subscription')
         next();
     } catch (error: any) {
         message.errorMessage = error.message;

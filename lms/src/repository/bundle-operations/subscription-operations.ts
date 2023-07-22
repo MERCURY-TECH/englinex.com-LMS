@@ -50,6 +50,16 @@ const cancelSubscription:ILogic = {
         return await subscription.deleteOne();
     }
 }
+const makeSubscriptionExpired:ILogic = {
+    name: "makeSubscriptionExpired",
+    callback: async function (subscriptionId:string) {
+        let subscription = await Subscription.findOne({_id:subscriptionId});
+        if(!subscription) throw new Error('Subscription does not exist in the system');
+        subscription.isExpired = true;
+        subscription.isActive = false;
+        return await subscription.save();
+    }
+}
 
 const updateSubscriptionBundle:ILogic = {
     name: "updateSubscriptionBundle",
@@ -61,10 +71,8 @@ const updateSubscriptionBundle:ILogic = {
         if(!bundle) throw new Error('bundle does not exist in system, provide valid bundle ID');
         if(!bundle.constraints?.isActive) throw new Error('You can not subscribe, bundle is not active');
 
-        if(subscription.bundle?.toString() == collection.update.bundle) 
-        {
-            return subscription
-        }
+        if(subscription.bundle?.toString() == collection.update.bundle) return subscription;
+      
         // TODO :: verify that payment has been done
         if(!paymentValidator()) throw new Error('invalid payment')
         subscription.bundle = new mongoose.Types.ObjectId(collection.update.bundle);
@@ -80,6 +88,12 @@ const getAllSubscriptions:ILogic = {
     name: "getAllSubscriptions",
     callback: async function () {
         return await Subscription.find().populate(['student','bundle']);
+    }
+}
+const getAllValidSubscriptions:ILogic = {
+    name: "getAllValidSubscriptions",
+    callback: async function () {
+        return await Subscription.find({ endDate: { $gte: new Date() } }).populate(['student','bundle']);
     }
 }
 const getSubscriptionById:ILogic = {
@@ -98,6 +112,6 @@ const getSubscriptionsByUserId:ILogic = {
 }
 
 
-export default [createSubscription, updateSubscriptionBundle, cancelSubscription, getSubscriptionsByUserId,getAllSubscriptions,getSubscriptionById];
+export default [createSubscription, updateSubscriptionBundle,getAllValidSubscriptions, cancelSubscription, getSubscriptionsByUserId,getAllSubscriptions,getSubscriptionById, makeSubscriptionExpired];
 
 //ISubscription

@@ -88,6 +88,24 @@ export default function(respository:any){
             }
         },
         {
+            actionName: 'get-all-valid-subscriptions',
+            actionScope: routeSecurityLevel.forbiden,
+            method: httpverbs.get,
+            routeDescription: 'route used to get all valid subscriptions in the system',
+            route: '/subscriptions/valid',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    let subscriptions = await respository.getAllValidSubscriptions();
+                    message.message = {subscriptions}
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
             actionName: 'get-user-subscription',
             actionScope: routeSecurityLevel.protected,
             method: httpverbs.get,
