@@ -11,7 +11,7 @@ import fs from "fs"
 import { upload } from "../../logic/image-upload";
 import RealTimeVoteCommunicator from "../socket/socket";
 import httpverbs from './HTTPVERB';
-import { IUser, generateToken, connectUser, serializeUserDataResponse, encrytpUserPassword } from "../../logic";
+import { IUser, generateToken, connectUser, serializeUserDataResponse, encrytpUserPassword, subscriptionWorker } from "../../logic";
 import { routeSecurityLevel } from "../../logic/lms-interfaces";
 
 
@@ -78,6 +78,7 @@ export default function(respository:any){
             actionName: 'login',
             actionScope: routeSecurityLevel.public,
             routeDescription: 'Route used to login user. User has to provide his user name and his password data for system to authenticate him. This is public route so it can accessed publicly by anyone.',
+            middleware:[subscriptionWorker],
             method: httpverbs.post,
             route: '/login',
             callback: async function (req: any, res: any, next: any) {

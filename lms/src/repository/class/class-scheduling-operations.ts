@@ -6,75 +6,83 @@
 * @email `ngumbukafon@gmail.com`
 */
 
-//IClassSchedule
-
-
-import { IClassSchedule, ICourseMaterialColor } from "../../logic/lms-interfaces";
+import { IClassSchedule } from "../../logic/lms-interfaces";
+import StudentLecturerRelationShip from "../../models/account-models/class-models/StudentLecturerAssignment";
 import ClassSchedule from "../../models/account-models/class-models/schedules-class-model";
 import CourseMaterialColor from "../../models/course-models/course-content-colors";
 import { ILogic } from "../IOperations";
 
-const getAllValidSchedules:ILogic = {
+const getAllValidSchedules: ILogic = {
     name: "getAllValidSchedules",
-    callback: async () => await ClassSchedule.find({datetime:{$gte: new Date()}}).populate(['course','student'])
+    callback: async () => await ClassSchedule.find({ datetime: { $gte: new Date() } }).populate(['course', 'student'])
 }
 
-const createSchedule:ILogic = {
+const createSchedule: ILogic = {
     name: "createSchedule",
     callback: async function (collection: IClassSchedule) {
-        // run conditions here
-        //   === >  make sure only students can create schedules
-        //  ==== > ensure user is register for course
         let schedule = new Date(collection.datetime);
-        let today:Date = new Date();
-        today.setHours(today.getHours() + 6);
-        
-        if(!( today < schedule)) throw new Error('Class needs to be scheduled at least 6 hours ahead of time')
-       return await new ClassSchedule(collection).save().then(t => t.populate(['student','course'])).then(t => t);
+        let today: Date = new Date();
+        today.setHours(today.getHours() + 8);
+
+        if (!(today < schedule)) throw new Error('Class needs to be scheduled at least 8 hours ahead of time')
+        return await new ClassSchedule(collection).save().then(t => t.populate(['student', 'course'])).then(t => t);
     }
 }
 
-const updateSchedule:ILogic = {
+const getScheduleAssociatedTolecturer: ILogic = {
+    name: "getScheduleAssociatedTolecturer",
+    callback: async (lecturerId: string) => {
+        let lecturerAssociatedStudents = (await StudentLecturerRelationShip.find({ lecturer: lecturerId }).select(['-_id', 'student'])).map((studentIdRef: any) => (studentIdRef.student as string).toString());
+        lecturerAssociatedStudents = Array.from(new Set(lecturerAssociatedStudents));
+        return await getSchedulesByStudent.callback(lecturerAssociatedStudents);
+    }
+}
+
+const updateSchedule: ILogic = {
     name: "updateSchedule",
-    callback: async () => await CourseMaterialColor.find()
+    callback: async () => await CourseMaterialColor.find({ datetime: { $gte: new Date() } })
 }
 
-const getSchedulesByCourse:ILogic = {
+const getSchedulesByCourse: ILogic = {
     name: "getSchedulesByCourse",
-    callback: async (courseId:string) => await ClassSchedule.find({course:courseId}).populate(['student','course'])
+    callback: async (courseId: string) => await ClassSchedule.find({ course: courseId, datetime: { $gte: new Date() } }).populate(['student', 'course'])
 }
 
-const getSchedulesByLecturer:ILogic = {
-    name: "getSchedulesByLecturer",
-    callback: async (courseId:string) => await ClassSchedule.find({course:courseId}).populate(['student','course'])
-}
-
-const getSchedulesByStudent:ILogic = {
+const getSchedulesByStudent: ILogic = {
     name: "getSchedulesByStudent",
-    callback: async (studentId:string) => await ClassSchedule.find({student:studentId}).populate(['student','course'])
+    callback: async (studentId: string | string[]) => {
+        if (studentId instanceof Array) {
+            return await ClassSchedule.find({ datetime: { $gte: new Date() } }).where('student').in([...studentId]).populate(['student', 'course'])
+        }
+        return await ClassSchedule.find({ student: studentId }).populate(['student', 'course'])
+    }
 }
 
-const cancelSchedule:ILogic = {
+const cancelSchedule: ILogic = {
     name: "cancelSchedule",
-    callback: async function (scheduleId:string) {
+    callback: async function (scheduleId: string) {
+        let schedule = await ClassSchedule.findOne({ _id: scheduleId })
+        if (!schedule) throw new Error('Schedule does not exist');
+        let scheduledTime = new Date(schedule.datetime as Date);
+        let today: Date = new Date();
+        if (!((today.getHours() - scheduledTime.getHours()) <= 8)) throw new Error('Class scheduled can only be cnacelled 8 hours ahead of time')
         return await ClassSchedule.findByIdAndDelete(scheduleId);
     }
 }
 
-const comfirmSchedule:ILogic = {
+const comfirmSchedule: ILogic = {
     name: "comfirmSchedule",
-    callback: async function (scheduleId:string) {
-        // createthe class URL
-        let schedule = await ClassSchedule.findOne({_id:scheduleId})
-        if(!schedule) throw new Error('Schedule does not exist');  
-        if(schedule){
+    callback: async function (scheduleId: string) {
+        let schedule = await ClassSchedule.findOne({ _id: scheduleId })
+        if (!schedule) throw new Error('Schedule does not exist');
+        if (schedule) {
             let scheduleTime = new Date(schedule.datetime as Date);
-            let today:Date = new Date();
-            if(!(scheduleTime>today)) throw new Error('Time has alredy passed, class can not more be comfirmed')
-            schedule.isConfirmed =  true;
-        }    
-        return await schedule.save().then(t => t.populate(['student','course'])).then(t => t);
+            let today: Date = new Date();
+            if (!(scheduleTime > today)) throw new Error('Time has alredy passed, class can not more be comfirmed')
+            schedule.isConfirmed = true;
+        }
+        return await schedule.save().then(t => t.populate(['student', 'course'])).then(t => t);
     }
 }
 
-export default [getSchedulesByStudent,  cancelSchedule, createSchedule, getAllValidSchedules, getSchedulesByCourse, getSchedulesByLecturer,updateSchedule, comfirmSchedule]
+export default [getSchedulesByStudent, cancelSchedule, createSchedule, getAllValidSchedules, getSchedulesByCourse, updateSchedule, comfirmSchedule, getScheduleAssociatedTolecturer]

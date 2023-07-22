@@ -1,15 +1,16 @@
 /**
-* @description Class scheduling routes
+* @description Routes used to manage live classes
 * @version 1.0
-* @since  Friday, 21 07 2023, at 18:14: 26 
+* @since  Saturday, 22 07 2023, at 15:34: 59 
 * @author Mercury-Tech by Ngum Buka Fon Nyuydze 
 * @email `ngumbukafon@gmail.com`
 */
 
+// middleware:[subscriptionWorker],
+
 import { getAuthenticatedUser, subscriptionWorker } from '../../../logic';
 import { IClassSchedule, routeSecurityLevel } from '../../../logic/lms-interfaces';
 import httpverbs from '../HTTPVERB';
-
 
 
 export default function(repository:any){

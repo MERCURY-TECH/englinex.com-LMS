@@ -46,7 +46,7 @@ export let verifyToken = function (bearerToken: string, secret: string): Partial
    * @returns {IUser} User Object
 **/
 export const connectUser = async function (username: any, password: string) {
-    const user: IUser = (await User.findOne({ username: username })) as  IUser;
+    const user: IUser = (await User.findOne({ username: username })) as IUser;
     if (user) {
         if (user?.isSuspended) throw new Error('User account suspended');
         const auth = await bcrypt.compare(password, user.password as string)
@@ -76,7 +76,7 @@ export function authorizeUserMiddleWare(req: any, res: any, next: any) {
         if (authenticatedUser.isActive) throw new Error('User account is not activated yet, you need activation to proceed');
         req.authenticatedUser = authenticatedUser;
         next();
-        
+
     } catch (error: any) {
         message.errorMessage = error.message;
         message.success = false
@@ -122,12 +122,22 @@ async function findRecordForModel(filter: Array<Object>, recordModel: any): Prom
  * @param id Random Object ID
  * @returns {Boolean} `true` if object is a valid ID or `false` otherwise.
  */
-function isValidateObjectID(id: string) : boolean{
+function isValidateObjectID(id: string): boolean {
     return ObjectId.isValid(id)
 }
 
+export function subscriptionWorker(req: any, res: any, next: any) {
+    let message: any = { success: true };
+    try {
+        // throw new Error('testing error fallback')
+        next();
+    } catch (error: any) {
+        message.errorMessage = error.message;
+        message.success = false
+        res.status(403).json(message)
+    }
+}
 
-
-export { IUser,isValidateObjectID,findRecordForModel };
+export { IUser, isValidateObjectID, findRecordForModel };
 
 

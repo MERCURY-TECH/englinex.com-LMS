@@ -85,8 +85,5 @@ export default function(respository:any){
                 message.success ? res.status(200).json(message) : res.status(403).json(message);
             }
         },
-        
-
-
     ]
 }

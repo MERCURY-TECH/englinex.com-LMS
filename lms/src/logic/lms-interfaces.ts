@@ -17,8 +17,8 @@ export interface IClassSchedule {
   datetime:Date,
   course:string,
   student:string,
-  isConfirmed:boolean
-
+  isConfirmed:boolean,
+  classUrl:string
 }
 
 interface serviceAction {
