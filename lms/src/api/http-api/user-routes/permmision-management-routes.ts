@@ -7,8 +7,8 @@
 */
 
 
-import { routeSecurityLevel } from '../../logic/lms-interfaces';
-import httpverbs from './HTTPVERB';
+import { routeSecurityLevel } from '../../../logic/lms-interfaces';
+import httpverbs from '../HTTPVERB';
 
 interface IPermissionRoleStructure {
     Sid: string,

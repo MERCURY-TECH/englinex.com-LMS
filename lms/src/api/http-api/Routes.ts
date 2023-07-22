@@ -8,22 +8,23 @@
 
 
 
+import { routeSecurityLevel, serviceRoutes } from '../../logic/lms-interfaces';
 import httpverbs from './HTTPVERB';
 import os from 'os';
-import userAccountManagementRoutes from './user-account-management-routes';
-import permmisionManagementRoutes from './permmision-management-routes';
-import { routeSecurityLevel, serviceRoutes } from '../../logic/lms-interfaces';
-import courseManagementRoutes from './course-management/course-management-routes';
-import courseSectionsRoutes from './course-management/course-sections-routes';
-import courseMaterialRoutes from './course-management/course-material-routes';
-import courseContentLevelRoutes from './course-management/course-content-level-routes';
-import tagRoutes from './course-management/tag-routes';
-import colorRoutes from './course-management/color-routes';
-import studentLecturersRoutes from './student-lecturers-routes';
 import bundelRoutes from './bundle-and-subscription-management/bundel-routes';
 import subscriptionRoutes from './bundle-and-subscription-management/subscription-routes';
 import classSchedulingRoutes from './class-routes/class-scheduling-routes';
 import liveClassRoutes from './class-routes/live-class-routes';
+import colorRoutes from './course-management/color-routes';
+import courseContentLevelRoutes from './course-management/course-content-level-routes';
+import courseManagementRoutes from './course-management/course-management-routes';
+import courseMaterialRoutes from './course-management/course-material-routes';
+import courseSectionsRoutes from './course-management/course-sections-routes';
+import tagRoutes from './course-management/tag-routes';
+import permmisionManagementRoutes from './user-routes/permmision-management-routes';
+import studentLecturersRoutes from './user-routes/student-lecturers-routes';
+import userAccountManagementRoutes from './user-routes/user-account-management-routes';
+
 
 
 let serviceRouteDocumentation = (repository: any) => {

@@ -6,13 +6,13 @@
 * @email `ngumbukafon@gmail.com`
 */
 
-import path from "path";
-import fs from "fs"
-import { upload } from "../../logic/image-upload";
-import RealTimeVoteCommunicator from "../socket/socket";
-import httpverbs from './HTTPVERB';
-import { IUser, generateToken, connectUser, serializeUserDataResponse, encrytpUserPassword, subscriptionWorker } from "../../logic";
-import { routeSecurityLevel } from "../../logic/lms-interfaces";
+
+import path from 'path';
+import { IUser, subscriptionWorker, connectUser, generateToken, serializeUserDataResponse, encrytpUserPassword } from '../../../logic';
+import { upload } from '../../../logic/image-upload';
+import { routeSecurityLevel } from '../../../logic/lms-interfaces';
+import httpverbs from '../HTTPVERB';
+
 
 
 export default function(respository:any){

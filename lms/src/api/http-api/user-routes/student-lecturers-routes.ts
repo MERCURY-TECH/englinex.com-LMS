@@ -6,9 +6,8 @@
 * @email `ngumbukafon@gmail.com`
 */
 
-import httpverbs from './HTTPVERB';
-import { IStudentLecturerRelationShip, routeSecurityLevel } from "../../logic/lms-interfaces";
-
+import { routeSecurityLevel, IStudentLecturerRelationShip } from '../../../logic/lms-interfaces';
+import httpverbs from '../HTTPVERB';
 
 export default function(respository:any){
     return [
