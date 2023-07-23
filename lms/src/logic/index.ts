@@ -104,7 +104,6 @@ export function isDate(dateToTest: any) {
  */
 export async function checkIfRecordExist(filter: Object, recordModel: any): Promise<Boolean> {
     let record = await recordModel.findOne(filter);
-    console.log(record)
     return record ? true : false;
 }
 
@@ -132,7 +131,6 @@ export async function subscriptionWorker(req: any, res: any, next: any) {
     try {
         // check user account type
         let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
-        console.log(user._doc)
         if(user._doc.accountType == AccountType.admin) return next();
         if(!(new SubscriptionManager()).subscriptionValidator(user._doc._id)) throw new Error('User has no valid subscription')
         next();
