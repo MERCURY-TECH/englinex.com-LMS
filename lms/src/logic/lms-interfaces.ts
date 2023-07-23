@@ -167,7 +167,8 @@ export interface IUser {
   manifeste?: String,
   description?: String,
   isActive?: Boolean,
-  isSuspended?: Boolean
+  isSuspended?: Boolean,
+  registeredCourses?:any
 }
 
 

@@ -18,6 +18,8 @@ import CourseSection from "../../models/course-models/course-section";
 import { ILogic } from "../IOperations";
 import mongoose from "mongoose";
 import Repository from "../Repository";
+import { checkIfRecordExist } from "../../logic";
+import User from "../../models/user-models/User";
 
 const createCourse: ILogic = {
     name: "createCourse",
@@ -284,6 +286,32 @@ const importCourseWithTransaction: ILogic = {
     }
 }
 
+const registerCourse:ILogic = {
+    name: "registerCourse",
+    callback: async function(collection:{courseId:string, studentId:String}){
+        let user = await User.findOne({_id:collection.studentId});
+        if(!user) throw new Error('user does not exist');
+        if(!(await checkIfRecordExist({_id:collection.courseId},Course))) throw new Error('You can not register an unexisting course');
+        if(!user.registeredCourses) user.registeredCourses = [];
+        let userCourses:any = Array.from(new Set([...JSON.parse(JSON.stringify(user.registeredCourses)), collection.courseId]));
+        user.registeredCourses = userCourses;
+        return await user.save();
+    }
+}
+const deregisterCourse:ILogic = {
+    name: "deregisterCourse",
+    callback: async function(collection:{courseId:string, studentId:String}){
+        let user = await User.findOne({_id:collection.studentId});
+        if(!user) throw new Error('user does not exist');
+        if(!user.registeredCourses) user.registeredCourses = [];
+        let registerdCourses =  new Set(JSON.parse(JSON.stringify(user.registeredCourses)));
+        registerdCourses.delete(collection.courseId);
+        let userCourses:any = Array.from(registerdCourses);
+        user.registeredCourses = userCourses;
+        return await user.save();
+    }
+}
+
 // function mapAncestorsToChildren(section:ICourseSection){
 //     let ancestorsToChildrenMap:any = []
 //     if(!section.parent){
@@ -298,4 +326,4 @@ const importCourseWithTransaction: ILogic = {
 // }
 
 
-export default [createCourse, findCourseByID,importCourseWithTransaction, getAllCourses, updateCourse, deleteCourse, importCourse]
+export default [createCourse, findCourseByID,importCourseWithTransaction, getAllCourses, updateCourse, deleteCourse, importCourse, registerCourse, deregisterCourse]

@@ -10,7 +10,7 @@ import path from "path";
 import fs from "fs"
 // import RealTimeVoteCommunicator from "../socket/socket";
 import httpverbs from '../HTTPVERB';
-import { getAuthenticatedUser } from "../../../logic";
+import { getAuthenticatedUser, subscriptionWorker } from "../../../logic";
 import { upload } from "../../../logic/image-upload";
 import { routeSecurityLevel } from "../../../logic/lms-interfaces";
 
@@ -34,6 +34,45 @@ export default function(repository:any){
                     message.success = false
                 }
                 message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
+            actionName: 'register-course',
+            actionScope: routeSecurityLevel.protected,
+            method: httpverbs.patch,
+            routeDescription: 'Route by user to register for a specific course ',
+            middleware:[subscriptionWorker],
+            route: '/register/course/:courseId',
+            callback: async function (req: any, res: any) {
+                let message: any = { success: true };
+                try {
+                    let course = req.params.courseId as string;
+                    let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);            
+                    message.message = { registeredCourse: await repository.registerCourse({courseId:course, studentId:user._doc._id}) };
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false;
+                }
+                message.success ? res.status(200).json(message) : res.status(500).json(message);
+            }
+        },
+        {
+            actionName: 'un-register-course',
+            actionScope: routeSecurityLevel.protected,
+            method: httpverbs.patch,
+            routeDescription: 'Route by user to un-register for a specific course ',
+            route: '/de-register/course/:courseId',
+            callback: async function (req: any, res: any) {
+                let message: any = { success: true };
+                try {
+                    let course = req.params.courseId as string;
+                    let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);            
+                    message.message = { registeredCourse: await repository.deregisterCourse({courseId:course, studentId:user._doc._id}) };
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false;
+                }
+                message.success ? res.status(200).json(message) : res.status(500).json(message);
             }
         },
         {
