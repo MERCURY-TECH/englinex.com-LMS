@@ -125,20 +125,41 @@ export default function(respository:any){
             }
         },
         {
+            actionName: 'password-recovery',
+            actionScope: routeSecurityLevel.public,
+            method: httpverbs.patch,
+            routeDescription: 'Route used by all system users to recover any lost password',
+            route: '/account/verify',
+            callback: async function (req: any, res: any) {
+                let message: any = { success: true };
+                try {
+                    /**
+                     * TODO 1 :: verify the number or email on the user account
+                     * TODO 2 :: send number or email to respective accounts
+                     */
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    console.log(error.message)
+                    message.success = false;
+                }
+                message.success ? res.status(200).json(message) : res.status(500).json(message);
+            }
+        },
+        {
             actionName: 'activate-users',
             actionScope: routeSecurityLevel.public,
             method: httpverbs.patch,
-            routeDescription: 'Route to activate a user: When a user is created, his is initially not activated because he has to provide his account comfirmation information, so this routes gets the biometric data as password inorder to activate the user. ',
+            routeDescription: 'Route to activate a user: When a user is created, his is initially not activated because he has to provide his account comfirmation information, so this routes gets the comfirmation data as password inorder to activate the user. ',
             route: '/register/activate',
             callback: async function (req: any, res: any) {
                 let message: any = { success: true };
                 try {
-                    if (!req.body.username) throw new Error('Please provide username');
-                    if (!req.body.biomertricString) throw new Error('Please provide biometric string');
-                    let activateUser = await respository.activateUser();
-                    let user = await activateUser({ biometricString: await encrytpUserPassword(req.body.biomertricString.trim()), username: req.body.username.trim() });
-                    let token = generateToken({ ...user }, process.env.Token_sercret, 60 * 60 * 60 * 24);
-                    message.message = { user: { ...user._doc, isActive: true }, token };
+                    // if (!req.body.username) throw new Error('Please provide username');
+                    // if (!req.body.biomertricString) throw new Error('Please provide biometric string');
+                    // let activateUser = await respository.activateUser();
+                    // let user = await activateUser({ biometricString: await encrytpUserPassword(req.body.biomertricString.trim()), username: req.body.username.trim() });
+                    // let token = generateToken({ ...user }, process.env.Token_sercret, 60 * 60 * 60 * 24);
+                    // message.message = { user: { ...user._doc, isActive: true }, token };
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     console.log(error.message)
