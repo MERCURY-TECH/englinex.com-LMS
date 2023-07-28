@@ -22,7 +22,6 @@ import courseMaterialRoutes from './course-management/course-material-routes';
 import courseSectionsRoutes from './course-management/course-sections-routes';
 import tagRoutes from './course-management/tag-routes';
 import permmisionManagementRoutes from './user-routes/permmision-management-routes';
-import studentLecturersRoutes from './user-routes/student-lecturers-routes';
 import userAccountManagementRoutes from './user-routes/user-account-management-routes';
 
 
@@ -59,7 +58,6 @@ let serviceRouteDocumentation = (repository: any) => {
           ...courseContentLevelRoutes(repository),
           ...tagRoutes(repository),
           ...colorRoutes(repository),
-          ...studentLecturersRoutes(repository),
           ...bundelRoutes(repository),
           ...subscriptionRoutes(repository),
           ...classSchedulingRoutes(repository),

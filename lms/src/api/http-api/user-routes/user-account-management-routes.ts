@@ -54,7 +54,7 @@ export default function(respository:any){
             }
         },
         {
-            actionName: 'get all user per account type',
+            actionName: 'get-all-user-per-account-type',
             actionScope: routeSecurityLevel.forbiden,
             method: httpverbs.get,
             routeDescription: 'Get all users in the application with a specific account type',

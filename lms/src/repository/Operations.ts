@@ -19,7 +19,6 @@ import courseMaterial from "./course-operations/course-material";
 import courseSection from "./course-operations/course-section";
 import tags from "./course-operations/tags";
 import permission_operations from "./permission-operations/permission_operations";
-import lecturetostudentRelationship from "./user-operations/lecturetostudent-relationship";
 import userManagementOperations from "./user-operations/user-management-operations";
 
 /**
@@ -37,7 +36,6 @@ const Operations:Array<ILogic> = [
     ...courseContentLevelOperations,
     ...tags,
     ...colors,
-    ...lecturetostudentRelationship,
     ...bundleOperations,
     ...subscriptionOperations,
     ...classSchedulingOperations

@@ -31,8 +31,7 @@ export default function (repository: any) {
                     //         return arr2.includes(i)
                     //     });
                     // }
-                    let createRole = await repository.createRole();
-                    message.message = { newRole: await createRole(req.body as IPermissionRoleStructure) };
+                    message.message = { newRole: await repository.createRole(req.body as IPermissionRoleStructure) };
 
                 } catch (error: any) {
                     message.errorMessage = error.message;
@@ -50,8 +49,7 @@ export default function (repository: any) {
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let deleteRole = await repository.deleteRole();
-                    await deleteRole({_id:req.params.roleID});
+                    await repository.deleteRole({_id:req.params.roleID});
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -61,15 +59,14 @@ export default function (repository: any) {
         },
         {
             actionName: 'update-role',
-            actionScope: routeSecurityLevel.protected,
+            actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'update a role',
             method: httpverbs.patch,
             route: '/role/update/:roleID',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let updateRole = await repository.updateRole();
-                    await updateRole({filter:{_id:req.params.roleID}, update:req.body as {Sid?:string, actions?:string[]}});
+                    message.message ={role : await repository.updateRole({filter:{_id:req.params.roleID}, update:req.body as {Sid?:string, actions?:string[]}})};
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -86,8 +83,7 @@ export default function (repository: any) {
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let deletePermissionRole = await repository.deletePermissionRole()
-                    await deletePermissionRole({ _id: req.params.permissionRoleID })
+                    await repository.deletePermissionRole({ _id: req.params.permissionRoleID })
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false;
@@ -99,13 +95,12 @@ export default function (repository: any) {
             route: '/assign/:roleID/:userID',
             method: httpverbs.put,
             actionName: 'assign-role-to-user',
-            actionScope: routeSecurityLevel.protected,
+            actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'assign a role to a user',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let assignRoleToUser = await repository.assignRoleToUser()
-                    message.UserPermission = await assignRoleToUser({ userID: req.params.userID, Role: req.params.roleID })
+                    message.UserPermission = repository.assignRoleToUser({ userID: req.params.userID, Role: req.params.roleID })
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false;
@@ -122,8 +117,7 @@ export default function (repository: any) {
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let getActionList = await repository.getActionList()
-                    message.actions = await getActionList();
+                    message.actions = await repository.getActionList();
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false;

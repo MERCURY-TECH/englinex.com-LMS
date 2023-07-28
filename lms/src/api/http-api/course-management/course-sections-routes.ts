@@ -86,7 +86,7 @@ export default function(repository:any){
                     let sectionId = req.params.sectionId;
                     let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
                     if(!sectionId) throw new Error('Please provide the course section ID');
-                    message.message = { section : {...(await repository.updateCourseSection({filter:{_id:sectionId, update:{...req.body, lastUpdatedBy:user._doc._id }}}))._doc, ...req.body} }
+                    message.message = { section : {...(await repository.updateCourseSection({filter:{_id:sectionId},update:{...req.body, lastUpdatedBy:user._doc._id }}))._doc, ...req.body} }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false

@@ -13,8 +13,14 @@ const ClassScheduleSchema = new mongoose.Schema({
     datetime: {type:Date, required:[true, 'you must provide the time']},
     course: { type: mongoose.Schema.Types.ObjectId,ref: 'Course', required:[true,'please provide course ID'] },
     student: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required:[true,'please provide student ID'] },
+    lecturer: { type: mongoose.Schema.Types.ObjectId,ref: 'User' },
     isConfirmed: {type:Boolean, default:false},
-    classUrl:String
+    relatedCourseMaterial : { type: mongoose.Schema.Types.ObjectId,ref: 'CourseSectionMaterial' },
+    liveClass :{
+        startedAt:Date,
+        endedAt:Date,
+        roomID:String
+    }
 });
 const ClassSchedule = mongoose.model('ClassSchedule', ClassScheduleSchema);
 

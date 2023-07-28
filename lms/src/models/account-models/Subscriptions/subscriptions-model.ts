@@ -15,7 +15,7 @@ const SubscriptionSchema = new mongoose.Schema({
     startDate: {type:Date, default:new Date()},
     endDate: {type:Date,require:[true, 'you must provide the end date'] },
     student: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required: [true, 'please provide the students ID ']},
-    numberOfClassHoursConsumed: {Type:Number},
+    numberOfClassHoursConsumed: {type:Number, default:0},
     isActive:{type:Boolean, default:true},
     isExpired:{type:Boolean, default:false}
 });

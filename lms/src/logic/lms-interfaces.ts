@@ -23,6 +23,8 @@ export interface IClassSchedule {
   datetime:Date,
   course:string,
   student:string,
+  lecturer:string,
+  relatedCourseMaterial:string,
   isConfirmed:boolean,
   classUrl:string
 }
@@ -67,6 +69,22 @@ export enum AccountType{
   "student"="student",
   "lecturer" = "lecturer",
   "admin"="admin"
+}
+
+export enum EnglishProficiency{
+  "Beginner"="Beginner",
+  "Elementary"="Elementary",
+  "PreIntermediate"="Pre-Intermediate",
+  "Intermediate"="Intermediate",
+  "UpperIntermediate"="Upper-Intermediate",
+  "Advanced"="Advanced"
+}
+
+export enum LearningGoals {
+  "EnglishExams"="English exams (TOEFL/IELTS)",
+  "BusinessEnglish"="Business English",
+  "EnglishForKids"="English for Kids",
+  "EnglishForConversation"="English for Conversation",
 }
 
 export enum CourseMaterialType {
@@ -168,7 +186,9 @@ export interface IUser {
   description?: String,
   isActive?: Boolean,
   isSuspended?: Boolean,
-  registeredCourses?:any
+  registeredCourses?:any,
+  EnglishProficiency:EnglishProficiency,
+  LearningGoals :LearningGoals
 }
 
 

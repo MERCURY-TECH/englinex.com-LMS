@@ -72,14 +72,16 @@ const getAllCourses: ILogic = {
 const updateCourse: ILogic = {
     name: "updateCourse",
     callback: async function (collection: { filter: { _id: string }, update: ICourse }) {
-        return await Course.findOneAndUpdate({ _id: collection.filter._id }, collection.update);
+        let update = await Course.findOneAndUpdate({ _id: collection.filter._id }, collection.update);
+        if(!update) throw new Error('Course does not exist in system');
+        return update
     }
 }
 
 const deleteCourse: ILogic = {
     name: "deleteCourse",
     callback: async function (collection: { filter: { _id: string } }) {
-        return await Course.findByIdAndDelete({ _id: collection.filter._id });
+        return await Course.deleteOne({ _id: collection.filter._id });
     }
 }
 const importCourse: ILogic = {

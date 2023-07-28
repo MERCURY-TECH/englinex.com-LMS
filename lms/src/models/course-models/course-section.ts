@@ -7,6 +7,7 @@
 */
 
 import mongoose from "mongoose";
+import CourseSectionMaterial from "./course-material";
 const CourseSectionSchema = new mongoose.Schema({
     // uuid:{ type: String, required: [true, 'please provide a valid unique identifier for the course section'], unique:[true,"please make sure the UUID is unique"] },
     parent: { type: mongoose.Schema.Types.ObjectId, ref: 'CourseSection' },
@@ -21,6 +22,11 @@ const CourseSectionSchema = new mongoose.Schema({
     lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId,ref: 'User' }
 });
 
+CourseSectionSchema.pre('deleteOne', async function(next:any) {
+    //@ts-ignore
+    await CourseSectionMaterial.deleteMany({_id:this.content});
+    next();
+  });
 const CourseSection = mongoose.model('CourseSection', CourseSectionSchema);
 
 export default CourseSection;

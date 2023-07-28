@@ -146,10 +146,11 @@ export default function(repository:any){
                 let message: any = { success: true };
                 try {
                     let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
-                    if(!req.params.courseID) throw new Error('Please provide the course ID')
-                    let course=await repository.findCourseByID(req.params.courseID);
-                    course['lastUpdatedBy'] = user._doc._id
-                    message.message = { courses : {...(await repository.updateCourse({filter:{_id:req.params.courseID, update:req.body}}))._doc, ...req.body} }
+                    if(!req.params.courseID) throw new Error('Please provide the course ID');
+                    let update:any = {...req.body};
+                    update['lastUpdatedBy'] = user._doc._id ;
+                    console.log(user)
+                    message.message = { courses : {...(await repository.updateCourse({filter:{_id:req.params.courseID}, update}))._doc, ...req.body} }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false

@@ -34,6 +34,8 @@ const CourseSectionMaterialSchema = new mongoose.Schema({
     },
     description: { type: String, required: [true, 'please provide a Course Section Material description'] },
     content: { type: String, required: [true, 'please provide a Course Section Material content'] },
+    answers: String,
+    isPublic:{type:Boolean, default:true, required:true},
 });
 const CourseSectionMaterial = mongoose.model('CourseSectionMaterial', CourseSectionMaterialSchema);
 

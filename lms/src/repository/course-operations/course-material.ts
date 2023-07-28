@@ -27,6 +27,8 @@ const createCourseSectionMaterial: ILogic = {
     }
 }
 
+
+
 const findCourseSectionMaterialByID: ILogic = {
     name: "findCourseSectionMaterialByID",
     callback: async (courseSectionMaterialId: String) => await CourseSectionMaterial.findOne({ _id: courseSectionMaterialId }).populate('displayBGColor')
@@ -37,20 +39,24 @@ const getAllSectionMaterialPerSectionId: ILogic = {
     callback: async (sectionId: string) => (await CourseSection.findOne({ _id: sectionId })
         .populate({path: 'material',populate: 'displayBGColor'}))?.material
 }
+const getMaterialById: ILogic = {
+    name: "getMaterialById",
+    callback: async (materialId: string) => (await CourseSectionMaterial.findOne({ _id: materialId }))
+}
 
 const updateCourseSectionMaterial: ILogic = {
     name: "updateCourseSectionMaterial",
     callback: async function (collection: { filter: { _id: string }, update: ICourseSection }) {
-        return await CourseSectionMaterial.findOneAndUpdate({ _id: collection.filter._id }, collection.update);
+        return await CourseSectionMaterial.findOneAndUpdate({ _id: collection.filter._id },{...collection.update});
     }
 }
 
 const deleteCourseSectionMaterial: ILogic = {
     name: "deleteCourseSectionMaterial",
     callback: async function (collection: { filter: { _id: string } }) {
-        return await CourseSectionMaterial.findByIdAndDelete(collection.filter._id);
+        return (await CourseSectionMaterial.deleteOne({_id:collection.filter._id}));
     }
 }
 
 
-export default [createCourseSectionMaterial, findCourseSectionMaterialByID, getAllSectionMaterialPerSectionId, updateCourseSectionMaterial, deleteCourseSectionMaterial]
+export default [createCourseSectionMaterial, findCourseSectionMaterialByID, getAllSectionMaterialPerSectionId, updateCourseSectionMaterial, deleteCourseSectionMaterial, getMaterialById]

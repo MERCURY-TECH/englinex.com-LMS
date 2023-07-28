@@ -32,6 +32,23 @@ export default function(repository:any){
             }
         },
         {
+            actionName: 'get-single-material',
+            actionScope: routeSecurityLevel.protected,
+            routeDescription: 'Route used to get a single course material from the system',
+            method: httpverbs.get,
+            route: '/materials/:materialId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    message.message = { materials : await repository.getMaterialById(req.params.materialId) }
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
             actionName: 'create-material-section',
             actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'Route used to create a single or multiple course material sections in the system',
@@ -67,7 +84,7 @@ export default function(repository:any){
                     let materialId = req.params.materialId;
                     let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
                     if(!materialId) throw new Error('Please provide the course section ID');
-                    message.message = { material : {...(await repository.updateCourseSectionMaterial({filter:{_id:materialId, update:{...req.body, lastUpdatedBy:user._doc._id }}}))._doc, ...req.body} }
+                    message.message = { material : {...(await repository.updateCourseSectionMaterial({filter:{_id:materialId, },update:{...req.body, lastUpdatedBy:user._doc._id }}))._doc, ...req.body} }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false

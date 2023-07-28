@@ -10,7 +10,7 @@
 
 import mongoose from "mongoose";
 import { encrytpUserPassword } from "../../logic";
-import { AccountType } from "../../logic/lms-interfaces";
+import { AccountType, EnglishProficiency, LearningGoals } from "../../logic/lms-interfaces";
 
 let userSchema = new mongoose.Schema({
     username: {
@@ -60,6 +60,12 @@ let userSchema = new mongoose.Schema({
         type:String,
         require:[true, 'please provide a password']
     },
+    address :{
+        countr:String,
+        City:String
+    },
+    EnglishProficiency:{type:String, enum:[...Object.values(EnglishProficiency)]},
+    LearningGoals :{type:String, enum:[...Object.values(LearningGoals)]},
     registeredCourses:[{type: mongoose.Schema.Types.ObjectId,ref: 'Course'}]
 })
 

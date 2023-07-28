@@ -64,14 +64,14 @@ const getAllCourseSectionPerCourseId: ILogic = {
 const updateCourseSection: ILogic = {
     name: "updateCourseSection",
     callback: async function (collection: { filter: { _id: string }, update: ICourseSection }) {
-        return await CourseSection.findOneAndUpdate({ _id: collection.filter._id }, collection.update);
+        return await CourseSection.findOneAndUpdate({ _id: collection.filter._id }, {...collection.update});
     }
 }
 
 const deleteCourseSection: ILogic = {
     name: "deleteCourseSection",
     callback: async function (collection: { filter: { _id: string } }) {
-        return await CourseSection.findByIdAndRemove(collection.filter._id);
+        return (await CourseSection.deleteOne({_id:collection.filter._id}));
     }
 }
 

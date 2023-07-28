@@ -7,6 +7,7 @@
 */
 
 import mongoose from "mongoose";
+import CourseSection from "./course-section";
 const CourseSchema = new mongoose.Schema({
   
   tags :[{ type: mongoose.Schema.Types.ObjectId,ref: 'Tag' }],
@@ -20,6 +21,11 @@ const CourseSchema = new mongoose.Schema({
 });
 
 
+CourseSchema.pre('deleteOne', function(next:any) {
+  //@ts-ignore
+  CourseSection.deleteMany().where('_id').in(this.content).exec();
+  next();
+});
 // TODO ::  Add cascade deletion to services
 
 const Course = mongoose.model('Course', CourseSchema);

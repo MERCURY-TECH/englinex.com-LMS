@@ -37,11 +37,11 @@ export default class API {
     const adminAuthz  = new AuthorizationManager(this.routeStructure, this.database_operations)
     service_routes.forEach(async (element:any) => {
       if(element.actionScope === routeSecurityLevel.protected){
-        return this.app[element.method](element.route,authorizeUserMiddleWare,element.middleware?element.middleware:(req:any,res:any,next:any)=>{next()},element.callback);
+        return this.app[element.method](element.route,authorizeUserMiddleWare,element.middleware?element.middleware:[],element.callback);
       }
       if(element.actionScope === routeSecurityLevel.forbiden){
         return this.app[element.method](element.route,adminAuthz.validateAction(element.actionName as string),
-        element.middleware?element.middleware:(req:any,res:any,next:any)=>{next()},element.callback);
+        element.middleware?element.middleware:[],element.callback);
       }
       this.app[element.method](element.route,element.middleware?element.middleware:(req:any,res:any,next:any)=>{next()},element.callback);
     });
