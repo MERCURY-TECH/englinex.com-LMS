@@ -39,7 +39,7 @@ let serviceRouteDocumentation = (repository: any) => {
                 actionScope: routeSecurityLevel.public,
                 method: httpverbs.get,
                 routeDescription: 'Provides the documentation for the service routes and possible service action names as well as their degree of protection or privileges needed to access them.',
-                route: '/',
+                route: '/docs',
                 callback: async function (req: any, res: any, next: any) {
                     let message: any = { success: true };
                     try {

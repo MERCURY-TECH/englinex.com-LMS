@@ -24,10 +24,11 @@ export default class server{
       configDotenv({path: '../.env'})
       const app = express()
       app.use('/images',express.static(path.join(__dirname, "../../images")));
+      app.use('/',express.static(path.join(__dirname, '../../dist')));
       app.use(morgan('dev'))
       app.use(bodyParser.json())
       app.use(bodyParser.urlencoded({ extended: true }))
-      app.use(helmet())
+      app.use(helmet());
       app.use(cors());
       app.use((err:any, req:any, res:any, next:any) => {
         reject(new Error('Something went wrong!, err:' + err))
