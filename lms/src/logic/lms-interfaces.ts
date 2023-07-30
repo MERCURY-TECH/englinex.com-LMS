@@ -64,6 +64,11 @@ export interface serviceRoutes {
   baseUrl: String,
   actions: Array<serviceAction>
 }
+export enum AccountActivityType {
+  "accountActivation"="activation",
+  "passwordRecovery" = "recovery"
+}
+
 
 export enum AccountType{
   "student"="student",
@@ -143,6 +148,19 @@ export interface ISubscription{
   isExpired:boolean
 }
 
+export interface ITransaction{
+  _id?: any;
+  student:string,
+  description:string,
+  currency:string,
+  channels:string,
+  status:string,
+  providerTransactionResponse:string,
+  bundle:string,
+  callbackLink:string,
+  amount:number;
+}
+
 export interface ICourseMaterial {
   sectionId:string,
   materialType:CourseMaterialType,
@@ -191,4 +209,23 @@ export interface IUser {
   LearningGoals :LearningGoals
 }
 
+export interface IAccountActivity {
+  user: string
+  isExpired ?:boolean,
+  comfirmed ?:boolean,
+  activityType  ?: string,
+  link ?:string,
+  expireAt?:Date
+}
 
+export interface INodemailerConfig {
+  host: string,
+  port: number,
+  service:string,
+  secure: boolean,
+  auth: {
+    user: string,
+    pass: string
+  }
+}
+export interface INodemailerMessage {from:string, to:string, subject: string,  text?: string,  amp?: string, html?: string}

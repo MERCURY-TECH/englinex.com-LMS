@@ -15,7 +15,7 @@ import httpverbs from '../HTTPVERB';
 
 
 
-export default function(respository:any){
+export default function(repository:any){
     return [
         {
             actionName: 'register-or-signup-users',
@@ -26,8 +26,9 @@ export default function(respository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let registerUsers = await respository.registerUsers(req.body as Array<IUser>)
-                    message.message = { users:registerUsers };
+                    let registerUser = await repository.registerUsers(req.body as IUser)
+                    await repository.initiateAccountActivation({user:registerUser._id})
+                    message.message = { users:registerUser };
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -44,7 +45,7 @@ export default function(respository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let lecturer = await respository.createTeacherAccount(req.body as IUser)
+                    let lecturer = await repository.createTeacherAccount(req.body as IUser)
                     message.message = { lecturer };
                 } catch (error: any) {
                     message.errorMessage = error.message;
@@ -63,7 +64,7 @@ export default function(respository:any){
                 let message: any = { success: true };
                 try {
                     let accountType = req.params.accountType;
-                    let users = await respository.getAllUsersPerAccountType(accountType);
+                    let users = await repository.getAllUsersPerAccountType(accountType);
                     message.message = {} as any;
                     message.message[accountType+'s'] = users
                 } catch (error: any) {
@@ -105,7 +106,7 @@ export default function(respository:any){
                 let message: any = { success: true };
                 try {
                     let userid = req.authenticatedUser._doc._id as string;
-                    let user=await respository.findUserByID(userid);
+                    let user=await repository.findUserByID(userid);
                     if(user){
                         if(user.profilePicture) {
                             //unlink image if exist
@@ -125,18 +126,16 @@ export default function(respository:any){
             }
         },
         {
-            actionName: 'password-recovery',
+            actionName: 'initiate-password-recovery',
             actionScope: routeSecurityLevel.public,
             method: httpverbs.patch,
-            routeDescription: 'Route used by all system users to recover any lost password',
-            route: '/account/verify',
+            routeDescription: 'Route used by all system users to initiate the recovery of lost password',
+            route: '/account/initiate/recovery/:username',
             callback: async function (req: any, res: any) {
                 let message: any = { success: true };
                 try {
-                    /**
-                     * TODO 1 :: verify the number or email on the user account
-                     * TODO 2 :: send number or email to respective accounts
-                     */
+                    let user = req.params.username;
+                    message.message = { recoverStated: await repository.initiateAccountPasswordRecoveryByUserName(user) };
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     console.log(error.message)
@@ -146,20 +145,35 @@ export default function(respository:any){
             }
         },
         {
-            actionName: 'activate-users',
+            actionName: 'comfirm-password-recovery',
             actionScope: routeSecurityLevel.public,
             method: httpverbs.patch,
-            routeDescription: 'Route to activate a user: When a user is created, his is initially not activated because he has to provide his account comfirmation information, so this routes gets the comfirmation data as password inorder to activate the user. ',
-            route: '/register/activate',
+            routeDescription: 'Route used by all system users to initiate the recovery of lost password',
+            route: '/account/comfirm/recovery/:userId/:uuid',
             callback: async function (req: any, res: any) {
                 let message: any = { success: true };
                 try {
-                    // if (!req.body.username) throw new Error('Please provide username');
-                    // if (!req.body.biomertricString) throw new Error('Please provide biometric string');
-                    // let activateUser = await respository.activateUser();
-                    // let user = await activateUser({ biometricString: await encrytpUserPassword(req.body.biomertricString.trim()), username: req.body.username.trim() });
-                    // let token = generateToken({ ...user }, process.env.Token_sercret, 60 * 60 * 60 * 24);
-                    // message.message = { user: { ...user._doc, isActive: true }, token };
+                    let user = req.params.userId;
+                    let uuid = req.params.uuid;
+                    message.message = { ...(await repository.comfirmAccountPasswordRecovery(user,uuid, req.body.password) )};
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    console.log(error.message)
+                    message.success = false;
+                }
+                message.success ? res.status(200).json(message) : res.status(500).json(message);
+            }
+        },
+        {
+            actionName: 'comfirm-account-activation',
+            actionScope: routeSecurityLevel.public,
+            method: httpverbs.patch,
+            routeDescription: 'Route used by user to comfirm the activation of his account. ',
+            route: '/account/comfirm/activate/:userId/:uuid',
+            callback: async function (req: any, res: any) {
+                let message: any = { success: true };
+                try {
+                    message.message = { activation: await repository.comfirmAccountActivation(req.params.userId, req.params.uuid) };
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     console.log(error.message)
@@ -177,7 +191,7 @@ export default function(respository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let allUsers=await respository.getAllUsers();
+                    let allUsers=await repository.getAllUsers();
                     message.message = { users:allUsers };
                 } catch (error: any) {
                     message.errorMessage = error.message;

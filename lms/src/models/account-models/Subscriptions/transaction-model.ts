@@ -9,15 +9,18 @@
 import mongoose from "mongoose";
 
 
+
 const TransactionSchema = new mongoose.Schema({
-    username: {type: String, required:[true, 'you must provide the Transaction title ID']},
+    student: { type: mongoose.Schema.Types.ObjectId,ref: 'User', required: [true, 'please provide the students ID ']},
     amount : {type:Number, default:0, required:[true,'Please provide the transaction amount in FCFA']},
-    paymentMode : {type:String, required:[true,'please provide the Transaction payment mode']},
-    payersName : {type:String, required:[true,'please provide the Transaction payment name']},
-    transactionItem:{type:String, required:[true,'please provide the Transaction associated line item']},
-    paymentStatus: {type:String, required:[true,'please provide the Transaction payment status']},
+    description:String,
+    currency:{type:String, default:'XAF'},
+    channels : {type:String, required:[true,'please provide the Transaction payment mode/ channel']},
+    payersName : {type:String},
+    bundle: {type: mongoose.Schema.Types.ObjectId,ref: 'Bundle', require:[true, 'you must provide the bundle ID']},
+    status: {type:String, enum:['pending', 'failed', 'success'], default:'pending', required:[true,'please provide the Transaction payment status']},
     callbackLink:{type:String},
-    provideTransactionResponse:{type:String, required:[true, 'Please provide the transcation details']}
+    providerTransactionResponse:{type:String}
 });
 
 TransactionSchema.pre('save',function(next:any){

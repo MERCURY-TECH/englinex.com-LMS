@@ -11,6 +11,7 @@
 import { ILogic } from "./IOperations";
 import bundleOperations from "./bundle-operations/bundle-operations";
 import subscriptionOperations from "./bundle-operations/subscription-operations";
+import transactionOperations from "./bundle-operations/transaction-operations";
 import classSchedulingOperations from "./class/class-scheduling-operations";
 import colors from "./course-operations/colors";
 import course from "./course-operations/course";
@@ -19,6 +20,7 @@ import courseMaterial from "./course-operations/course-material";
 import courseSection from "./course-operations/course-section";
 import tags from "./course-operations/tags";
 import permission_operations from "./permission-operations/permission_operations";
+import AccountActivityOperations from "./user-operations/AccountActivity-operations";
 import userManagementOperations from "./user-operations/user-management-operations";
 
 /**
@@ -38,6 +40,8 @@ const Operations:Array<ILogic> = [
     ...colors,
     ...bundleOperations,
     ...subscriptionOperations,
-    ...classSchedulingOperations
+    ...classSchedulingOperations,
+    ...AccountActivityOperations,
+    ...transactionOperations
 ]
 export default Operations;

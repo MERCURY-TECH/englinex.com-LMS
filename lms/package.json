@@ -15,6 +15,7 @@
   "scripts": {
     "generate-docs": "jsdoc -c ./jsdoc-config.json",
     "build-run": "set NODE_ENV=production && npm run compile && cd build && pm2 start --name LMS index.js -f --watch",
+    "buildcp-ui": "cd .. && cd ui && mkdir test",
     "compile": "tsc",
     "start:tsc": "npx ts-node ./src",
     "start:prod": "node ./build/index",
@@ -52,11 +53,13 @@
     "mongoose": "^7.0.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.4",
     "nodemon": "^2.0.20",
     "pm2": "^5.3.0",
     "socket.io": "^4.6.1",
     "supertest": "^6.3.3",
-    "ts-jest": "^29.1.0"
+    "ts-jest": "^29.1.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.1",

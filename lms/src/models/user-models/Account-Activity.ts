@@ -7,28 +7,17 @@
 */
 
 import mongoose from "mongoose";
-import { AccountType } from "../../logic/lms-interfaces";
+import { v4 as uuidv4 } from 'uuid';
+import { AccountActivityType } from "../../logic/lms-interfaces";
 
-enum AccountActivityType {
-    "accountActivation"="activation",
-    "passwordRecovery" = "recovery"
-}
 
 function makePhoneticFieldsRequired(){
     // @ts-ignore
     return this.materialType == CourseMaterialType.phonetic
 }
 
-/**
- * sound: {
-        type: String,
-        required : makePhoneticFieldsRequired
-    },
-    englishText:  {
-        type: String,
-        required : makePhoneticFieldsRequired
-    },
- */
+
+
 
 let AccountActivitySchema = new mongoose.Schema({
     user: {
@@ -36,21 +25,13 @@ let AccountActivitySchema = new mongoose.Schema({
         type: String,
     },
     activityType : {type:String, enum:[...Object.values(AccountActivityType)]},
-    activity:{
-        activation:{
-           
-            // firt check if the account is activated or not
-            // activation link
-            // auto delete 
-        },
-        passwordRecovery:{
-            isExpired:{type:Boolean, default:false, required:true}
-            // recovery link
-            // auto delete :: expires duration (5  mins)
-            // recoveryURL  = timeStamp, userID, UUID
-        }
-    }
+    //@ts-ignore
+    uuid:{type:String, default:function (){return uuidv4()}},
+    expireAt:Date
+    
 });
+
+AccountActivitySchema.index( { "expireAt": 1 }, { expireAfterSeconds: 0 } );
 
 const AccountActivity = mongoose.model('AccountActivity', AccountActivitySchema);
 export default AccountActivity;

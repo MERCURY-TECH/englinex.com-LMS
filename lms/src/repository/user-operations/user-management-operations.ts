@@ -14,7 +14,7 @@ import { ILogic } from "../IOperations";
 const registerUsers:ILogic = {
     name: "registerUsers",
     callback: async function (collection: Array<IUser>) {
-       return await User.insertMany(collection)
+       return await new User(collection).save()
     }
 }
 

@@ -23,6 +23,7 @@ import courseSectionsRoutes from './course-management/course-sections-routes';
 import tagRoutes from './course-management/tag-routes';
 import permmisionManagementRoutes from './user-routes/permmision-management-routes';
 import userAccountManagementRoutes from './user-routes/user-account-management-routes';
+import transactionRoutes from './bundle-and-subscription-management/transaction-routes';
 
 
 
@@ -61,7 +62,8 @@ let serviceRouteDocumentation = (repository: any) => {
           ...bundelRoutes(repository),
           ...subscriptionRoutes(repository),
           ...classSchedulingRoutes(repository),
-          ...liveClassRoutes(repository)
+          ...liveClassRoutes(repository),
+          ...transactionRoutes(repository)
         ]
     } as serviceRoutes
 }
@@ -73,5 +75,11 @@ export let canonicalServiceRoutes = (repository: any): serviceRoutes => {
 export default function (repository: any) {
     return canonicalServiceRoutes(repository)
 }
-
+/**
+ * router.get('/signature', (req, res)=>{
+    const mongoose = require('mongoose');
+    let signatureID = new mongoose.Types.ObjectId();
+    res.status(200).json({_id:signatureID, status: "success"})
+})
+ */
 
