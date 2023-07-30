@@ -34,8 +34,8 @@ export default class DataBase {
    * @example 
    */
   public getMongoURL(options: any) {
-    // const url = options.servers.reduce((prev: any, cur: any) => prev + cur + ',', 'mongodb+srv://');
-    const url = options.servers.reduce((prev: any, cur: any) => prev + cur + ',', 'mongodb://');
+     const url = options.servers.reduce((prev: any, cur: any) => prev + cur + ',', 'mongodb+srv://');
+   // const url = options.servers.reduce((prev: any, cur: any) => prev + cur + ',', 'mongodb://');
     return `${url.substr(0, url.length - 1)}/${options.db}`;
   }
 

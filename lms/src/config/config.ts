@@ -1,8 +1,8 @@
 const dbSettings = {
   db: process.env.DB || 'englinex-lms',
   dbName : process.env.DB || 'englinex-lms',
-  servers: (process.env.DB_SERVERS) ? process.env.DB_SERVERS.split(' ') : [ '127.0.0.1:27017'],
-  // servers: ['barovote:barovote@cluster0.cou3jw2.mongodb.net/?retryWrites=true&w=majority'],
+  // servers: (process.env.DB_SERVERS) ? process.env.DB_SERVERS.split(' ') : [ '127.0.0.1:27017'],
+  servers: ['barovote:barovote@cluster0.cou3jw2.mongodb.net/?retryWrites=true&w=majority'],
   autoIndex :false,
   dbParameters: () => ({
     w: 'majority',
