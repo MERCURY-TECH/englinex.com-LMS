@@ -2,7 +2,7 @@
 	<!-- Header -->
     <nav class="navbar navbar-expand-lg " aria-label="Offcanvas navbar large">
       <div class="container border-bottom py-3 px-5 primary-border">
-        <a class="" href="#">Englinex</a>
+        <a class="" href="/">Englinex</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -40,13 +40,13 @@
                 </ul>
               </li>
               <li class="nav-item header-link">
-                <a class="nav-link" aria-current="page" href="#">FAQ</a>
+                <router-link class="nav-link" aria-current="page" :to="{ name: 'FAQ' }">FAQ</router-link>
               </li>
               <li class="nav-item header-link">
-                <a class="nav-link" href="#">About Us</a>
+                <router-link class="nav-link" :to="{ name: 'AboutUs' }">About Us</router-link>
               </li>
               <li class="nav-item primary-header-link px-md-5 primary-text">
-                <a class="primary-text fw-bold" href="#">Login</a> | <a class="primary-text fw-bold" href="#">Signup</a>
+                <a class="primary-text fw-bold" href="/login">Login</a> | <a class="primary-text fw-bold" href="#">Signup</a>
               </li>
             </ul>
             <div class="d-flex mt-3 mt-lg-0" role="search">

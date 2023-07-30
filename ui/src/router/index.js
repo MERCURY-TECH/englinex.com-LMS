@@ -10,12 +10,30 @@ import DashboardEditCourseSection from '../views/DashboardEditCourseSection'
 import DashboardCreateSectionMaterial from '../views/DashboardCreateSectionMaterial'
 import DashboardEditSectionMaterial from '../views/DashboardEditSectionMaterial'
 import LoginForm from '../views/LoginForm'
+import HomePage from '../views/HomePage'
+import AboutPage from '../views/AboutPage'
+import FAQPage from '../views/FAQPage'
 
 const routes = [
     {
         path: '/login',
         name: 'Login',
         component: LoginForm
+    },
+    {
+        path: '/',
+        name: 'HomeView',
+        component: HomePage
+    },
+    {
+        path: '/about-us',
+        name: 'AboutUs',
+        component: AboutPage
+    },
+    {
+        path: '/FAQ',
+        name: 'FAQ',
+        component: FAQPage
     },
     {
         path: '/dashboard/',
