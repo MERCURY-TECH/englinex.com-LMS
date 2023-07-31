@@ -10,18 +10,26 @@ import DashboardEditCourseSection from '../views/DashboardEditCourseSection'
 import DashboardCreateSectionMaterial from '../views/DashboardCreateSectionMaterial'
 import DashboardEditSectionMaterial from '../views/DashboardEditSectionMaterial'
 import LoginForm from '../views/LoginForm'
+import SignupCheckout from '../views/SignupCheckout'
 import HomePage from '../views/HomePage'
 import AboutPage from '../views/AboutPage'
 import FAQPage from '../views/FAQPage'
+import CourseList from '../views/CourseList'
+import CourseOverview from '../views/CourseOverview'
 
 const routes = [
     {
-        path: '/login',
-        name: 'Login',
+        path: '/w-login',
+        name: 'LoginForm',
         component: LoginForm
     },
     {
-        path: '/',
+        path: '/w-signup',
+        name: 'SignupForm',
+        component: SignupCheckout
+    },
+    {
+        path: '/welcome',
         name: 'HomeView',
         component: HomePage
     },
@@ -34,6 +42,16 @@ const routes = [
         path: '/FAQ',
         name: 'FAQ',
         component: FAQPage
+    },
+    {
+        path: '/all-materials',
+        name: 'MaterialsList',
+        component: CourseList
+    },
+    {
+        path: '/material',
+        name: 'MaterialOverview',
+        component: CourseOverview
     },
     {
         path: '/dashboard/',
@@ -75,17 +93,17 @@ const routes = [
         component: DashboardCreateCourseSection
     },
     {
-        path: '/dashboard/edit-course-section',
+        path: '/dashboard/edit-course-section/:sectionId',
         name: 'EditCourseSection',
         component: DashboardEditCourseSection
     },
     {
-        path: '/dashoard/create-section-material',
+        path: '/dashboard/create-section-material/:sectionId',
         name: 'CreateSectionMaterial',
         component: DashboardCreateSectionMaterial
     },
     {
-        path: '/dashoard/edit-section-material',
+        path: '/dashboard/edit-section-material/:materialId',
         name: 'EditSectionMaterial',
         component: DashboardEditSectionMaterial
     }
