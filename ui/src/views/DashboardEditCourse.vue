@@ -127,7 +127,7 @@
                         <div :id="'panelsStayOpen-collapseOne' + section._id" class="accordion-collapse collapse">
                           <div class="accordion-body">
                             <p class="h6">
-                              <router-link :to="{ name: 'EditCourseSection' }" class="primary-text ps-2 pe-1"><i class="bi-pencil-square"></i></router-link>
+                              <router-link :to="{ name: 'EditCourseSection', params: { sectionId: section._id } }" class="primary-text ps-2 pe-1"><i class="bi-pencil-square"></i></router-link>
                               <a @click="deleteSection(section._id)" style="cursor: pointer;" class="text-danger ps-1"><i class="bi-trash-fill"></i></a>
                             </p>
 
@@ -142,7 +142,7 @@
                                 <div :id="'panelsStayChild-collapseOne' + material._id" class="accordion-collapse collapse">
                                   <div class="accordion-body">
                                    <p class="h6">
-                                    <router-link :to="{ name: 'EditSectionMaterial' }" class="primary-text ps-2 pe-1"><i class="bi-pencil-square"></i></router-link>
+                                    <router-link :to="{ name: 'EditSectionMaterial', params: { materialId: material._id } }" class="primary-text ps-2 pe-1"><i class="bi-pencil-square"></i></router-link>
                                     <a @click="deleteMaterial(material._id)" style="cursor: pointer;" class="text-danger ps-1"><i class="bi-trash-fill"></i></a>
                                   </p>
                                   </div>
@@ -229,14 +229,13 @@ export default {
     },
 
     editCourse() {
-      const cd = new FormData();
-      cd.append('coverimage', this.course.coverimage);
-      cd.append('title', this.course.title);
-      cd.append('description', this.course.description);
-      cd.append('isPublic', this.course.isPublic);
-      //cd.append('tags', this.tags);
-
-      axios.patch('edit-courses/'+this.courseId, cd)
+      
+      axios.patch('edit-courses/'+this.courseId, {
+        coverimage: this.course.coverimage,
+        title: this.course.title,
+        description: this.course.description,
+        isPublic: this.course.isPublic
+      })
       .then(response => {
 
         if (this.image !== '') {
@@ -337,6 +336,19 @@ export default {
       this.course.content = content;
       console.log(this.course.content)
       alert('Your file has been uploaded');
+    },
+
+    deleteMaterial(e) {
+      if (window.confirm('Are you sure you want to delete this section material?')) {
+        axios.delete('delete/material/'+e)
+        .then(() => {
+          alert('Section material has been deleted');
+          this.$forceUpdate();
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
     },
   }
 }

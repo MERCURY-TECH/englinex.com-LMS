@@ -97,8 +97,8 @@
                           <div class="col-auto text-center">
                             <p class="pt-3">
                               <span class="rounded bg-body mb-3 px-2">
-                                <router-link :to="{ name: 'EditSectionMaterial' }" class="primary-text ps-1"><i class="bi-pencil-square"></i></router-link>
-                                <a href="" class="text-danger ps-1"><i class="bi-trash-fill"></i></a>
+                                <router-link :to="{ name: 'EditSectionMaterial', params: { materialId: material._id } }" class="primary-text ps-1"><i class="bi-pencil-square"></i></router-link>
+                                <a @click="deleteMaterial(material._id)" class="text-danger ps-1"><i class="bi-trash-fill"></i></a>
                               </span>
                               <span class="ps-3 primary-text"><i class="bi-chevron-right"></i></span>
                             </p>
@@ -197,11 +197,14 @@
               this.contentLevel = response.data.message.sections.contentLevel
               this.coverimage = response.data.message.sections.coverimage
               this.material = response.data.message.sections.material
-              if (response.data.message.sections.coverimage.length > 0) {
+              if (this.coverimage.length > 0) {
                 this.imagePath = 'http://185.216.26.155:3000'+response.data.message.sections.coverimage;
               }
-              this.fetchCourse();
+              
               console.log(response.data.message.sections)
+            })
+            .then(() => {
+              this.fetchCourse();
             })
             .catch(error => {
               console.log(error)
@@ -211,7 +214,7 @@
             axios.get('get-course/'+this.courseId)
             .then(response => {
               this.course = response.data.message.courses;
-              console.log(this.course)
+              console.log('Course: '+this.course)
             })
             .catch(error => {
               console.log(error)
@@ -242,6 +245,18 @@
             this.imagePath = URL.createObjectURL(this.image);
             this.coverimage = this.image.name;
             alert('Image selected: '+ this.coverimage);
+          },
+          deleteMaterial(e) {
+            if (window.confirm('Are you sure you want to delete this section material?')) {
+              axios.delete('delete/material/'+e)
+              .then(() => {
+                alert('Section material has been deleted');
+                this.$forceUpdate();
+              })
+              .catch(error => {
+                console.log(error)
+              })
+            }
           },
           editSection() {
             const arr = [];

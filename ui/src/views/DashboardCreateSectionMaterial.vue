@@ -21,11 +21,11 @@
                 <i class="bi-upload"></i> Upload via CSV
               </button>
             </div>
-            <router-link
+            <!-- <router-link
               :to="{ name: 'EditCourseSection' }"
               class="h3 text-danger ms-3"
               ><i class="bi-x-circle"></i
-            ></router-link>
+            ></router-link> -->
           </div>
         </div>
         <hr />
@@ -119,7 +119,7 @@ export default {
       .then(response => {
         alert('Section Material Created Successfully')
         console.log(response)
-        this.$router.push('/dashboard/edit-course-section/'+this.sectionId)
+        this.$router.push('/dashboard/edit-course-section/'+response.data.message.courseMaterial[0]._id)
       })
       .catch(error => {
         console.log(error)
