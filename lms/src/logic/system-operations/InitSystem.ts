@@ -13,7 +13,7 @@ export default class InitSystem{
             let rootUser = await operations.findUserByField({username:'root'});
             let rootRole = await operations.getRoleBySID('root');
             if(!rootUser){
-                let rootUser  = (await operations.registerUsers([{
+                rootUser  = (await operations.registerUsers({
                     accountType: 'admin',
                     firstname:process.env.ROOT_FIRST_NAME || "root",
                     lastname:process.env.ROOT_LAST_NAME || "root",
@@ -23,7 +23,7 @@ export default class InitSystem{
                     isActive:true,
                     isSuspended:false,
                     isRoot:true,
-                }]))[0];
+                }));
             }
             await operations.assignRoleToUser({userID:rootUser._id, Role:rootRole._id})
         } catch (error:any) {
