@@ -1,6 +1,6 @@
 <template>
     <header class="navbar sticky-top bg-body flex-md-nowrap p-0 shadow-sm">
-        <router-link class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 bg-body" to="{ name: 'DashboardHome' }">Englinex</router-link>
+        <router-link class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 bg-body" :to="{ name: 'DashboardHome' }">Englinex</router-link>
         <form class="w-50 d-md-block d-none">
             <input class="form-control rounded-0 border-0" style="cursor: pointer; transition: .2s;" id="searchbar" type="text" placeholder="Search..." aria-label="Search">
         </form>
