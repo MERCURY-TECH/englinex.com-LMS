@@ -8,7 +8,12 @@
             <form method="POST" class="text-center p-3" @submit.prevent="handleSubmit">
               <input type="text" v-model="user.username" placeholder="Username" class="form-control mb-3 p-2 px-3" />
               <input type="password" v-model="user.password" placeholder="Password" class="form-control mb-3 p-2 px-3" />
-              <button class="btn primary-button-outline form-control">Connect</button>
+              <button class="btn primary-button-outline form-control">
+                Connect
+                <div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </button>
             </form>
             <p class="text-muted px-3">
               <small>Forgot your password?<br>
@@ -48,24 +53,30 @@
         user: {
           username: '',
           password: ''
-        }
+        },
+        loader: false
       }
     },
     methods: {
       
       handleSubmit() {
-        // const fd = new FormData();
-        // fd.append('username', this.username);
-        // fd.append('pwd', this.pwd);
+        this.loader = true
+        const fd = new FormData();
+        fd.append('username', this.user.username);
+        fd.append('pwd', this.user.password);
 
-        axios.post('login', this.user)
+        axios.post('login', fd)
         .then(response => {
           localStorage.setItem('token', response.data.token);
           alert('Logged in successfully');
+          console.log(response)
+          this.loader = false
           this.$router.push('/dashboard/');
         })
         .catch(error => {
-          alert('Login Error: ' + error.response.data.errorMessage)
+          alert('Login Error: ' + error.message)
+          this.loader = false
+          console.log(error.message)
         })
       }
 
