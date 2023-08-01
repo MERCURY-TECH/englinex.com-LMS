@@ -16,20 +16,31 @@ import AboutPage from '../views/AboutPage'
 import FAQPage from '../views/FAQPage'
 import CourseList from '../views/CourseList'
 import CourseOverview from '../views/CourseOverview'
+import Signup from '@/views/Signup'
+import PlatformBundles from '@/views/PlatformBundles'
+import PlatformTransaction from "@/views/PlatformTransactions"
+import PlatformTeachers from '@/views/PlatformTeachers'
+import UserDasboard from '@/views/UserDashboard'
+
 
 const routes = [
     {
-        path: '/w-login',
+        path: '/login',
         name: 'LoginForm',
         component: LoginForm
     },
     {
-        path: '/w-signup',
+        path: '/signup',
+        name: 'Signup',
+        component: Signup
+    },
+    {
+        path: '/checkout',
         name: 'SignupForm',
         component: SignupCheckout
     },
     {
-        path: '/welcome',
+        path: '/',
         name: 'HomeView',
         component: HomePage
     },
@@ -106,7 +117,27 @@ const routes = [
         path: '/dashboard/edit-section-material/:materialId',
         name: 'EditSectionMaterial',
         component: DashboardEditSectionMaterial
-    }
+    },
+    {
+        path: '/dashboard/platformbundles',
+        name: 'PlatformBundles',
+        component: PlatformBundles
+    },
+    {
+        path: '/dashboard/platformtransactions',
+        name: 'PlatformTransaction',
+        component: PlatformTransaction
+    },
+    {
+        path: '/dashboard/platformteachers',
+        name: 'PlatformTeachers',
+        component: PlatformTeachers
+    },
+    {
+        path: '/userdashboard',
+        name: 'UserDasboard',
+        component: UserDasboard
+    },
 
 ]
 
