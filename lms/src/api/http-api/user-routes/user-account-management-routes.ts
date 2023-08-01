@@ -79,7 +79,6 @@ export default function(repository:any){
             actionName: 'login',
             actionScope: routeSecurityLevel.public,
             routeDescription: 'Route used to login user. User has to provide his user name and his password data for system to authenticate him. This is public route so it can accessed publicly by anyone.',
-            middleware:[subscriptionWorker],
             method: httpverbs.post,
             route: '/login',
             callback: async function (req: any, res: any, next: any) {
