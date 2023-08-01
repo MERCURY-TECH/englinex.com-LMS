@@ -16,9 +16,11 @@ const createCourseSectionMaterial: ILogic = {
     callback: async function (collection: { sectionId: string, materials: Array<ICourseMaterial> }) {
         try {
             let courseSection = await CourseSection.findOne({ _id: collection.sectionId })
-            let courseSectionMaterial;
-            if (courseSection) {
-                courseSectionMaterial = await CourseSectionMaterial.insertMany(collection.materials)
+            let courseSectionMaterial:any =[];
+            if(courseSection){
+                if (courseSection) { courseSectionMaterial = await CourseSectionMaterial.insertMany(collection.materials) }
+                courseSection.material = [...(await CourseSectionMaterial.find({sectionId:collection.sectionId}).select(['_id']))] as any
+                await courseSection.save()
             }
             return courseSectionMaterial;
         } catch (error) {
@@ -54,7 +56,17 @@ const updateCourseSectionMaterial: ILogic = {
 const deleteCourseSectionMaterial: ILogic = {
     name: "deleteCourseSectionMaterial",
     callback: async function (collection: { filter: { _id: string } }) {
-        return (await CourseSectionMaterial.deleteOne({_id:collection.filter._id}));
+        let material = await getMaterialById.callback(collection.filter._id);
+        if(!material){throw new Error('material does not exist')}
+        let relatedSection = material.sectionId.toString();
+        let materialId = material._id.toString();
+        let section =await  CourseSection.findById(relatedSection);
+        if(section){
+            let materialsOfSection:Array<string> =  JSON.parse(JSON.stringify(section.material));
+            section.material = materialsOfSection.filter(v=>v != materialId) as any
+            section.save();
+        }
+        return (await material.deleteOne());
     }
 }
 

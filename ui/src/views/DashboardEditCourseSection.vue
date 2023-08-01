@@ -216,7 +216,6 @@
               console.log(error)
             })
           },
-
           fetchCourse() {
             axios.get('get-course/'+this.courseId)
             .then(response => {
@@ -227,7 +226,6 @@
               console.log(error)
             })
           },
-
           fetchContentLevels() {
             axios.get('get-all-course-content-levels')
             .then(response => {
@@ -238,7 +236,6 @@
               console.log(error)
             })
           },
-
           fetchMaterials() {
             axios.get('section-materials/'+this.sectionId)
             .then(response => {
@@ -249,7 +246,6 @@
               console.log(error)
             })
           },
-
           onImageSelected(event) {
             this.image = event.target.files[0];
             this.imagePath = URL.createObjectURL(this.image);

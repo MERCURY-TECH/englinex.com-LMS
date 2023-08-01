@@ -1,4 +1,6 @@
 */node_modules/*
+*/dist/*
+*/build/*
 lms/package-lock.json
 package-lock.json
 lms/node_modules/jsdoc/templates/default/static/fonts/OpenSans-Bold-webfont.svg

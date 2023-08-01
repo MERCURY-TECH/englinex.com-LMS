@@ -209,7 +209,6 @@ export default {
         console.log(error)
       })
     },
-
     fetchContentLevels() {
       axios.get('get-all-course-content-levels')
       .then(response => {
@@ -220,7 +219,6 @@ export default {
         console.log(error)
       })
     },
-
     onImageSelected(event) {
       this.image = event.target.files[0];
       this.imagePath = URL.createObjectURL(this.image);
