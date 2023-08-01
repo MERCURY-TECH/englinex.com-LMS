@@ -20,7 +20,11 @@
                       </div>
                       <div class="col-auto d-flex">
                         <p>
-                          <button type="submit" class="btn btn-sm primary-button-outline px-5">Save</button>
+                          <button type="submit" class="btn btn-sm primary-button-outline px-5">Update 
+                            <div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </button>
                           <router-link :to="'/dashboard/get-course/'+courseId" class="h3 text-danger ms-3 pt-3 mt-2"><i class="bi-x-circle"></i></router-link>
                         </p>
                       </div>
@@ -59,13 +63,13 @@
                               <div class="drag-zone p-2 rounded-4 text-center" style="background-color: #F7EBFF; border: 2px dashed #ccc; opacity: 0.8;">
                                 <p class="h1 primary-text"><i class="bi-image"></i></p>
                                 <p style="font-size: .85em">
-                                  <small>Drag your photo here to start uploading</small>
+                                  <small>Browse files and start uploading</small>
                                 </p>
-                                <div class="row">
+                                <!-- <div class="row">
                                   <div class="col-5"><hr></div>
                                   <div class="col-2 p-0"><p class="h4">OR</p></div>
                                   <div class="col-5"><hr></div>
-                                </div>
+                                </div> -->
                                 <label class="btn btn-sm primary-button w-100 rounded-2" for="inputImage" style="opacity: 1;">
                                   Browse files
                                   <input type="file" @change="onImageSelected" class="visually-hidden" accept=".jpg, .jpeg, .png" id="inputImage" />
@@ -97,8 +101,8 @@
                           <div class="col-auto text-center">
                             <p class="pt-3">
                               <span class="rounded bg-body mb-3 px-2">
-                                <router-link :to="{ name: 'EditSectionMaterial' }" class="primary-text ps-1"><i class="bi-pencil-square"></i></router-link>
-                                <a href="" class="text-danger ps-1"><i class="bi-trash-fill"></i></a>
+                                <router-link :to="{ name: 'EditSectionMaterial', params: { materialId: material._id } }" class="primary-text ps-1"><i class="bi-pencil-square"></i></router-link>
+                                <a @click="deleteMaterial(material._id)" class="text-danger ps-1"><i class="bi-trash-fill"></i></a>
                               </span>
                               <span class="ps-3 primary-text"><i class="bi-chevron-right"></i></span>
                             </p>
@@ -185,8 +189,10 @@
             image: null,
             imagePath: '',
             coverImage: '',
+            loader: false
           }
         },
+
         methods: {
           fetchSection() {
             axios.get('section/'+this.sectionId)
@@ -197,11 +203,14 @@
               this.contentLevel = response.data.message.sections.contentLevel
               this.coverimage = response.data.message.sections.coverimage
               this.material = response.data.message.sections.material
-              if (response.data.message.sections.coverimage.length > 0) {
+              if (this.coverimage.length > 0) {
                 this.imagePath = 'http://185.216.26.155:3000'+response.data.message.sections.coverimage;
               }
-              this.fetchCourse();
+              
               console.log(response.data.message.sections)
+            })
+            .then(() => {
+              this.fetchCourse();
             })
             .catch(error => {
               console.log(error)
@@ -211,7 +220,7 @@
             axios.get('get-course/'+this.courseId)
             .then(response => {
               this.course = response.data.message.courses;
-              console.log(this.course)
+              console.log('Course: '+this.course)
             })
             .catch(error => {
               console.log(error)
@@ -243,7 +252,22 @@
             this.coverimage = this.image.name;
             alert('Image selected: '+ this.coverimage);
           },
+
+          deleteMaterial(e) {
+            if (window.confirm('Are you sure you want to delete this section material?')) {
+              axios.delete('delete/material/'+e)
+              .then(() => {
+                alert('Section material has been deleted');
+                this.fetchMaterials();
+              })
+              .catch(error => {
+                console.log(error)
+              })
+            }
+          },
+
           editSection() {
+            this.loader = true
             const arr = [];
             arr.push({
               parent: null,
@@ -262,13 +286,17 @@
                 axios.patch('/section/cover-image/'+this.sectionId, fd)
                 .then(() => {
                   alert('Course Section Successfully Updated')
-                  this.$router.push('/dashboard/get-course/'+this.courseId);
+                  this.loader = false
+                  this.fetchMaterials()
                 })
                 .catch(error => {
+                  this.loader = false
+                  alert('An error occured. Please try again later')
                   console.log(error)
                 })
               } else {
                 alert('Course Section Successfully Updated')
+                this.loader = false
                 this.$router.push('/dashboard/get-course/'+this.courseId)
                 console.log(response.data)
               }

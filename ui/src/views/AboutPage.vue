@@ -54,7 +54,7 @@
             
           </div>
         </div>
-        <div class="col-md-6 ps-md-5">
+        <div class="col-md-6 ps-md-5 pe-md-3">
           <div class="h-100 file-drag" style="background-color:rgba(0, 0, 0, 0.1); background-blend-mode: multiply; background-position: top center; background-size: cover;"></div>
         </div>
       </div>

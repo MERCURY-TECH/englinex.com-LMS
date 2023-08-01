@@ -3,7 +3,7 @@
     <div class="container px-md-1 py-3">
       <div class="p-3">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <div
               class="row p-2 col-12 rounded-2 m-1"
               style="background-color: #f7ebff"
@@ -34,8 +34,11 @@
                     <button
                       type="submit"
                       class="btn btn-sm primary-button-outline px-5"
-                      >Save</button
-                    >
+                      >Save 
+                      <div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </button>
                   </p>
                 </div>
               </div>
@@ -43,7 +46,7 @@
               <!-- End Form Head Row -->
 
               <form class="row p-3" @submit.prevent="createSection()">
-                <div class="col-md-7">
+                <div class="col-md-8">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="mb-3">
@@ -61,9 +64,12 @@
                         <label for="floatingLevel">Difficulty Level</label>
                       </div>
                     </div>
+                    <div class="col-md-12 mt-3">
+                      <ckeditor :editor="editor" v-model="description" ></ckeditor>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-5 px-3">
+                <div class="col-md-4 px-3">
                   <div class="col-md-12 mb-3">
                     <div class="new-file-drag bg-light p-2 rounded-4" :style="{ backgroundImage: `url(${imagePath})` }" style="background-size: cover; background-position: center;">
                       <div class="drag-zone p-3 rounded-4 text-center" style="background-color: #F7EBFF; border: 2px dashed #ccc; opacity: .8;">
@@ -85,9 +91,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-12 mt-3">
-                  <ckeditor :editor="editor" v-model="description" ></ckeditor>
-                </div>
+                
               </form>
               <!-- <hr />
               <div class="p-2">
@@ -121,10 +125,10 @@
             </form>
           </div>
 
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <div class="rounded bg-body p-3">
               <p class="h2">Course Sections</p>
-              <!-- Related Section -->
+              
               <div
                 class="bg-light rounded-2 mx-1 mb-2"
                 style="display: grid; grid-template-columns: 2fr 5fr 1.5fr"
@@ -144,7 +148,7 @@
                 <div class="">
                   <p class="rounded p-0 mt-4 me-1">
                     <router-link
-                      :to="{ name: 'EditCourseSection' }"
+                      :to="{ name: 'Courses' }"
                       class="primary-text "
                       ><i class="bi-pencil-square"></i
                     ></router-link>
@@ -155,7 +159,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -190,7 +194,8 @@ export default {
       coverimage: '',
       imagePath: '',
       title: '',
-      description: ''
+      description: '',
+      loader: false
     }
   },
   methods: {
@@ -198,7 +203,7 @@ export default {
       axios.get('get-course/'+this.courseId)
       .then(response => {
         this.course = response.data.message.courses;
-        console.log(this.course)
+        console.log(this.response.data)
       })
       .catch(error => {
         console.log(error)
@@ -220,7 +225,9 @@ export default {
       this.coverimage = this.image.name;
       alert('Image selected: '+ this.coverimage);
     },
+
     createSection() {
+      this.loader = true
       const arr = [];
       arr.push({
         parent: null,
@@ -239,13 +246,17 @@ export default {
           axios.patch('/section/cover-image/'+response.data.message.courseSections[0]._id, fd)
           .then(() => {
             alert('Course Section Successfully Created')
+            this.loader = false;
             this.$router.push('/dashboard/get-course/'+this.courseId);
           })
           .catch(error => {
+            alert('An error occured, please retry later')
+            this.loader = false
             console.log(error)
           })
         } else {
           alert('Course Section Successfully Created')
+          this.loader = false
           this.$router.push('/dashboard/get-course/'+this.courseId)
           console.log(response.data)
         }
