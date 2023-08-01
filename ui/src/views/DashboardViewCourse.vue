@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-auto d-flex">
                   <a @click="deleteCourse" style="cursor: pointer;" class="h5 text-danger ms-3 pt-3"><i class="bi-trash-fill"></i></a>
-                  <router-link :to="{ name: 'EditCourse' }" class="h5 primary-text ms-3 pt-3"><i class="bi-pencil-square"></i></router-link>
+                  <router-link :to="{ name: 'EditCourse', params: { id: courseId } }" class="h5 primary-text ms-3 pt-3"><i class="bi-pencil-square"></i></router-link>
                   <router-link :to="{ name: 'Courses' }" class="h5 text-danger ms-3 pt-3"><i class="bi-x-circle"></i></router-link>
                 </div>
               </div>
@@ -194,7 +194,7 @@ export default {
         axios.delete('delete/section/'+e)
         .then(() => {
           alert('Course section has been deleted');
-          this.$forceUpdate();
+          this.fetchCourse();
         })
         .catch(error => {
           console.log(error)
@@ -207,7 +207,7 @@ export default {
         axios.delete('delete/material/'+e)
         .then(() => {
           alert('Section material has been deleted');
-          this.$forceUpdate();
+          this.fetchCourse()
         })
         .catch(error => {
           console.log(error)

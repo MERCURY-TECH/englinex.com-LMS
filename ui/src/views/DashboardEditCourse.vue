@@ -21,7 +21,12 @@
                 <input class="form-check-input" type="checkbox" v-else role="switch" id="makeCoursePublic" @change="makePublic">
               </div>
               <div class="pt-3">
-                <button class="btn btn-sm primary-button-outline px-5 mx-2">Save</button>
+                <button class="btn btn-sm primary-button-outline px-5 mx-2">
+                  Update 
+                  <div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </button>
               </div>
               <router-link :to="'/dashboard/get-course/'+courseId" class="h3 text-danger ms-3 pt-3"><i class="bi-x-circle"></i></router-link>
             </div>
@@ -58,7 +63,12 @@
                   <div class="col-12">
                     <p class="fw-semibold"><small>Create new tags:</small></p>
                     <input type="text" v-model="tagNames" placeholder="Enter tag names..." class="form-control form-control-sm w-75 d-inline-flex" style="border: none; border-left: 1px solid grey; border-radius: 0" />
-                    <a @click="createTags" class="btn btn-sm primary-button d-inline-flex">Add</a>
+                    <a @click="createTags" class="btn btn-sm primary-button d-inline-flex">
+                      Add 
+                      <div class="spinner-border spinner-border-sm text-light" v-if="tagloader" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </a>
                   </div>
                 </div>
                 <div class="bg-light p-2 mt-3 border rounded">
@@ -194,6 +204,8 @@ export default {
       imagePath: '',
       coverImage: '',
       isPublic: '',
+      loader: false,
+      tagloader: false
     }
   },
   mounted() {
@@ -229,7 +241,7 @@ export default {
     },
 
     editCourse() {
-      
+      this.loader = true;
       axios.patch('edit-courses/'+this.courseId, {
         coverimage: this.course.coverimage,
         title: this.course.title,
@@ -244,20 +256,24 @@ export default {
           fd.append('upload', this.image);
           axios.patch('cover-image/'+this.courseId, fd)
           .then(() => {
-            alert('Course successfully updated')
+            alert('Course successfully updated. (Please refresh page to see all changes)')
+            this.loader = false
             this.$router.push('/dashboard/get-course/'+this.courseId);
           })
           .catch(error => {
+            this.loader = false
             console.log(error)
           })
         }
 
-        alert('Course successfully updated')
+        alert('Course successfully updated. (Please refresh page to see all changes)')
         console.log(response.data)
         this.$router.push('/dashboard/get-course/'+this.courseId);
 
       })
       .catch(error => {
+        alert('An error occured. Please try again later')
+        this.loader = false;
         console.log(error)
       })
 
@@ -277,7 +293,8 @@ export default {
     },
 
     createTags() {
-      if (this.tagNames.length === 0) { alert('Empty tags list') } else {
+      this.tagloader = true
+      if (this.tagNames.length === 0) { alert('Empty tags list'); this.tagloader = false } else {
       const arr = this.tagNames.split(",");
       const tagList = [];
       arr.forEach(function(tagin) {
@@ -290,11 +307,14 @@ export default {
       .then(response => {
           console.log(response);
           alert('Tags successfully created');
+          this.tagloader = false
           this.fetchTags();
           this.tagNames = '';
         })
         .catch(error => {
           // Handle the error
+          alert('An error occured. Please try again later')
+          this.tagloader = false
           console.log(error);
         });
       }
@@ -338,12 +358,25 @@ export default {
       alert('Your file has been uploaded');
     },
 
+    deleteSection(e) {
+      if (window.confirm('Are you sure you want to delete this course section?')) {
+        axios.delete('delete/section/'+e)
+        .then(() => {
+          alert('Course section has been deleted');
+          this.fetchCourse();
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
+    },
+
     deleteMaterial(e) {
       if (window.confirm('Are you sure you want to delete this section material?')) {
         axios.delete('delete/material/'+e)
         .then(() => {
           alert('Section material has been deleted');
-          this.$forceUpdate();
+          this.fetchCourse();
         })
         .catch(error => {
           console.log(error)

@@ -14,6 +14,9 @@
             <div class="pt-3">
               <button class="btn btn-sm primary-button-outline px-5 mx-2">
                 Save
+                <div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </button>
             </div>
             <!-- <div class="pt-3">
@@ -21,11 +24,11 @@
                 <i class="bi-upload"></i> Upload via CSV
               </button>
             </div> -->
-            <!-- <router-link
-              :to="{ name: 'EditCourseSection' }"
+            <router-link
+              :to="'/dashboard/edit-course-section/'+sectionId"
               class="h3 text-danger ms-3"
               ><i class="bi-x-circle"></i
-            ></router-link> -->
+            ></router-link>
           </div>
         </div>
         <hr />
@@ -104,7 +107,8 @@ export default {
       title: '',
       description: '',
       content: '',
-      isPublic: false
+      isPublic: false,
+      loader: false
     }
   },
   mounted() {
@@ -132,6 +136,7 @@ export default {
       if (this.isPublic) { this.isPublic = false } else { this.isPublic = true }
     },
     editMaterial() {
+      this.loader = true
       axios.patch('edit-section-material/'+this.materialId, {
         title: this.title,
         description: this.description,
@@ -141,9 +146,12 @@ export default {
       .then(response => {
         console.log(response)
         alert('The Material Was Succesfully Updated')
+        this.loader = false
         this.$router.push('/dashboard/edit-course-section/'+this.sectionId)
       })
       .catch(error => {
+        alert('An error occured, please retry later')
+        this.loader = false
         console.log(error)
       })
     }

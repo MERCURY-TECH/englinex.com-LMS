@@ -20,7 +20,11 @@
                       </div>
                       <div class="col-auto d-flex">
                         <p>
-                          <button type="submit" class="btn btn-sm primary-button-outline px-5">Save</button>
+                          <button type="submit" class="btn btn-sm primary-button-outline px-5">Update 
+                            <div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </button>
                           <router-link :to="'/dashboard/get-course/'+courseId" class="h3 text-danger ms-3 pt-3 mt-2"><i class="bi-x-circle"></i></router-link>
                         </p>
                       </div>
@@ -59,13 +63,13 @@
                               <div class="drag-zone p-2 rounded-4 text-center" style="background-color: #F7EBFF; border: 2px dashed #ccc; opacity: 0.8;">
                                 <p class="h1 primary-text"><i class="bi-image"></i></p>
                                 <p style="font-size: .85em">
-                                  <small>Drag your photo here to start uploading</small>
+                                  <small>Browse files and start uploading</small>
                                 </p>
-                                <div class="row">
+                                <!-- <div class="row">
                                   <div class="col-5"><hr></div>
                                   <div class="col-2 p-0"><p class="h4">OR</p></div>
                                   <div class="col-5"><hr></div>
-                                </div>
+                                </div> -->
                                 <label class="btn btn-sm primary-button w-100 rounded-2" for="inputImage" style="opacity: 1;">
                                   Browse files
                                   <input type="file" @change="onImageSelected" class="visually-hidden" accept=".jpg, .jpeg, .png" id="inputImage" />
@@ -185,8 +189,10 @@
             image: null,
             imagePath: '',
             coverImage: '',
+            loader: false
           }
         },
+
         methods: {
           fetchSection() {
             axios.get('section/'+this.sectionId)
@@ -210,6 +216,7 @@
               console.log(error)
             })
           },
+
           fetchCourse() {
             axios.get('get-course/'+this.courseId)
             .then(response => {
@@ -220,6 +227,7 @@
               console.log(error)
             })
           },
+
           fetchContentLevels() {
             axios.get('get-all-course-content-levels')
             .then(response => {
@@ -230,6 +238,7 @@
               console.log(error)
             })
           },
+
           fetchMaterials() {
             axios.get('section-materials/'+this.sectionId)
             .then(response => {
@@ -240,25 +249,29 @@
               console.log(error)
             })
           },
+
           onImageSelected(event) {
             this.image = event.target.files[0];
             this.imagePath = URL.createObjectURL(this.image);
             this.coverimage = this.image.name;
             alert('Image selected: '+ this.coverimage);
           },
+
           deleteMaterial(e) {
             if (window.confirm('Are you sure you want to delete this section material?')) {
               axios.delete('delete/material/'+e)
               .then(() => {
                 alert('Section material has been deleted');
-                this.$forceUpdate();
+                this.fetchMaterials();
               })
               .catch(error => {
                 console.log(error)
               })
             }
           },
+
           editSection() {
+            this.loader = true
             const arr = [];
             arr.push({
               parent: null,
@@ -277,13 +290,17 @@
                 axios.patch('/section/cover-image/'+this.sectionId, fd)
                 .then(() => {
                   alert('Course Section Successfully Updated')
-                  this.$router.push('/dashboard/get-course/'+this.courseId);
+                  this.loader = false
+                  this.fetchMaterials()
                 })
                 .catch(error => {
+                  this.loader = false
+                  alert('An error occured. Please try again later')
                   console.log(error)
                 })
               } else {
                 alert('Course Section Successfully Updated')
+                this.loader = false
                 this.$router.push('/dashboard/get-course/'+this.courseId)
                 console.log(response.data)
               }

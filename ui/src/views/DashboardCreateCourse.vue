@@ -20,7 +20,12 @@
                 <input class="form-check-input" type="checkbox" role="switch" id="makeCoursePublic" @change="makePublic">
               </div>
               <div class="pt-3">
-                <button class="btn btn-sm primary-button-outline px-5 mx-2">Save</button>
+                <button class="btn btn-sm primary-button-outline px-5 mx-2">
+                  Save
+                  <div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </button>
               </div>
               <div class="pt-3">
                 <button class="btn btn-sm primary-button-outline mx-2"><i class="bi-upload"></i> Upload via CSV</button>
@@ -70,7 +75,12 @@
                   <div class="col-12">
                     <p class="fw-semibold"><small>Create new tags:</small></p>
                     <input type="text" v-model="tagNames" placeholder="Enter tag names..." class="form-control form-control-sm w-75 d-inline-flex" style="border: none; border-left: 1px solid grey; border-radius: 0" />
-                    <a @click="createTags" class="btn btn-sm primary-button d-inline-flex">Add</a>
+                    <a @click="createTags" class="btn btn-sm primary-button d-inline-flex">
+                      Add 
+                      <div class="spinner-border spinner-border-sm text-light" v-if="tagloader" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </a>
                   </div>
                 </div>
                 <div class="bg-light p-3 mt-3 border rounded">
@@ -139,7 +149,9 @@
               title: '',
               description: '',
               isPublic: false,
-              content: []
+              content: [],
+              loader: false,
+              tagloader: false
           }
         },
         mounted() {
@@ -151,7 +163,8 @@
           },
 
           createTags() {
-            if (this.tagNames.length === 0) { alert('Empty tags list') } else {
+            this.tagloader = true
+            if (this.tagNames.length === 0) { alert('Empty tags list'); this.tagloader = false } else {
             const arr = this.tagNames.split(",");
             const tagList = [];
             arr.forEach(function(tagin) {
@@ -166,9 +179,12 @@
                 alert('Tags successfully created');
                 this.fetchTags();
                 this.tagNames = '';
+                this.tagloader = false;
               })
               .catch(error => {
                 // Handle the error
+                alert('An error occured. Please try again later')
+                this.tagloader = false
                 console.log(error);
               });
             }
@@ -187,6 +203,7 @@
           },
 
           createCourse() {
+            this.loader = true
             const arr = [];
 
             arr.push({
@@ -201,24 +218,31 @@
             axios.post('create-courses', arr)
               .then(response => {
                 if (this.image !== null) {
-
                   const fd = new FormData();
                   fd.append('upload', this.image);
                   axios.patch('cover-image/'+response.data.message.courses[0]._id, fd)
                   .then(() => {
-                    alert('Course successfully updated')
+                    alert('Course created with success')
+                    this.loader = false
                     this.$router.push('/dashboard/get-course/'+response.data.message.courses[0]._id);
                   })
                   .catch(error => {
+                    alert('An error occured. Please try again later')
+                    this.loader = false;
                     console.log(error)
                   })
                 
+                } else {
+                  alert('Course created with success')
+                  this.loader = false;
+                  this.$router.push('/dashboard/courses')
+                  console.log(response.data)
                 }
-                alert('Course created with success')
-                this.$router.push('/dashboard/courses')
-                console.log(response.data)
+                
               })
               .catch(error => {
+                alert('An error occured. Please try again later')
+                this.loader = false;
                 console.log(error)
               })
           },

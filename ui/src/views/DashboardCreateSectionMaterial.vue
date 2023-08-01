@@ -13,7 +13,10 @@
           <div class="col-auto d-flex">
             <div class="pt-3">
               <button class="btn btn-sm primary-button-outline px-5 mx-2">
-                Save
+                Save 
+                <div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </button>
             </div>
             <div class="pt-3">
@@ -21,11 +24,11 @@
                 <i class="bi-upload"></i> Upload via CSV
               </button>
             </div>
-            <!-- <router-link
-              :to="{ name: 'EditCourseSection' }"
+            <router-link
+              :to="{ name: 'EditCourseSection', params: { sectionId: sectionId } }"
               class="h3 text-danger ms-3"
               ><i class="bi-x-circle"></i
-            ></router-link> -->
+            ></router-link>
           </div>
         </div>
         <hr />
@@ -92,7 +95,8 @@ export default {
       materialType: 'rich-text',
       title: '',
       description: '',
-      content: ''
+      content: '',
+      loader: false
     };
   },
   methods: {
@@ -107,6 +111,7 @@ export default {
       })
     },
     createMaterial() {
+      this.loader = true;
       const arr = [];
       arr.push({
         materialType: this.materialType,
@@ -119,9 +124,12 @@ export default {
       .then(response => {
         alert('Section Material Created Successfully')
         console.log(response)
-        this.$router.push('/dashboard/edit-course-section/'+response.data.message.courseMaterial[0]._id)
+        this.loader = false
+        this.$router.push('/dashboard/edit-course-section/'+response.data.message.courseMaterial[0].sectionId)
       })
       .catch(error => {
+        alert('An error occured, please retry later')
+        this.loader = false
         console.log(error)
       })
     }
