@@ -68,3 +68,17 @@
 		name: 'WebsiteHeader'
 	}
 </script>
+
+<style scoped>
+  .router-link-active {
+    background-color: #FBF3FF !important;
+    color: #A01FEF;
+    border-bottom: 2px solid #A01FEF;
+  }
+
+  .router-link-exact-active {
+    background-color: #FBF3FF !important;
+    color: #A01FEF;
+    border-bottom: 2px solid #A01FEF;
+  }
+</style>
