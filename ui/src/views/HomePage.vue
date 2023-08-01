@@ -102,14 +102,14 @@
     <section class="p-md-5">
       <div class="container">
         <div class="row">
-          <div class="col-md-7 row">
-            <div class="col-9" style="z-index: 155;">
+          <div class="col-md-7" style="position: relative;">
+            <div class="" style="z-index: 155; position: absolute; width: 75%; right: 30%">
               <img class="shadow rounded-2 w-100"  src="@/assets/woman-teaching.jpg" />
             </div>
-            <div class="col-7 mt-4" style="z-index: 135; margin-left: -301px; height: 90%;">
+            <div class="" style="z-index: 135; position: absolute; height: 75%; width: 68%; right: 25%; top: 5%;">
               <img class="shadow rounded-2 w-100"  src="@/assets/woman-teaching.jpg" />
             </div>
-            <div class="col-5 mt-5" style="z-index: 115; margin-left: -220px; height: 80%">
+            <div class="" style="z-index: 115; position: absolute; height: 65%; width: 60%; right: 20%; top: 10%;">
               <img class="shadow rounded-2 w-100" src="@/assets/woman-teaching.jpg" />
             </div>
           </div>

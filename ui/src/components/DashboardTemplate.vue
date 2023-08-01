@@ -1,6 +1,6 @@
 <template>
     <DashboardTopHeader />
-    <div class="container-fluid">
+    <div class="container-fluid" id="bodyBackground">
         <div class="row">
             <DashboardSideBar />
             <main class="col-md-9 col-lg-10">
@@ -26,8 +26,12 @@ export default {
 <style>
 body {
 	font-family: 'Quicksand', sans-serif;
-	background-color: #15223214; 
 }
+
+#bodyBackground {
+	background-color: #15223214
+}
+
 .header-link {
 	font-weight: bold;
 }
@@ -223,18 +227,6 @@ body {
 .sidebar .nav-link {
   font-size: .875rem;
   font-weight: 500;
-}
-
-.router-link-active {
-  background-color: #FBF3FF !important;
-	color: #A01FEF;
-	border-left: 2px solid #A01FEF;
-}
-
-.router-link-exact-active {
-  background-color: #FBF3FF !important;
-	color: #A01FEF;
-	border-left: 2px solid #A01FEF;
 }
 
 .sidebar-heading {
