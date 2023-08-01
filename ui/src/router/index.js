@@ -22,6 +22,7 @@ import PlatformTransaction from "@/views/PlatformTransactions"
 import PlatformTeachers from '@/views/PlatformTeachers'
 import UserDasboard from '@/views/UserDashboard'
 import LecturerCourses from '@/views/LecturerCourses'
+import StudentList from '@/views/StudentList'
 
 const routes = [
     {
@@ -137,6 +138,11 @@ const routes = [
         path: '/dashboard/lecturercourses',
         name: 'LecturerCourses',
         component: LecturerCourses
+    },
+    {
+        path: '/dashboard/studentlist',
+        name: 'StudentList',
+        component: StudentList
     },
     {
         path: '/userdashboard',
