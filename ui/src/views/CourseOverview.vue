@@ -196,8 +196,8 @@
                 style="font-family: 'Raleway', sans-serif"
                 >The Course Title</span
               >
-              <a class="btn btn-sm primary-button col-auto px-md-4 py-2"
-                >Register Course</a
+              <router-link :to="{ name: 'SignupForm' }" class="btn btn-sm primary-button col-auto px-md-4 py-2"
+                >Register Course</router-link
               >
             </p>
             <p
