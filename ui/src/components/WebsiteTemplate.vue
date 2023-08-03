@@ -1,22 +1,16 @@
 <template>
-    <WebsiteHeader />
         <slot></slot>
-    <WebsiteFooter />
 </template>
 
 <script>
-import WebsiteHeader from './website/WebsiteHeader.vue'
-import WebsiteFooter from './website/WebsiteFooter.vue'
 
 export default {
   name: 'WebsiteTemplate',
   components: {
-    WebsiteHeader,
-    WebsiteFooter
+
   }
 }
 </script>
-
 <style scoped>
 body {
   font-family: 'Quicksand', sans-serif;
@@ -168,7 +162,10 @@ body {
 }
 
 .form-control:hover {
-  border: 1px solid #c8a4df !important;
+  border: 1px solid #e9c5ff !important;
+}
+.form-control-error {
+  border: 1px solid #fa3131 !important;
 }
 
 .form-control:focus {

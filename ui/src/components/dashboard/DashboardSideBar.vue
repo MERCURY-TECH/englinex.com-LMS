@@ -21,51 +21,46 @@
               </router-link>
             </li>
             <li class="nav-item header-link">
-              <router-link class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{ name: 'ViewCourse' }">
-                <i class="bi-envelope p-left"></i>
-                Inbox
-                <span class='badge rounded-pill text-bg-purple h3' style="background-color:#A01FEF; margin-left: 6em;">10</span>
-              </router-link>
-            </li>
+                <a class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{ name: 'Courses'}">
+                  <i class="bi-people p-left"></i>
+                  Students
+                </a>
+              </li>
+            <li class="nav-item header-link">
+                <router-link class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{ name: 'PlatformTeachers'}">
+                  <i class="bi-people p-left"></i>
+                  Teachers
+                </router-link>
+              </li>
+            <li class="nav-item header-link">
+                <router-link class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{name:'PlatformBundles'}">
+                  <i class="bi bi-bag p-left"></i>
+                  Bundles
+                </router-link>
+              </li>
+            <li class="nav-item header-link">
+                <a class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" href="./">
+                  <i class="bi bi-bank p-left"></i>
+                  Subscriptions
+                </a>
+              </li>
+            <li class="nav-item header-link">
+                <router-link class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{name:'PlatformTransaction'}">
+                  <i class="bi bi-body-text p-left"></i>
+                  Transaction
+                </router-link>
+              </li>
+            <li class="nav-item header-link">
+                <a class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" href="./">
+                  <i class="bi bi-calendar3 p-left"></i>
+                  Schedules
+                </a>
+              </li>
             <li class="nav-item header-link">
               <router-link class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{ name: 'Settings' }">
                 <i class="bi-gear p-left"></i>
                 Settings
               </router-link>
-            </li>
-          </ul>
-
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-            <span>Users Management</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
-              <i class="bi-person"></i>
-            </a>
-          </h6>
-          <ul class="nav flex-column mb-auto">
-            
-            <li class="nav-item header-link">
-              <a class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" href="./customers">
-                <i class="bi-people p-left"></i>
-                Customers
-              </a>
-            </li>
-            <li class="nav-item header-link">
-              <a class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" href="./chatroom">
-                <i class="bi-chat-dots p-left"></i>
-                Chat Room
-              </a>
-            </li>
-            <li class="nav-item header-link">
-              <a class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" href="./calendar">
-                <i class="bi-calendar p-left"></i>
-                Calendar
-              </a>
-            </li>
-            <li class="nav-item header-link">
-              <a class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" href="./help-center">
-                <i class="bi-question-circle p-left"></i>
-                Help Center
-              </a>
             </li>
           </ul>
         </div>

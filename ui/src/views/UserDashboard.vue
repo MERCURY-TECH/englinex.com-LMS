@@ -56,153 +56,168 @@
                 </div>
                 <div class="col-md-8">
                     <!-- student card -->
-                   <div class="" v-if="studentRole">
-                    <TabsWrapper class="p-2">
-                        <tab title="My Courses" class="card p-2">
-                            <div class="d-flex align-items-center justify-content-between">
-                              <div class="">
-                                <span class="" style="color: font-size: 14px;">#Name</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
-                              </div>
-                              <div class="">
-                                <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total) for 3 months</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to material</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited Courses</span> 
-                              </div>
-                              <div class="d-flex">
-                                <button class="btn btn-sm">
-                                    <span style="font-size: 13px;">
-                                        <i class="bi bi-x-circle text-danger"></i>
-                                        Cancel Subscription
-                                    </span>
-                                </button>
-                                <button class="btn btn-sm">
-                                    <span style="font-size: 13px;">
-                                        <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
-                                        Edit Subscription
-                                    </span>
-                                </button>
-                              </div>
-                            </div>
-                        </tab>
-                        <tab title="Schedules" class="card p-2">
-                              <div class="d-flex align-items-center justify-content-between">
-                              <div class="">
-                                <span class="" style="color: font-size: 14px;">#Name</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
-                              </div>
-                              <div class="">
-                                <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total) for 3 months</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to material</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited Courses</span> 
-                              </div>
-                              <div class="d-flex">
-                                <button class="btn btn-sm">
-                                    <span style="font-size: 13px;">
-                                        <i class="bi bi-x-circle text-danger"></i>
-                                        Cancel Subscription
-                                    </span>
-                                </button>
-                                <button class="btn btn-sm">
-                                    <span style="font-size: 13px;">
-                                        <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
-                                        Edit Subscription
-                                    </span>
-                                </button>
-                              </div>
-                            </div>
-                        </tab>
-                        <tab title="Subscription" class="card p-2">
-                              <div class="d-flex align-items-center justify-content-between">
-                              <div class="">
-                                <span class="" style="color: font-size: 14px;">#Name</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
-                              </div>
-                              <div class="">
-                                <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total) for 3 months</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to material</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited Courses</span> 
-                              </div>
-                              <div class="d-flex">
-                                <button class="btn btn-sm">
-                                    <span style="font-size: 13px;">
-                                        <i class="bi bi-x-circle text-danger"></i>
-                                        Cancel Subscription
-                                    </span>
-                                </button>
-                                <button class="btn btn-sm">
-                                    <span style="font-size: 13px;">
-                                        <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
-                                        Edit Subscription
-                                    </span>
-                                </button>
-                              </div>
-                            </div>
-                        </tab>
-                        
-                    </TabsWrapper>
-                   </div>
+                    <div class="" v-if="studentRole">
+                        <TabsWrapper class="p-2">
+                            <tab title="My Courses" class="card p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="">
+                                        <span class="" style="color: font-size: 14px;">#Name</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
+                                    </div>
+                                    <div class="">
+                                        <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total)
+                                            for 3 months</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to
+                                            material</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited
+                                            Courses</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <button class="btn btn-sm">
+                                            <span style="font-size: 13px;">
+                                                <i class="bi bi-x-circle text-danger"></i>
+                                                Cancel Subscription
+                                            </span>
+                                        </button>
+                                        <button class="btn btn-sm">
+                                            <span style="font-size: 13px;">
+                                                <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
+                                                Edit Subscription
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab title="Schedules" class="card p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="">
+                                        <span class="" style="color: font-size: 14px;">#Name</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
+                                    </div>
+                                    <div class="">
+                                        <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total)
+                                            for 3 months</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to
+                                            material</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited
+                                            Courses</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <button class="btn btn-sm">
+                                            <span style="font-size: 13px;">
+                                                <i class="bi bi-x-circle text-danger"></i>
+                                                Cancel Subscription
+                                            </span>
+                                        </button>
+                                        <button class="btn btn-sm">
+                                            <span style="font-size: 13px;">
+                                                <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
+                                                Edit Subscription
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab title="Subscription" class="card p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="">
+                                        <span class="" style="color: font-size: 14px;">#Name</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
+                                    </div>
+                                    <div class="">
+                                        <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total)
+                                            for 3 months</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to
+                                            material</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited
+                                            Courses</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <button class="btn btn-sm">
+                                            <span style="font-size: 13px;">
+                                                <i class="bi bi-x-circle text-danger"></i>
+                                                Cancel Subscription
+                                            </span>
+                                        </button>
+                                        <button class="btn btn-sm">
+                                            <span style="font-size: 13px;">
+                                                <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
+                                                Edit Subscription
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </tab>
+
+                        </TabsWrapper>
+                    </div>
                     <!-- Lecturer card -->
-                   <div class="" v-else>
-                    <TabsWrapper class="p-2">
-                        <tab title="My Courses" class=" p-3 rounded" style="background-color: #d1d1d156;">
-                            <div class="d-flex align-items-center justify-content-between">
-                              <div class="row">
-                                <span class="col-6 text-truncate" style="color: font-size: 14px;">The Quick brown fox</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">#ytitytytgggffnvjuyfgfj</span>
-                              </div>
-                             
-                              <div class="d-flex">
-                                <button class="btn btn-sm mx-2" style="background-color: #F7EBFF;">
-                                    <span style="font-size: 13px;">
-                                        View Students
-                                    </span>
-                                </button>
-                                <button class="btn btn-sm mx-2" style="background-color: #F7EBFF;">
-                                    <span style="font-size: 13px;">
-                                       
-                                        Go to Class
-                                    </span>
-                                </button>
-                              </div>
-                              <div class="">
-                                <router-link to="/" class="nav-link rounded-pill px-1" style="border:1px solid #9F1FED;">
-                                    
-                                    <i class="bi bi-chevron-right"></i>
-                                </router-link>
-                              </div>
-                            </div>
-                        </tab>
-                        <tab title="Schedules" class="card p-2">
-                              <div class="d-flex align-items-center justify-content-between">
-                              <div class="">
-                                <span class="" style="color: font-size: 14px;">#Name</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
-                              </div>
-                              <div class="">
-                                <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total) for 3 months</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to material</span> <br>
-                                <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited Courses</span> 
-                              </div>
-                              <div class="d-flex">
-                                <button class="btn btn-sm">
-                                    <span style="font-size: 13px;">
-                                        <i class="bi bi-x-circle text-danger"></i>
-                                        Cancel Subscription
-                                    </span>
-                                </button>
-                                <button class="btn btn-sm">
-                                    <span style="font-size: 13px;">
-                                        <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
-                                        Edit Subscription
-                                    </span>
-                                </button>
-                              </div>
-                            </div>
-                        </tab>
-                       
-                    </TabsWrapper>
-                   </div>
+                    <div class="" v-else>
+                        <TabsWrapper class="p-2">
+                            <tab title="My Courses" class=" p-3 rounded" style="background-color: #d1d1d156;">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="row">
+                                        <span class="col-6 text-truncate" style="color: font-size: 14px;">The Quick brown
+                                            fox</span> <br>
+                                        <span class=""
+                                            style="color: #8b8b8b; font-size: 13px;">#ytitytytgggffnvjuyfgfj</span>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <button class="btn btn-sm mx-2" style="background-color: #F7EBFF;">
+                                            <span style="font-size: 13px;">
+                                                View Students
+                                            </span>
+                                        </button>
+                                        <button class="btn btn-sm mx-2" style="background-color: #F7EBFF;">
+                                            <span style="font-size: 13px;">
+
+                                                Go to Class
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="">
+                                        <router-link to="/" class="nav-link rounded-pill px-1"
+                                            style="border:1px solid #9F1FED;">
+
+                                            <i class="bi bi-chevron-right"></i>
+                                        </router-link>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab title="Schedules" class="card p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="">
+                                        <span class="" style="color: font-size: 14px;">#Name</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
+                                    </div>
+                                    <div class="">
+                                        <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total)
+                                            for 3 months</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to
+                                            material</span> <br>
+                                        <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited
+                                            Courses</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <button class="btn btn-sm">
+                                            <span style="font-size: 13px;">
+                                                <i class="bi bi-x-circle text-danger"></i>
+                                                Cancel Subscription
+                                            </span>
+                                        </button>
+                                        <button class="btn btn-sm">
+                                            <span style="font-size: 13px;">
+                                                <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
+                                                Edit Subscription
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </tab>
+
+                        </TabsWrapper>
+                    </div>
                 </div>
             </div>
         </div>

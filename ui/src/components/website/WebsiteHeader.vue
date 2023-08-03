@@ -49,7 +49,8 @@
                 <a class="nav-link">Contact Us</a>
               </li>
               <li class="nav-item primary-header-link px-md-5 primary-text">
-                <router-link class="primary-text fw-bold" :to="{ name: 'LoginForm' }">Login</router-link> | <router-link class="primary-text fw-bold" :to="{ name: 'SignupForm' }">Signup</router-link>
+                <router-link class="primary-text fw-bold" :to="{ name: 'LoginSignUpPage' }">Login | Signup</router-link>
+                // add account routes
               </li>
             </ul>
             <div class="d-flex mt-3 mt-lg-0" role="search">
@@ -79,6 +80,7 @@
   .router-link-exact-active {
     background-color: #FBF3FF !important;
     color: #A01FEF;
+    padding: 3px;
     border-bottom: 2px solid #A01FEF;
   }
 </style>

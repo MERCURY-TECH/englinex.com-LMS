@@ -1,3 +1,4 @@
+
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardHome from '../views/DashboardHome.vue'
 import DashboardCourses from '../views/DashboardCourses.vue'
@@ -9,7 +10,7 @@ import DashboardCreateCourseSection from '../views/DashboardCreateCourseSection'
 import DashboardEditCourseSection from '../views/DashboardEditCourseSection'
 import DashboardCreateSectionMaterial from '../views/DashboardCreateSectionMaterial'
 import DashboardEditSectionMaterial from '../views/DashboardEditSectionMaterial'
-import LoginForm from '../views/LoginForm'
+// import LoginForm from '../views/LoginForm'
 import SignupCheckout from '../views/SignupCheckout'
 import HomePage from '../views/HomePage'
 import AboutPage from '../views/AboutPage'
@@ -22,13 +23,22 @@ import PlatformTransaction from "@/views/PlatformTransactions"
 import PlatformTeachers from '@/views/PlatformTeachers'
 import UserDasboard from '@/views/UserDashboard'
 import LecturerCourses from '@/views/LecturerCourses'
+import LoginSignUpPage from '@/views/auth/LoginSignUpPage'
+
+const http404 = { 
+	template: '<div>http404 path is : {{$route.path}}</div>',
+  mounted(){
+    console.log(this.$route.path);
+    this.$parent.title ="http404 Page";
+  }
+}
 
 const routes = [
-    {
-        path: '/login',
-        name: 'LoginForm',
-        component: LoginForm
-    },
+    // {
+    //     path: '/auth',
+    //     name: 'LoginForm',
+    //     component: LoginForm
+    // },
     {
         path: '/signup',
         name: 'Signup',
@@ -57,79 +67,81 @@ const routes = [
     {
         path: '/all-materials',
         name: 'MaterialsList',
+        accountType: 'admin',
         component: CourseList
     },
     {
         path: '/material',
         name: 'MaterialOverview',
+        accountType: 'admin',
         component: CourseOverview
     },
     {
-        path: '/dashboard/',
+        path: '/admin',
         name: 'DashboardHome',
-        component: DashboardHome
+        component: DashboardHome,
     },
     {
-        path: '/dashboard/courses',
+        path: '/admin/dashboard/courses',
         name: 'Courses',
         component: DashboardCourses
     },
     {
-        path: '/dashboard/settings',
+        path: '/admin/dashboard/settings',
         name: 'Settings',
         component: DashboardSettings
     },
     {
-        path: '/dashboard/course',
+        path: '/admin/dashboard/course',
         name: 'ViewCourse',
         component: DashboardViewCourse
     },
     {
-        path: '/dashboard/get-course/:id',
+        path: '/admin/dashboard/get-course/:id',
         component: DashboardViewCourse
     },
     {
-        path: '/dashboard/create-course',
+        path: '/admin/dashboard/create-course',
         name: 'CreateCourse',
         component: DashboardCreateCourse
     },
     {
-        path: '/dashboard/edit-course/:id',
+        path: '/admin/dashboard/edit-course/:id',
         name: 'EditCourse',
         component: DashboardEditCourse
     },
     {
-        path: '/dashboard/create-course-section/:courseId',
+        path: '/admin/dashboard/create-course-section/:courseId',
         name: 'CreateCourseSection',
         component: DashboardCreateCourseSection
     },
     {
-        path: '/dashboard/edit-course-section/:sectionId',
+        path: '/admin/dashboard/edit-course-section/:sectionId',
         name: 'EditCourseSection',
         component: DashboardEditCourseSection
     },
     {
-        path: '/dashboard/create-section-material/:sectionId',
+        path: '/admin/dashboard/create-section-material/:sectionId',
         name: 'CreateSectionMaterial',
         component: DashboardCreateSectionMaterial
     },
     {
-        path: '/dashboard/edit-section-material/:materialId',
+        path: '/admin/dashboard/edit-section-material/:materialId',
         name: 'EditSectionMaterial',
         component: DashboardEditSectionMaterial
     },
     {
-        path: '/dashboard/platformbundles',
+        path: '/admin/dashboard/platformbundles',
         name: 'PlatformBundles',
         component: PlatformBundles
     },
     {
-        path: '/dashboard/platformtransactions',
+        path: '/admin/dashboard/platformtransactions',
         name: 'PlatformTransaction',
         component: PlatformTransaction
     },
     {
-        path: '/dashboard/platformteachers',
+        path: '/admin/dashboard/platformteachers',
         name: 'PlatformTeachers',
         component: PlatformTeachers
     },
@@ -143,6 +155,17 @@ const routes = [
         name: 'UserDasboard',
         component: UserDasboard
     },
+    {
+        path: '/auth',
+        name: 'LoginSignUpPage',
+        component: LoginSignUpPage
+    },
+    {
+        path: '/**/',
+        name: '404FallBack',
+        component: http404
+    },
+
 
 ]
 
