@@ -11,11 +11,8 @@ import DashboardEditCourseSection from '../views/DashboardEditCourseSection'
 import DashboardCreateSectionMaterial from '../views/DashboardCreateSectionMaterial'
 import DashboardEditSectionMaterial from '../views/DashboardEditSectionMaterial'
 // import LoginForm from '../views/LoginForm'
-import SignupCheckout from '../views/SignupCheckout'
+
 import HomePage from '../views/HomePage'
-import AboutPage from '../views/AboutPage'
-import FAQPage from '../views/FAQPage'
-import CourseList from '../views/CourseList'
 import CourseOverview from '../views/CourseOverview'
 import Signup from '@/views/Signup'
 import PlatformBundles from '@/views/PlatformBundles'
@@ -25,7 +22,7 @@ import UserDasboard from '@/views/UserDashboard'
 import LecturerCourses from '@/views/LecturerCourses'
 import LoginSignUpPage from '@/views/auth/LoginSignUpPage'
 import StudentList from '@/views/StudentList'
-
+import {parseJwt} from '../helpers'
 const http404 = { 
 	template: '<div>http404 path is : {{$route.path}}</div>',
   mounted(){
@@ -33,21 +30,27 @@ const http404 = {
     this.$parent.title ="http404 Page";
   }
 }
+
+
+function beforeRouteEnter (to, from, next) {
+    if (localStorage.token) {
+      const jwtPayload = parseJwt(localStorage.token);
+      if (jwtPayload.exp < Date.now()/1000) {
+          // token expired
+          deleteTokenFromLocalStorage();
+          next("/");
+      }
+      next();
+    } else {
+      next("/");
+    }
+  }
+
 const routes = [
-    // {
-    //     path: '/auth',
-    //     name: 'LoginForm',
-    //     component: LoginForm
-    // },
-    {
-        path: '/signup',
-        name: 'Signup',
-        component: Signup
-    },
     {
         path: '/checkout',
         name: 'SignupForm',
-        component: SignupCheckout
+        component: ()=> import('../views/SignupCheckout')
     },
     {
         path: '/',
@@ -57,23 +60,21 @@ const routes = [
     {
         path: '/about-us',
         name: 'AboutUs',
-        component: AboutPage
+        component: ()=>import('../views/AboutPage')
     },
     {
         path: '/FAQ',
         name: 'FAQ',
-        component: FAQPage
+        component: ()=>import('../views/FAQPage')
     },
     {
         path: '/all-materials',
         name: 'MaterialsList',
-        accountType: 'admin',
-        component: CourseList
+        component: ()=>import('../views/CourseList')
     },
     {
         path: '/material',
         name: 'MaterialOverview',
-        accountType: 'admin',
         component: CourseOverview
     },
     {
@@ -146,12 +147,12 @@ const routes = [
         component: PlatformTeachers
     },
     {
-        path: '/dashboard/lecturercourses',
+        path: '/admin/dashboard/lecturercourses',
         name: 'LecturerCourses',
         component: LecturerCourses
     },
     {
-        path: '/dashboard/studentlist',
+        path: '/admin/dashboard/studentlist',
         name: 'StudentList',
         component: StudentList
     },
