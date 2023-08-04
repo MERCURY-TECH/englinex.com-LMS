@@ -24,6 +24,7 @@ import PlatformTeachers from '@/views/PlatformTeachers'
 import UserDasboard from '@/views/UserDashboard'
 import LecturerCourses from '@/views/LecturerCourses'
 import LoginSignUpPage from '@/views/auth/LoginSignUpPage'
+import StudentList from '@/views/StudentList'
 
 const http404 = { 
 	template: '<div>http404 path is : {{$route.path}}</div>',
@@ -32,7 +33,6 @@ const http404 = {
     this.$parent.title ="http404 Page";
   }
 }
-
 const routes = [
     // {
     //     path: '/auth',
@@ -149,6 +149,11 @@ const routes = [
         path: '/dashboard/lecturercourses',
         name: 'LecturerCourses',
         component: LecturerCourses
+    },
+    {
+        path: '/dashboard/studentlist',
+        name: 'StudentList',
+        component: StudentList
     },
     {
         path: '/userdashboard',

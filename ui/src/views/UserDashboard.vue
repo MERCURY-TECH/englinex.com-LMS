@@ -236,7 +236,7 @@ export default {
     },
     data() {
         return {
-            studentRole: false
+            studentRole: true
         }
     },
 }
