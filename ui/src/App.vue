@@ -16,11 +16,7 @@ export default {
   computed: {
     isAdminRoute: {
       get() {
-        try {
-          return this.$router.currentRoute.value.path.includes('admin')
-        } catch (error) {
-          console.log(error)
-        }
+        return this.$router.currentRoute.value.path.includes('admin')
       },
     }
   }

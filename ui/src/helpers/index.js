@@ -1,7 +1,7 @@
-import parseJwt from "./auth-helper";
+import parseJwt from "./auth-helper"
 
 
 
 
 
-export {parseJwt};
+export { parseJwt }
