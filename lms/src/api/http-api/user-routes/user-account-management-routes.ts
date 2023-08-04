@@ -26,9 +26,10 @@ export default function(repository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let registerUser = await repository.registerUsers(req.body as IUser)
+                    let registerUser = await repository.registerUsers(req.body as IUser);
+					let token = generateToken({ ...registerUser }, process.env.Token_sercret, 60 * 60 * 60 * 24);
                     await repository.initiateAccountActivation({user:registerUser._id})
-                    message.message = { users:registerUser };
+                    message.message = { token, users:registerUser };
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
