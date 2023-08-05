@@ -1,7 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DashboardHome from "../views/DashboardHome.vue";
-import DashboardCourses from "../views/DashboardCourses.vue";
-import DashboardSettings from "../views/DashboardSettings.vue";
 import DashboardViewCourse from "../views/DashboardViewCourse";
 import DashboardCreateCourse from "../views/DashboardCreateCourse";
 import DashboardEditCourse from "../views/DashboardEditCourse";
@@ -9,10 +6,8 @@ import DashboardCreateCourseSection from "../views/DashboardCreateCourseSection"
 import DashboardEditCourseSection from "../views/DashboardEditCourseSection";
 import DashboardCreateSectionMaterial from "../views/DashboardCreateSectionMaterial";
 import DashboardEditSectionMaterial from "../views/DashboardEditSectionMaterial";
-// import LoginForm from '../views/LoginForm'
-
 import HomePage from "../views/HomePage";
-import CourseOverview from "../views/CourseOverview";
+
 // import Signup from '@/views/Signup'
 import PlatformBundles from "@/views/PlatformBundles";
 import PlatformTransaction from "@/views/PlatformTransactions";
@@ -43,6 +38,7 @@ const http404 = {
 //       next("/");
 //     }
 //   }
+// DashboardCourses
 
 const routes = [
     {
@@ -73,22 +69,22 @@ const routes = [
     {
         path: "/material",
         name: "MaterialOverview",
-        component: CourseOverview,
+        component: ()=>import('../views/CourseOverview'),
     },
     {
         path: "/admin",
         name: "DashboardHome",
-        component: DashboardHome,
+        component: ()=>import("../views/DashboardHome.vue"),
     },
     {
         path: "/admin/dashboard/courses",
         name: "Courses",
-        component: DashboardCourses,
+        component: ()=>import("../views/DashboardCourses.vue"),
     },
     {
         path: "/admin/dashboard/settings",
         name: "Settings",
-        component: DashboardSettings,
+        component: ()=>import("../views/DashboardSettings.vue"),
     },
     {
         path: "/admin/dashboard/course",
@@ -97,6 +93,7 @@ const routes = [
     },
     {
         path: "/admin/dashboard/get-course/:id",
+		name:"GetSingleCourse",
         component: DashboardViewCourse,
     },
     {

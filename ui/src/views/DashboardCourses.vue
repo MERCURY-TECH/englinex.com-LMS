@@ -172,8 +172,8 @@ export default {
           console.log(error);
         });
     },
-    viewCourse(e) {
-      this.$router.push('/dashboard/get-course/'+ e);
+    viewCourse(id) {
+      this.$router.push({name:'GetSingleCourse',params: { id }});
     },
     deleteCourse(e) {
       if (window.confirm('Are you sure you want to delete this course?')) {

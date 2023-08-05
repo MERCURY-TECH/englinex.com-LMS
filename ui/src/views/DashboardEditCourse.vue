@@ -77,9 +77,7 @@
                   </small>
                 </div>
               </div>
-
-              
-              <!-- <div class="p-2">
+             <div class="p-2">
                 <p class="h4">Course Content</p>
                 <p class="h6">Section & Material</p>
 
@@ -100,7 +98,7 @@
                     </label>
                   </div>
                 </div>
-              </div> -->
+              </div>
             </div>
             <div class="col-md-5 px-3" style="border-left: 1px solid #A01FEF;">
               <div class="col-md-12">
@@ -110,11 +108,11 @@
                       <p style="font-size: .85em" class="mb-4">
                         <small>Browse files & select your photo here to start uploading</small>
                       </p>
-                      <!-- <div class="row">
+                      <div class="row">
                         <div class="col-5"><hr></div>
                         <div class="col-2 p-0"><p class="h4">OR</p></div>
                         <div class="col-5"><hr></div>
-                      </div> -->
+                      </div> 
                       <label class="btn btn-sm primary-button w-100 rounded-2" for="inputImage" style="opacity: 1;">
                         Browse files
                         <input type="file" @change="onImageSelected" class="visually-hidden" accept=".jpg, .jpeg, .png" id="inputImage" />
