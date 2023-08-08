@@ -170,10 +170,11 @@
 </template>
 
 <script>
-import DashboardTemplate from '../components/DashboardTemplate.vue';
+import DashboardTemplate from '@/components/DashboardTemplate.vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   name: 'DashboardEditCourse',
@@ -247,26 +248,27 @@ export default {
         isPublic: this.course.isPublic
       })
       .then(response => {
-
+        console.log(response)
         if (this.image !== '') {
-
           const fd = new FormData();
           fd.append('upload', this.image);
           axios.patch('cover-image/'+this.courseId, fd)
           .then(() => {
-            alert('Course successfully updated. (Please refresh page to see all changes)')
+            Swal.fire('Course Update','Course cover Image  was updated with success');
+          Swal.update({icon:'success'});
             this.loader = false
-            this.$router.push('/dashboard/get-course/'+this.courseId);
+            this.$router.push({name:'GetSingleCourse',params:{id:this.courseId}});
           })
           .catch(error => {
             this.loader = false
-            console.log(error)
+            Swal.fire('Course not Updated',error.message);
+            Swal.update({icon:'error'});
           })
         }
 
         alert('Course successfully updated. (Please refresh page to see all changes)')
-        console.log(response.data)
-        this.$router.push('/dashboard/get-course/'+this.courseId);
+
+        this.$router.push({name:'GetSingleCourse',params:{id:this.courseId}});
 
       })
       .catch(error => {

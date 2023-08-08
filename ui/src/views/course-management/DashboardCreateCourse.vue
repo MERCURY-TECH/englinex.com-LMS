@@ -21,7 +21,7 @@
 								@change="makePublic">
 						</div>
 						<div class="pt-3">
-							<button class="btn btn-sm primary-button-outline px-5 mx-2">
+							<button @click="createCourse" class="btn btn-sm primary-button-outline px-5 mx-2">
 								Save
 								<div class="spinner-border spinner-border-sm text-dark" v-if="loader" role="status">
 									<span class="visually-hidden">Loading...</span>
@@ -116,62 +116,25 @@
 							</div>
 
 						</div>
-
-						<div class="col-md-4 p-2">
-							<p class="h4">Course Content</p>
-							<p class="h6">Section & Material</p>
-							<p class="text-muted" style="font-size: .85em">
-								<small>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-									incididunt ut labore et dol.
-								</small>
-							</p>
-							<div class="content-drag bg-light p-2 rounded-4" @drop.prevent="onDrop">
-								<div class="drag-zone p-3 rounded-4 text-center"
-									style="background-color: #F7EBFF; border: 2px dashed #ccc;">
-									<p class="h1 primary-text py-3"><i class="bi-folder-fill"></i></p>
-									<p style="font-size: .85em">
-										<small>Drag your course content <strong>CSV | JSON</strong> here to start
-											uploading</small>
-									</p>
-									<div class="row my-4">
-										<div class="col-5">
-											<hr>
-										</div>
-										<div class="col-2  p-0">
-
-
-
-
-											<p class="h2">OR</p>
-										</div>
-										<div class="col-5">
-											<hr>
-										</div>
-									</div>
-									<label class="btn btn-sm primary-button w-100 rounded-2" for="inputDoc">
-										Browse Files
-										<input type="file" @change="onDocumentSelected" class="visually-hidden"
-											accept=".csv, .json" id="inputDoc" />
-									</label>
-								</div>
-							</div>
-						</div>
+						<ImportCourseContent targetEndPoint='/import-sections/courseId' importSectionTitle="Section & Material"  />
 					</div>
 				</form>
-				<ImportCourseContent importSectionTitle="Course, section & Material" v-if="this.toggleCreateToImportCourse" />
+				<ImportCourseContent targetEndPoint='import-course/' importSectionTitle="Course, section & Material" v-if="this.toggleCreateToImportCourse" />
 			</div>
 		</div>
 
 	</DashboardTemplate>
 </template>
 
-<script>
+
+<script >
 import axios from 'axios';
-import DashboardTemplate from '../components/DashboardTemplate.vue';
+import DashboardTemplate from '@/components/DashboardTemplate.vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import ImportCourseContent from '../components/misc/course-management/ImportCourseContent.vue'
+import ImportCourseContent from '@/components/misc/course-management/ImportCourseContent.vue'
 import CKEditor from '@ckeditor/ckeditor5-vue';
+
+
 
 export default {
 	name: 'DashboardCreateCourse',
@@ -283,7 +246,7 @@ export default {
 					} else {
 						alert('Course created with success')
 						this.loader = false;
-						this.$router.push('/admin/dashboard/courses')
+						this.$router.push({name:'Courses'})
 						console.log(response.data)
 					}
 

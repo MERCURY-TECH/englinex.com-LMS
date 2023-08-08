@@ -3,7 +3,7 @@
     <div class="container p-md-3">
         <div class="">
           <div class="row">
-            <div class="col-md-11 rounded bg-body p-3">
+            <div class="col-md-8 rounded bg-body p-3">
               <!-- Form Head Row -->
               <div class="row">
                 <div class="col">
@@ -104,8 +104,7 @@
                 </div>
               </div>
             </div>
-
-            <!-- <div class="col-md-4">
+             <div class="col-md-4">
               <div class="rounded bg-body p-3">
                 <p class="h2">Related Courses</p>
                 <p><small>Course title: lorem ipsum dolor sit</small></p>
@@ -123,18 +122,19 @@
                 </div>
 
               </div>
-            </div> -->
+            </div> 
           </div>
         </div>
     </div>
   </DashboardTemplate>
 </template>
 
-<script>
-import DashboardTemplate from '../components/DashboardTemplate.vue';
+<script >
+import DashboardTemplate from '@/components/DashboardTemplate.vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   name: 'DashboardViewCourse',
@@ -143,9 +143,6 @@ export default {
     ckeditor: CKEditor.component
   },
   
-  props: {
-  },
-
   mounted() {
     this.fetchCourse();
   },
@@ -167,7 +164,8 @@ export default {
         this.course = response.data.message.courses;
         if (this.course.coverimage.length > 0) {
           this.imagePresent = true;
-          this.imagePath = 'http://185.216.26.155:3000'+this.course.coverimage;
+          this.course.coverimage
+          this.imagePath =   this.course.coverimage;
         }
         console.log(this.course)
       })
@@ -181,7 +179,7 @@ export default {
         axios.delete('delete/course/'+this.courseId)
         .then(() => {
           alert('The course has been deleted')
-          this.$router.push('/dashboard/courses')
+          this.$router.push({name:'Courses'})
         })
         .catch(error => {
           console.log(error)
@@ -193,10 +191,13 @@ export default {
       if (window.confirm('Are you sure you want to delete this course section?')) {
         axios.delete('delete/section/'+e)
         .then(() => {
-          alert('Course section has been deleted');
+          Swal.fire('Course deleted','Course was deleted with success');
+          Swal.update({icon:'success'});
           this.fetchCourse();
         })
         .catch(error => {
+          Swal.fire('Course Note deleted','Course section was not deleted');
+          Swal.update({icon:'error'});
           console.log(error)
         })
       }
@@ -206,7 +207,8 @@ export default {
       if (window.confirm('Are you sure you want to delete this section material?')) {
         axios.delete('delete/material/'+e)
         .then(() => {
-          alert('Section material has been deleted');
+          Swal.fire('Course deleted','Course was deleted with success');
+          Swal.update({icon:'success'});
           this.fetchCourse()
         })
         .catch(error => {

@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DashboardViewCourse from "../views/DashboardViewCourse";
-import DashboardCreateCourse from "../views/DashboardCreateCourse";
-import DashboardEditCourse from "../views/DashboardEditCourse";
-import DashboardCreateCourseSection from "../views/DashboardCreateCourseSection";
-import DashboardEditCourseSection from "../views/DashboardEditCourseSection";
-import DashboardCreateSectionMaterial from "../views/DashboardCreateSectionMaterial";
-import DashboardEditSectionMaterial from "../views/DashboardEditSectionMaterial";
+import DashboardViewCourse from "../views/course-management/DashboardViewCourse";
+import DashboardCreateCourse from "../views/course-management/DashboardCreateCourse";
+import DashboardEditCourse from "../views/course-management/DashboardEditCourse";
+import DashboardCreateCourseSection from "../views/course-management/DashboardCreateCourseSection";
+import DashboardEditCourseSection from "../views/course-management/DashboardEditCourseSection";
+import DashboardCreateSectionMaterial from "../views/course-management/DashboardCreateSectionMaterial";
+import DashboardEditSectionMaterial from "../views/course-management/DashboardEditSectionMaterial";
 import HomePage from "../views/HomePage";
 
 // import Signup from '@/views/Signup'
@@ -79,7 +79,7 @@ const routes = [
     {
         path: "/admin/dashboard/courses",
         name: "Courses",
-        component: ()=>import("../views/DashboardCourses.vue"),
+        component: ()=>import("../views/course-management/DashboardCourses.vue"),
     },
     {
         path: "/admin/dashboard/settings",
