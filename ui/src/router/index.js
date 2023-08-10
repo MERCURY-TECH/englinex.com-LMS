@@ -12,8 +12,7 @@ import HomePage from "../views/HomePage";
 import PlatformBundles from "@/views/PlatformBundles";
 import PlatformTransaction from "@/views/PlatformTransactions";
 import PlatformTeachers from "@/views/PlatformTeachers";
-import UserDasboard from "@/views/UserDashboard";
-import LecturerCourses from "@/views/LecturerCourses";
+
 import LoginSignUpPage from "@/views/auth/LoginSignUpPage";
 import StudentList from "@/views/StudentList";
 // import {parseJwt} from '../helpers'
@@ -67,7 +66,7 @@ const routes = [
         component: () => import("../views/CourseList"),
     },
     {
-        path: "/material",
+        path: "/course/:courseId",
         name: "MaterialOverview",
         component: ()=>import('../views/CourseOverview'),
     },
@@ -144,7 +143,7 @@ const routes = [
     {
         path: "/admin/dashboard/lecturercourses",
         name: "LecturerCourses",
-        component: LecturerCourses,
+        component: ()=>import("@/views/course-management/LecturerCourses"),
     },
     {
         path: "/admin/dashboard/studentlist",
@@ -154,7 +153,7 @@ const routes = [
     {
         path: "/userdashboard",
         name: "UserDasboard",
-        component: UserDasboard,
+        component: ()=>import("@/views/account-management/UserDashboard.vue"),
     },
     {
         path: "/auth",

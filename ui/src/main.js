@@ -5,6 +5,9 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from "./router";
 import './axios.js';
-const pinia = createPinia()
 
-createApp(App).use(pinia,router, VueSweetalert2 ).mount('#app')
+let app = createApp(App);
+app.use(router);
+app.use(createPinia());
+app.use(VueSweetalert2);
+app.mount('#app')

@@ -155,7 +155,7 @@ export default {
       loader: false,
       formErrors: { error: false, messages: {} },
       materialTypeList: ['rich-text', 'phonetic'],
-      materialColorList: [{ colorCode: '#ff3e34', title: 'Red' }]
+      materialColorList: []
     };
   },
   methods: {

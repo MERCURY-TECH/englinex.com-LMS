@@ -25,15 +25,9 @@
     </section>
 </template>
 
-<script>
+<script setup>
 import AuthHandler from '../../components/misc/authentication/AuthHandler.vue'
 
-export default {
-    name: 'LoginSignUpPage',
-    components: {
-        AuthHandler
-    }
-}
 </script>
 
 <style>

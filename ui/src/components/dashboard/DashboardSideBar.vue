@@ -8,7 +8,7 @@
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
           <ul class="nav flex-column">
             <li class="nav-item header-link">
-              <router-link class="nav-link d-flex align-items-center gap-2 active fw-bold text-dark" aria-current="page" :to="{ name: 'DashboardHome' }">
+              <router-link class="nav-link d-flex align-items-center gap-2 active fw-bold text-dark" aria-current="page" :to="{ name: 'HomeView' }">
                 <i class="bi-house p-left"></i>
                 Home
               </router-link>
@@ -17,7 +17,9 @@
               <router-link class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{ name: 'Courses' }">
                 <i class="bi-bar-chart-line p-left"></i>
                 Courses
-                <span class='badge rounded-pill text-bg-purple h3' style="background-color:#A01FEF; margin-left: 4.5em;">10</span>
+                <span class='badge rounded-pill text-bg-purple h3' style="background-color:#A01FEF; margin-left: 4.5em;">
+                  {{ courseStore.courses.length }}
+                </span>
               </router-link>
             </li>
             <li class="nav-item header-link">
@@ -56,18 +58,31 @@
                 Settings
               </router-link>
             </li>
+            <li @click="disconnect" class="nav-item header-link">
+              <span class="nav-link d-flex align-items-center gap-2 fw-bold text-dark">
+                <i class="bi bi-box-arrow-in-left"></i>
+                Disconnect
+              </span>
+            </li>
           </ul>
         </div>
       </div>
     </div>
 </template>
 
-<script>
-export default {
-  name: 'DashboardSideBar',
-  props: {
+<script setup>
+  import { useCourseStore } from '@/stores/courseStore';
+  import { useAuthStore } from "@/stores/authStore";
+  import router from '@/router';
+
+  const authStore = useAuthStore();
+  let courseStore = useCourseStore()
+
+  function disconnect(){
+    authStore.disconnect();
+    router.push({name:'HomeView'})
   }
-}
+
 </script>
 
 <style scoped>

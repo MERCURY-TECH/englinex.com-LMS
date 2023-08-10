@@ -1,26 +1,20 @@
 <template>
-  <WebsiteHeader v-if="!this.isAdminRoute" />
+  <WebsiteHeader v-if="!isAdminRoute" />
   <router-view />
-  <WebsiteFooter v-if="!this.isAdminRoute" />
+  <WebsiteFooter v-if="!isAdminRoute" />
 </template>
 
-<script>
+<script setup>
 import WebsiteHeader from './components/website/WebsiteHeader.vue'
 import WebsiteFooter from './components/website/WebsiteFooter.vue'
-export default {
-  name: 'App',
-  components: {
-    WebsiteHeader,
-    WebsiteFooter
-  },
-  computed: {
-    isAdminRoute: {
-      get() {
-        return this.$router.currentRoute.value.path.includes('admin')
-      },
-    }
-  }
-}
+import router from '@/router'
+import {computed,onMounted} from 'vue'
+import { useAuthStore } from './stores/authStore';
+const authStore = useAuthStore()
+
+onMounted(()=>authStore.loadUserFromLocalStorage());
+
+let  isAdminRoute =  computed(()=>router.currentRoute.value.path.includes('admin'))
 </script>
 
 
