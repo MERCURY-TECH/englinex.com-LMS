@@ -21,6 +21,7 @@ import UserDasboard from "@/views/UserDashboard";
 import LecturerCourses from "@/views/LecturerCourses";
 import LoginSignUpPage from "@/views/auth/LoginSignUpPage";
 import StudentList from "@/views/StudentList";
+import WaitingsCreen from '@/views/WaitingScreen.vue'
 // import {parseJwt} from '../helpers'
 const http404 = {
     template: "<div>http404 path is : {{$route.path}}</div>",
@@ -158,6 +159,11 @@ const routes = [
         path: "/userdashboard",
         name: "UserDasboard",
         component: UserDasboard,
+    },
+    {
+        path: "/waitingscreen",
+        name: "WaitingsCreen",
+        component: WaitingsCreen,
     },
     {
         path: "/auth",
