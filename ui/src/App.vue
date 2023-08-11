@@ -16,9 +16,15 @@ import WebsiteFooter from './components/website/WebsiteFooter.vue'
 import router from '@/router'
 import {computed,onMounted} from 'vue'
 import { useAuthStore } from './stores/authStore';
-const authStore = useAuthStore()
+import { useBundleStore } from './stores/bundleStore';
+import { useCourseStore } from './stores/courseStore';
 
+const authStore = useAuthStore()
+const bundleStore = useBundleStore();
+const courseStore = useCourseStore()
 onMounted(()=>authStore.loadUserFromLocalStorage());
+onMounted(async ()=> await bundleStore.getBundles());
+onMounted(async ()=> await courseStore.getAllCourses());
 
 let  isAdminRoute =  computed(()=>router.currentRoute.value.path.includes('admin'))
 </script>
