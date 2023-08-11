@@ -7,8 +7,6 @@ import DashboardEditCourseSection from "../views/course-management/DashboardEdit
 import DashboardCreateSectionMaterial from "../views/course-management/DashboardCreateSectionMaterial";
 import DashboardEditSectionMaterial from "../views/course-management/DashboardEditSectionMaterial";
 import HomePage from "../views/HomePage";
-
-// import Signup from '@/views/Signup'
 import PlatformBundles from "@/views/PlatformBundles";
 import PlatformTransaction from "@/views/PlatformTransactions";
 import PlatformTeachers from "@/views/PlatformTeachers";
@@ -16,13 +14,6 @@ import PlatformTeachers from "@/views/PlatformTeachers";
 import LoginSignUpPage from "@/views/auth/LoginSignUpPage";
 import StudentList from "@/views/StudentList";
 // import {parseJwt} from '../helpers'
-const http404 = {
-    template: "<div>http404 path is : {{$route.path}}</div>",
-    mounted() {
-        console.log(this.$route.path);
-        this.$parent.title = "http404 Page";
-    },
-};
 
 // function beforeRouteEnter (to, from, next) {
 //     if (localStorage.token) {
@@ -41,9 +32,9 @@ const http404 = {
 
 const routes = [
     {
-        path: "/checkout",
-        name: "SignupForm",
-        component: () => import("../views/SignupCheckout"),
+        path: "/checkOut",
+        name: "CheckOut",
+        component: () => import("../views/CheckOutPage"),
     },
     {
         path: "/",
@@ -160,10 +151,11 @@ const routes = [
         name: "LoginSignUpPage",
         component: LoginSignUpPage,
     },
+    
     {
-        path: "/**/",
-        name: "404FallBack",
-        component: http404,
+        path: "/:catchAll(.*)",
+        name: "NotFound",
+        component: ()=>import("@/views/fallback/NotFound.vue"),
     },
 ];
 

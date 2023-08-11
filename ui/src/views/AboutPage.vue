@@ -1,5 +1,4 @@
 <template>
-	<WebsiteTemplate>
     <section class="p-md-5" >
       <div class="container">
         <div class="row">
@@ -62,45 +61,9 @@
       </div>
     </section>
     
-  </WebsiteTemplate>
 </template>
-<script>
-	import WebsiteTemplate from '../components/WebsiteTemplate.vue';
-	import axios from 'axios';
-
-	export default {
-		name: 'AboutPage',
-		components: {
-			WebsiteTemplate,
-		},
-    data() {
-      return {
-        user: {
-          username: '',
-          password: ''
-        }
-      }
-    },
-    methods: {
-      
-      handleSubmit() {
-        // const fd = new FormData();
-        // fd.append('username', this.username);
-        // fd.append('pwd', this.pwd);
-
-        axios.post('login', this.user)
-        .then(response => {
-          localStorage.setItem('token', response.data.token);
-          alert('Logged in successfully');
-          this.$router.push('/dashboard/');
-        })
-        .catch(error => {
-          alert('Login Error: ' + error.response.data.errorMessage)
-        })
-      }
-
-    }
-	}
+<script setup>
+	
 </script>
 
 <style scoped>

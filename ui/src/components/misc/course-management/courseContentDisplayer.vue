@@ -27,7 +27,7 @@
     <div class="pt-5 px-2">
       <p class="row">
         <span class="h3 fw-bold col" style="font-family: 'Raleway', sans-serif">{{ props.course.title }}</span>
-        <router-link :to="{ name: authStore.authUser === null ? 'SignupForm' : '' }"
+        <router-link :to="{ name: authStore.authUser ?  'UserDasboard' : 'CheckOut'}"
           class="btn btn-sm primary-button col-auto px-md-4 py-2">Register Course</router-link>
       </p>
       <p class="border-start border-warning bg-warning-subtle p-4" style="line-height: -5px">
@@ -52,8 +52,9 @@
     </div>
   </div>
   <div v-if="props.contenttodisplay" class="p-3 col-auto col-md-8">
-    <span class="h4 fw-bold col" style="font-family: 'Raleway', sans-serif">{{ props.contenttodisplay.object.title
-    }}</span>
+    <span class="h4 fw-bold col" style="font-family: 'Raleway', sans-serif">
+      {{ props.contenttodisplay.object.title }}
+    </span>
     <p v-html="props.contenttodisplay.object.description"></p>
     <p v-html="props.contenttodisplay.object.content"></p>
   </div>

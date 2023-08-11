@@ -17,7 +17,7 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li @click="navigateToDashBoard" v-if="authStore.authUser" class="nav-item header-link px-4 active">
-              <span class="nav-link active">welcome {{ authStore.authUser.firstname }}</span>
+              <span class="nav-link active">Welcome {{ authStore.authUser.firstname }}</span>
             </li>
             <li class="nav-item dropdown header-link">
               <a class="nav-link header-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

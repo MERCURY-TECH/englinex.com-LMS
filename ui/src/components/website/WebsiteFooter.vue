@@ -93,10 +93,10 @@
 
 </script>
 <style scoped>
-/* footer{
-  position: absolute;
-  top: 100%;
+footer{
+  position: relative;
+  top: 30vh;
   width: 100vw;
-} */
+}
 </style>
 
