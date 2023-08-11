@@ -3,7 +3,7 @@
     <div class="container px-md-3 py-3">
         <div class="p-3">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
               <div class="row p-2 col-12 rounded-2 m-1" style="background-color: #F7EBFF;">
                 <div class="col"><p class="h6 fw-bold">{{course.title}}</p></div>
                 <div class="col-auto">
@@ -86,17 +86,17 @@
                       <div class="col">
                         <p><span class="h4">Section Material</span><br><small>Section ID: #{{sectionId}}</small></p>
                       </div>
-                      <div class="col-auto">
-                        <router-link :to="{ name: 'CreateSectionMaterial', params: { sectionId: sectionId } }" class="fw-bold" style="color: #490194;">
-                          <small>Create new material</small> <a class="h4 ps-2" style="color: #490194;"><i class="bi-plus-circle-fill"></i></a></router-link>
+                      <div @click="toggleCreateMaterialForm"  class="fw-bold col-auto" style="color: #490194;" >
+                        <small>Create new material</small> <a class="h4 ps-2"  style="color: #490194;"><i class="bi-plus-circle-fill"></i></a>
                       </div>
+                      <DashboardCreateSectionMaterial :course-section="this.currentSection" @toggleCreateMaterialForm="toggleCreateMaterialForm"   v-if="isCreateMaterial" />
                     </div>
                     <div style="max-height: 220px; overflow-y: scroll;" class="p-2">
-                      
                       <div class="p-2">
                         <div v-for="(material,index) in materialList" :key="index" class="row bg-light rounded-2 mb-2 section-material" style="transition: .2s;">
                           <div class="col"> 
                             <p class="pt-2"><small style="font-size: .78em;"><span class="primary-text fw-bold">{{material.title}}</span><br><span>#{{material._id}}</span></small></p>
+
                           </div>
                           <div class="col-auto text-center">
                             <p class="pt-3">
@@ -122,7 +122,7 @@
                 </div>  
             </div>
 
-            <!-- <div class="col-md-4">
+            <div class="col-md-4">
               <div class="rounded bg-body p-3" style="position: relative;">
                 <p class="h2">Course Sections</p>
                 <p><small>Course title: lorem ipsum dolor sit</small></p>
@@ -148,7 +148,7 @@
 
                 </div>
               </div>
-            </div> -->
+            </div> 
           </div>
         </div>
     </div>
@@ -156,16 +156,18 @@
 </template>
 
 <script>
-  import DashboardTemplate from '../components/DashboardTemplate.vue';
+  import DashboardTemplate from '@/components/DashboardTemplate.vue';
   import axios from 'axios';
   import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   import CKEditor from '@ckeditor/ckeditor5-vue';
+  import DashboardCreateSectionMaterial from '@/views/course-management/DashboardCreateSectionMaterial.vue'
 
     export default {
         name: 'DashboardEditCourseSection',
         components: {
           DashboardTemplate,
-          ckeditor: CKEditor.component
+          ckeditor: CKEditor.component,
+          DashboardCreateSectionMaterial
         },
         props: {
         },
@@ -176,6 +178,7 @@
         },
         data() {
           return {
+            isCreateMaterial:false,
             sectionId: this.$route.params.sectionId,
             courseId: '',
             editor: ClassicEditor,
@@ -189,11 +192,15 @@
             image: null,
             imagePath: '',
             coverImage: '',
-            loader: false
+            loader: false,
+            currentSection:''
           }
         },
 
         methods: {
+          toggleCreateMaterialForm(){
+            this.isCreateMaterial = !this.isCreateMaterial;
+          },
           fetchSection() {
             axios.get('section/'+this.sectionId)
             .then(response => {
@@ -203,6 +210,7 @@
               this.contentLevel = response.data.message.sections.contentLevel
               this.coverimage = response.data.message.sections.coverimage
               this.material = response.data.message.sections.material
+              this.currentSection = response.data.message.sections;
               if (this.coverimage.length > 0) {
                 this.imagePath = 'http://185.216.26.155:3000'+response.data.message.sections.coverimage;
               }

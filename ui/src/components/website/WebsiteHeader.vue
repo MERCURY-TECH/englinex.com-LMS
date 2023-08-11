@@ -2,7 +2,9 @@
   <!-- Header -->
   <nav class="navbar navbar-expand-lg " aria-label="Offcanvas navbar large">
     <div class="container border-bottom py-3 px-5 primary-border">
-      <router-link :to="{ name: 'HomeView' }">Englinex</router-link>
+      <router-link :to="{ name: 'HomeView' }">
+        <img src="" alt="Englinex" >
+      </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
         aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -14,6 +16,9 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li @click="navigateToDashBoard" v-if="authStore.authUser" class="nav-item header-link px-4 active">
+              <span class="nav-link active">Welcome {{ authStore.authUser.firstname }}</span>
+            </li>
             <li class="nav-item dropdown header-link">
               <a class="nav-link header-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -53,12 +58,10 @@
             <li class="nav-item header-link">
               <a class="nav-link">Contact Us</a>
             </li>
-            <li class="nav-item primary-header-link px-md-5 primary-text">
+            <li v-if="!authStore.authUser" class="nav-item primary-header-link px-md-5 primary-text">
               <router-link class="primary-text fw-bold" :to="{ name: 'LoginSignUpPage' }">Login | Signup</router-link>
             </li>
-            <li class="nav-item header-link">
-              <img src="https://github.com/mdo.png" alt="" width="40" height="40" class="rounded-circle me-2">
-            </li>
+            
           </ul>
           <div class="d-flex mt-3 mt-lg-0" role="search">
             <input class="form-control form-control-sm me-2 d-none" type="search" placeholder="Search..."
@@ -72,9 +75,14 @@
   <!-- !Header -->
 </template>
 
-<script>
-export default {
-  name: 'WebsiteHeader'
+<script setup>
+import { useAuthStore } from "@/stores/authStore";
+const authStore = useAuthStore();
+import router from "@/router";
+function navigateToDashBoard(){
+  if(authStore.authUser.accountType === 'admin') router.push({name:'DashboardHome'});
+  if(authStore.authUser.accountType === 'teacher') router.push({name:'UserDasboard'})
+  if(authStore.authUser.accountType === 'student') router.push({name:'UserDasboard'})
 }
 </script>
 
@@ -90,4 +98,6 @@ export default {
   color: #A01FEF;
   padding: 3px;
   border-bottom: 2px solid #A01FEF;
-}</style>
+}
+
+</style>

@@ -3,7 +3,7 @@
     <div class="container px-md-1 py-3">
       <div class="p-3">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-8">
             <div
               class="row p-2 col-12 rounded-2 m-1"
               style="background-color: #f7ebff"
@@ -93,7 +93,7 @@
 
                 
               </form>
-              <!-- <hr />
+               <hr />
               <div class="p-2">
                 <p class="h4">Section Content</p>
                 <div class="content-drag bg-light p-2 rounded-4">
@@ -121,11 +121,11 @@
                     >
                   </div>
                 </div>
-              </div> -->
+              </div> 
             </form>
           </div>
 
-          <!-- <div class="col-md-4">
+          <div class="col-md-4">
             <div class="rounded bg-body p-3">
               <p class="h2">Course Sections</p>
               
@@ -159,7 +159,7 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -167,7 +167,7 @@
 </template>
 
 <script>
-import DashboardTemplate from "../components/DashboardTemplate.vue";
+import DashboardTemplate from "@/components/DashboardTemplate.vue";
 import axios from 'axios';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-vue';
@@ -249,7 +249,7 @@ export default {
           .then(() => {
             alert('Course Section Successfully Created')
             this.loader = false;
-            this.$router.push('/dashboard/get-course/'+this.courseId);
+            this.$router.push({name:'GetSingleCourse', params:{id:this.courseId}});
           })
           .catch(error => {
             alert('An error occured, please retry later')
@@ -259,12 +259,11 @@ export default {
         } else {
           alert('Course Section Successfully Created')
           this.loader = false
-          this.$router.push('/dashboard/get-course/'+this.courseId)
+          this.$router.push({name:'GetSingleCourse', params:{id:this.courseId}});
           console.log(response.data)
         }
       })
     }
   }
-
 };
 </script>

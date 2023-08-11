@@ -6,17 +6,9 @@
     </DashboardTemplate>
 </template>
 
-<script>
+<script setup>
 import DashboardTemplate from '../components/DashboardTemplate.vue';
 
-export default {
-  name: 'DashboardHome',
-  components: {
-    DashboardTemplate,
-  },
-  props: {
-  }
-}
 </script>
 
 <style scoped>

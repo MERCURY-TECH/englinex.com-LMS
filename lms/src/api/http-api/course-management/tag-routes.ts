@@ -41,8 +41,7 @@ export default function(repository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    console.log(req.body)
-                    message.message = { courses : await repository.createTag([...req.body]) }
+                    message.message = { tags : await repository.createTag([...req.body]) }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false

@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col">
             <p class="h2 fw-bold" style="font-family: 'Raleway', sans-serif">
-              {{title}}
+              {{ title }}
             </p>
             <p></p>
           </div>
@@ -19,16 +19,14 @@
                 </div>
               </button>
             </div>
-            <!-- <div class="pt-3">
+            <div class="pt-3">
               <button class="btn btn-sm primary-button-outline mx-2">
                 <i class="bi-upload"></i> Upload via CSV
               </button>
-            </div> -->
-            <router-link
-              :to="'/dashboard/edit-course-section/'+sectionId"
-              class="h3 text-danger ms-3"
-              ><i class="bi-x-circle"></i
-            ></router-link>
+            </div>
+
+            <router-link :to="'/dashboard/edit-course-section/' + sectionId" class="h3 text-danger ms-3"><i
+                class="bi-x-circle"></i></router-link>
           </div>
         </div>
         <hr />
@@ -44,39 +42,32 @@
                   <small><span>Make This Material Public</span></small>
                 </span>
               </label>
-                  <input class="form-check-input" type="checkbox" v-if="isPublic" checked role="switch" id="makeCoursePublic" @change="makePublic">
-                  <input class="form-check-input" type="checkbox" v-else role="switch" id="makeCoursePublic" @change="makePublic">
+              <input class="form-check-input" type="checkbox" v-if="isPublic" checked role="switch" id="makeCoursePublic"
+                @change="makePublic">
+              <input class="form-check-input" type="checkbox" v-else role="switch" id="makeCoursePublic"
+                @change="makePublic">
             </div>
           </div>
           <div class="col-md-12 row">
             <div class="mb-3 col-md-12">
-              <input
-                type="text"
-                v-model="title"
-                placeholder="Material Title"
-                class="form-control"
-              />
+              <input type="text" v-model="title" placeholder="Material Title" class="form-control" />
             </div>
             <div class="mb-3 col-md-12">
-              <textarea
-                class="form-control"
-                placeholder="Material description"
-                style="min-height: 75px"
-                v-model="description"
-              ></textarea>
+              <textarea class="form-control" placeholder="Material description" style="min-height: 75px"
+                v-model="description"></textarea>
             </div>
-            
+
           </div>
           <div class="col-md-12">
             <div class="">
               <form class="mb-3">
                 <div class="row">
                   <div class="col-md-12 mb-3 ">
-                    <ckeditor :editor="editor" v-model="content" ></ckeditor>
+                    <ckeditor :editor="editor" v-model="content"></ckeditor>
                   </div>
                 </div>
               </form>
-          
+
             </div>
           </div>
         </div>
@@ -86,7 +77,7 @@
 </template>
 
 <script>
-import DashboardTemplate from "../components/DashboardTemplate.vue";
+import DashboardTemplate from "@/components/DashboardTemplate.vue";
 import axios from "axios";
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-vue';
@@ -119,41 +110,40 @@ export default {
       this.showForm = !this.showForm;
     },
     fetchMaterial() {
-      axios.get('materials/'+this.materialId)
-      .then(response => {
-        this.title = response.data.message.materials.title
-        this.description = response.data.message.materials.description
-        this.content = response.data.message.materials.content
-        this.isPublic = response.data.message.materials.isPublic
-        this.sectionId = response.data.message.materials.sectionId
-        console.log(response.data.message)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      axios.get('materials/' + this.materialId)
+        .then(response => {
+          this.title = response.data.message.materials.title
+          this.description = response.data.message.materials.description
+          this.content = response.data.message.materials.content
+          this.isPublic = response.data.message.materials.isPublic
+          this.sectionId = response.data.message.materials.sectionId
+          console.log(response.data.message)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     makePublic() {
       if (this.isPublic) { this.isPublic = false } else { this.isPublic = true }
     },
-    editMaterial() {
+    async editMaterial() {
       this.loader = true
-      axios.patch('edit-section-material/'+this.materialId, {
-        title: this.title,
-        description: this.description,
-        isPublic: this.isPublic,
-        content: this.content
-      })
-      .then(response => {
+      try {
+        const response = await (await axios.patch('edit-section-material/' + this.materialId, {
+          title: this.title, description: this.description, isPublic: this.isPublic, content: this.content })).data
+        
         console.log(response)
         alert('The Material Was Succesfully Updated')
         this.loader = false
-        this.$router.push('/dashboard/edit-course-section/'+this.sectionId)
-      })
-      .catch(error => {
-        alert('An error occured, please retry later')
+        this.$router.push({ name: 'EditCourseSection', params: { sectionId: this.sectionId } })
+      } catch (e) {
+        const statusCode = e.response.status 
+        const statusText = e.response.statusText 
         this.loader = false
-        console.log(error)
-      })
+        const message = e.response.data.message[0]
+        console.log(`${statusCode} - ${statusText} - ${message}`)
+        alert(`${statusCode} - ${statusText} - ${message}`)
+      }
     }
   },
 };
@@ -163,6 +153,7 @@ export default {
 .section-material:hover {
   background-color: #f7ebff !important;
 }
+
 .section-material:hover .sub-content {
   display: block !important;
 }

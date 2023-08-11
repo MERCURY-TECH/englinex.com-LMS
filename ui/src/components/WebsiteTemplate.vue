@@ -2,14 +2,9 @@
         <slot></slot>
 </template>
 
-<script>
+<script setup>
 
-export default {
-  name: 'WebsiteTemplate',
-  components: {
 
-  }
-}
 </script>
 <style scoped>
 body {
