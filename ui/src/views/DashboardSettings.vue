@@ -17,7 +17,7 @@
                 <hr>
                 <div class="px-md-4 pb-5">
                   <div class="p-2">
-                      <div class="row table-row">
+                      <div class="row table-row" v-for="i in 3" :key="i">
                         <div class="col-2 pt-3 ps-3">
                           <img src="https://github.com/mdo.png" alt="" width="37" height="37" class="rounded-circle me-2">
                         </div>
@@ -86,7 +86,7 @@
                 </div>
                 <hr>  
                 <div class="px-3 pb-5">
-                  <div class="row table-row">
+                  <div class="row table-row" v-for="i in 3" :key="i">
                     <div class="col-8 pt-3" style="border-bottom: 1px solid lightgrey;">
                       <p>
                         <span class="text-muted">Role-Name</span>
@@ -143,6 +143,17 @@
               </div>
             </div>
           </div>
+          <p class="mt-3">Course Elements</p>
+          <hr>
+          <div class="row">
+           <div class="col-md-6">
+            <colorAdder/>
+           </div>
+           <div class="col-md-6">
+            <tags/>
+            <levels/>
+           </div>
+          </div>
         </div>
     </div>
   </DashboardTemplate>
@@ -150,11 +161,17 @@
 
 <script>
 import DashboardTemplate from '../components/DashboardTemplate.vue';
+import colorAdder from '@/components/dashboard/Setting/AddColor.vue'
+import tags from '@/components/dashboard/Setting/Tags.vue'
+import levels from '@/components/dashboard/Setting/Levels.vue'
 
 export default {
   name: 'DashboardSettings',
   components: {
     DashboardTemplate,
+    colorAdder,
+    tags,
+    levels
   },
   props: {
   },
