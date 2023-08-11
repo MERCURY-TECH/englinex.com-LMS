@@ -15,7 +15,7 @@
   "scripts": {
     "generate-docs": "jsdoc -c ./jsdoc-config.json",
     "build-run": "set NODE_ENV=production && npm run compile && cd build && pm2 start --name LMS index.js -f --watch && npm run buildcp-ui",
-    "buildcp-ui": "cd .. && cd ui && npm run build && cp -r ./dist ../lms/build",
+    "buildcp-ui": "cd .. && cd ui && npm run build && cp -r ./dist ../lms",
     "compile": "tsc",
     "start:tsc": "npx ts-node ./src",
     "start:prod": "node ./build/index",
