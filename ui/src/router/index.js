@@ -13,6 +13,8 @@ import PlatformTeachers from "@/views/PlatformTeachers";
 
 import LoginSignUpPage from "@/views/auth/LoginSignUpPage";
 import StudentList from "@/views/StudentList";
+import WaitingsCreen from '@/views/WaitingScreen.vue'
+import LiveClass from '@/views/Liveclass.vue'
 // import {parseJwt} from '../helpers'
 
 // function beforeRouteEnter (to, from, next) {
@@ -145,6 +147,16 @@ const routes = [
         path: "/userdashboard",
         name: "UserDasboard",
         component: ()=>import("@/views/account-management/UserDashboard.vue"),
+    },
+    {
+        path: "/waitingscreen",
+        name: "WaitingsCreen",
+        component: WaitingsCreen,
+    },
+    {
+        path: "/liveclass",
+        name: "LiveClass",
+        component: LiveClass,
     },
     {
         path: "/auth",

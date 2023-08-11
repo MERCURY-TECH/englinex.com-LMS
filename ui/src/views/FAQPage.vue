@@ -1,6 +1,6 @@
 <template>
 	<WebsiteTemplate>
-    <section style="overflow: hidden;">
+    <section style="overflow: hidden;" class="container">
       <div class="row">
         <div class="col-md-4 p-5">
           <p class="display-4 p-4 primary-text" style="font-family: 'Raleway', sans-serif;">Frequently Asked Questions</p>
