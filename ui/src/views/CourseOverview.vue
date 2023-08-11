@@ -13,7 +13,6 @@ import { ref,onMounted } from "vue";
 import { useCourseStore } from "@/stores/courseStore";
 import CourseContentDisplayer from "@/components/misc/course-management/courseContentDisplayer.vue";
 import MeterialListNavigation from '@/components/misc/course-management/MeterialListNavigation.vue'
-
 const routerObj = useRouter();
 const courseStore = useCourseStore();
 const course = ref({});

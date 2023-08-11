@@ -41,7 +41,7 @@ export const useAuthStore = defineStore('authStore', {
                 this.authUser = response.data.message.user
                 this.token.value = response.data.message.token
                 localStorage.setItem('englinex-token', response.data.message.token);
-                localStorage.setItem('englinex-authstore', JSON.stringify(this));
+                localStorage.setItem('englinex-authstore', this);
                 return {success:true, message:'User signed & connected successfully'}
             } catch (e) {
                 localStorage.removeItem('englinex-token');
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('authStore', {
             }
         },
         async loadUserFromLocalStorage(){
-            this.authUser = JSON.parse(localStorage.getItem('englinex-authstore')) ? JSON.parse(localStorage.getItem('englinex-authstore')).authUser:null;
+            this.authUser = localStorage.getItem('englinex-authstore') ? localStorage.getItem('englinex-authstore').authUser:null;
             this.token.value = localStorage.getItem('englinex-token');
             this.getUserSubscription()
         },
