@@ -25,7 +25,7 @@ export default class server{
       const app = express()
       app.use('/images',express.static(path.join(__dirname, "../../images")));
       app.use(express.static(path.join(__dirname, '../../dist')));
-      app.use(fallback('index.html',{root:path.join(__dirname, '../../dist')}))
+      
       app.use(morgan('dev'))
       app.use(bodyParser.json())
       app.use(bodyParser.urlencoded({ extended: true }))
@@ -39,6 +39,7 @@ export default class server{
       new SubscriptionManager(options.database_operations).startWorker();
       const httpserver = http.createServer(app);
       new RealTimeVoteCommunicator(httpserver);
+      app.use(fallback('index.html',{root:path.join(__dirname, '../../dist')}))
       const server:Server = httpserver.listen(options.port, () => resolve(server))
     })
   }
