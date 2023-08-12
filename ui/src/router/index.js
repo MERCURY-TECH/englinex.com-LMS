@@ -23,6 +23,7 @@ import LoginSignUpPage from "@/views/auth/LoginSignUpPage";
 import StudentList from "@/views/StudentList";
 import WaitingsCreen from '@/views/WaitingScreen.vue'
 import LiveClass from '@/views/Liveclass.vue'
+import BundlesPage from '@/views/Bundles'
 // import {parseJwt} from '../helpers'
 const http404 = {
     template: "<div>http404 path is : {{$route.path}}</div>",
@@ -170,6 +171,11 @@ const routes = [
         path: "/liveclass",
         name: "LiveClass",
         component: LiveClass,
+    },
+    {
+        path: "/bundles",
+        name: "BundlesPage",
+        component: BundlesPage,
     },
     {
         path: "/auth",

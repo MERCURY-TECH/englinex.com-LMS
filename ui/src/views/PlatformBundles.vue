@@ -119,5 +119,10 @@ export default {
 .btn-outline-primary {
     color: #A01FEF;
     border: #A01FEF 1px solid;
+    background-color: #fff;
+}
+.btn-outline-primary:hover{
+    background-color: #A01FEF;
+    color: #fff;
 }
 </style>
