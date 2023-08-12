@@ -58,13 +58,12 @@ const deleteCourseSectionMaterial: ILogic = {
     callback: async function (collection: { filter: { _id: string } }) {
         let material = await getMaterialById.callback(collection.filter._id);
         if(!material){throw new Error('material does not exist')}
-        let relatedSection = material.sectionId.toString();
-        let materialId = material._id.toString();
-        let section =await  CourseSection.findById(relatedSection);
-        if(section){
-            let materialsOfSection:Array<string> =  JSON.parse(JSON.stringify(section.material));
-            section.material = materialsOfSection.filter(v=>v != materialId) as any
-            section.save();
+        console.log(material)
+        let relatedSection = await CourseSection.findOne({material:collection.filter._id})
+        if(relatedSection){
+            let materialsOfSection:Array<string> =  JSON.parse(JSON.stringify(relatedSection.material));
+            relatedSection.material = materialsOfSection.filter(v=>v.toString() != collection.filter._id) as any
+            relatedSection.save();
         }
         return (await material.deleteOne());
     }

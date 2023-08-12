@@ -1,5 +1,4 @@
 <template>
-	<WebsiteTemplate>
     <section class="p-md-5" >
       <div class="container">
         <div class="row">
@@ -83,127 +82,52 @@
           <div class="h-100 file-drag" style="background-color:rgba(0, 0, 0, 0.1); background-blend-mode: multiply; background-position: top center; background-size: cover;"></div>
         </div>
       </div>
-    </section>
-    <section class="mt-5" style="overflow: hidden;">
-        <div class="row">
-          <div class="col-md-6 row p-5">
-            <div class="col-md-4 p-4">
-              <img class="w-100 rounded-4 mb-3" src="@/assets/woman-teaching.jpg" />
-              <p class="border-top primary-border text-center">
-                <span class="h5">Christina Milan</span><br>
-                <small>Founder & CEO</small>
-              </p>
-            </div>
-            <div class="col-md-4 p-4">
-              <img class="w-100 rounded-4 mb-3" src="@/assets/woman-teaching.jpg" />
-              <p class="border-top primary-border text-center">
-                <span class="h5">Christina Milan</span><br>
-                <small>Founder & CEO</small>
-              </p>
-            </div>
-            <div class="col-md-4 p-4">
-              <img class="w-100 rounded-4 mb-3" src="@/assets/woman-teaching.jpg" />
-              <p class="border-top primary-border text-center">
-                <span class="h5">Christina Milan</span><br>
-                <small>Founder & CEO</small>
-              </p>
-            </div>
-            <div class="col-md-4 p-4">
-              <img class="w-100 rounded-4 mb-3" src="@/assets/woman-teaching.jpg" />
-              <p class="border-top primary-border text-center">
-                <span class="h5">Christina Milan</span><br>
-                <small>Founder & CEO</small>
-              </p>
-            </div>
-            <div class="col-md-4 p-4">
-              <img class="w-100 rounded-4 mb-3" src="@/assets/woman-teaching.jpg" />
-              <p class="border-top primary-border text-center">
-                <span class="h5">Christina Milan</span><br>
-                <small>Founder & CEO</small>
-              </p>
-            </div>
-            <div class="col-md-4 p-4">
-              <img class="w-100 rounded-4 mb-3" src="@/assets/woman-teaching.jpg" />
-              <p class="border-top primary-border text-center">
-                <span class="h5">Christina Milan</span><br>
-                <small>Founder & CEO</small>
-              </p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="p-md-2 mb-4 rounded-2 px-3" style="background: #A01FEF;">
-              <div class="">
-                <p class="h1 text-light text-center ps-5" style="border-bottom: 5px solid #E5; font-family: Raleway, sans-serif;"> Our Team</p>
-              </div>
-              <p class="text-light py-3 px-md-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat.</p>
-            </div>
-            <div class="row">
-              <div class="col-md-4 p-4 text-center">
-                <p class="display-4">24</p>
-                <p><small>Total Courses</small></p>
-              </div>
-
-              <div class="col-md-4 p-4 text-center">
-                <div class="p-0">
-                  <p class="display-4 text-light p-0" style="background-color: #A01FEF; border-radius: 25px;">24</p>
-                </div>
-                <p><small>Total Courses</small></p>
-              </div>
-
-              <div class="col-md-4 p-4 text-center">
-                <p class="display-4">24</p>
-                <p><small>Total Courses</small></p>
-              </div>
-            </div>
-          </div>
-        </div>      
-    </section>
-  </WebsiteTemplate>
+    </section>    
 </template>
-<script>
-	import WebsiteTemplate from '../components/WebsiteTemplate.vue';
-	import axios from 'axios';
-
-	export default {
-		name: 'AboutPage',
-		components: {
-			WebsiteTemplate,
-		},
-    data() {
-      return {
-        user: {
-          username: '',
-          password: ''
-        }
-      }
-    },
-    methods: {
-      
-      handleSubmit() {
-        // const fd = new FormData();
-        // fd.append('username', this.username);
-        // fd.append('pwd', this.pwd);
-
-        axios.post('login', this.user)
-        .then(response => {
-          localStorage.setItem('token', response.data.token);
-          alert('Logged in successfully');
-          this.$router.push('/dashboard/');
-        })
-        .catch(error => {
-          alert('Login Error: ' + error.response.data.errorMessage)
-        })
-      }
-
-    }
-	}
+<script setup>
+	
 </script>
 
-<style>
-  .file-drag {
-    background-image: url(@/assets/woman-teaching.jpg);
-  }
+
+<style scoped>
+.file-drag {
+	background-image: url(@/assets/woman-teaching.jpg);
+}
+
+.circle-1 {
+	background: #F7EBFF 0% 0% no-repeat padding-box;
+	border-radius: 100%;
+	opacity: 1;
+	padding: 32px;
+}
+
+.circle-2 {
+	background: #E5BBFF 0% 0% no-repeat padding-box;
+	opacity: 1;
+	border-radius: 100%;                   
+	padding: 32px;
+}
+
+.circle-3 {
+	background: var(---a01fef) 0% 0% no-repeat padding-box;
+	padding: 32px;
+	background: #A01FEF 0% 0% no-repeat padding-box;
+	opacity: 1;
+	border-radius: 100%;
+	background: var(---a01fef) 0% 0% no-repeat padding-box;
+	background: #A01FEF 0% 0% no-repeat padding-box;
+	opacity: 1;
+}
+
+.call-out{
+	font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-75) var(--unnamed-font-family-dm-serif-display);
+letter-spacing: var(--unnamed-character-spacing-0);
+text-align: center;
+font: normal normal normal 60px/75px DM Serif Display;
+letter-spacing: 0px;
+color: #F9F9F9;
+text-transform: uppercase;
+opacity: 1;
+}
+
 </style>

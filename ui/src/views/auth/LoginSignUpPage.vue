@@ -2,7 +2,9 @@
     <section class="my-5 pb-5 pt-3 ">
         <div class="container">
             <div class="row">
-                <AuthHandler />
+                <div class="col-md-5">
+                    <AuthHandler />
+                </div>
                 <div class="col-md-7 d-none d-md-block">
                     <div class="row h-100" style="padding-left: 10px;">
                         <div class="col-md-5 file-drag" style="background-size: cover; background-position: center center;">
@@ -25,15 +27,9 @@
     </section>
 </template>
 
-<script>
+<script setup>
 import AuthHandler from '../../components/misc/authentication/AuthHandler.vue'
 
-export default {
-    name: 'LoginSignUpPage',
-    components: {
-        AuthHandler
-    }
-}
 </script>
 
 <style>

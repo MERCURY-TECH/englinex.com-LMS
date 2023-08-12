@@ -10,17 +10,10 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import DashboardTopHeader from './dashboard/DashboardTopHeader.vue'
 import DashboardSideBar from './dashboard/DashboardSideBar.vue'
 
-export default {
-  name: 'DashboardTemplate',
-  components: {
-    DashboardTopHeader,
-    DashboardSideBar
-  }
-}
 </script>
 
 <style>

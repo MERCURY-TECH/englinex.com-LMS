@@ -10,7 +10,7 @@ import path from 'path';
 import RealTimeVoteCommunicator from '../api/socket/socket';
 import cors from 'cors';
 import SubscriptionManager from '../logic/subscription-manager/subscription-manager';
-
+import fallback from 'express-history-api-fallback';
 
 export default class server{
   public static start(options:any):Promise<any>{
@@ -24,7 +24,8 @@ export default class server{
       configDotenv({path: '../.env'})
       const app = express()
       app.use('/images',express.static(path.join(__dirname, "../../images")));
-      app.use('/',express.static(path.join(__dirname, '../../dist')));
+      app.use(express.static(path.join(__dirname, '../../dist')));
+      
       app.use(morgan('dev'))
       app.use(bodyParser.json())
       app.use(bodyParser.urlencoded({ extended: true }))
@@ -38,6 +39,7 @@ export default class server{
       new SubscriptionManager(options.database_operations).startWorker();
       const httpserver = http.createServer(app);
       new RealTimeVoteCommunicator(httpserver);
+      app.use(fallback('index.html',{root:path.join(__dirname, '../../dist')}))
       const server:Server = httpserver.listen(options.port, () => resolve(server))
     })
   }

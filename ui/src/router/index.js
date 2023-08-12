@@ -1,37 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DashboardHome from "../views/DashboardHome.vue";
-import DashboardCourses from "../views/DashboardCourses.vue";
-import DashboardSettings from "../views/DashboardSettings.vue";
-import DashboardViewCourse from "../views/DashboardViewCourse";
-import DashboardCreateCourse from "../views/DashboardCreateCourse";
-import DashboardEditCourse from "../views/DashboardEditCourse";
-import DashboardCreateCourseSection from "../views/DashboardCreateCourseSection";
-import DashboardEditCourseSection from "../views/DashboardEditCourseSection";
-import DashboardCreateSectionMaterial from "../views/DashboardCreateSectionMaterial";
-import DashboardEditSectionMaterial from "../views/DashboardEditSectionMaterial";
-// import LoginForm from '../views/LoginForm'
-
+import DashboardViewCourse from "../views/course-management/DashboardViewCourse";
+import DashboardCreateCourse from "../views/course-management/DashboardCreateCourse";
+import DashboardEditCourse from "../views/course-management/DashboardEditCourse";
+import DashboardCreateCourseSection from "../views/course-management/DashboardCreateCourseSection";
+import DashboardEditCourseSection from "../views/course-management/DashboardEditCourseSection";
+import DashboardCreateSectionMaterial from "../views/course-management/DashboardCreateSectionMaterial";
+import DashboardEditSectionMaterial from "../views/course-management/DashboardEditSectionMaterial";
 import HomePage from "../views/HomePage";
-import CourseOverview from "../views/CourseOverview";
-// import Signup from '@/views/Signup'
 import PlatformBundles from "@/views/PlatformBundles";
 import PlatformTransaction from "@/views/PlatformTransactions";
 import PlatformTeachers from "@/views/PlatformTeachers";
-import UserDasboard from "@/views/UserDashboard";
-import LecturerCourses from "@/views/LecturerCourses";
+
 import LoginSignUpPage from "@/views/auth/LoginSignUpPage";
 import StudentList from "@/views/StudentList";
 import WaitingsCreen from '@/views/WaitingScreen.vue'
 import LiveClass from '@/views/Liveclass.vue'
 import BundlesPage from '@/views/Bundles'
 // import {parseJwt} from '../helpers'
-const http404 = {
-    template: "<div>http404 path is : {{$route.path}}</div>",
-    mounted() {
-        console.log(this.$route.path);
-        this.$parent.title = "http404 Page";
-    },
-};
 
 // function beforeRouteEnter (to, from, next) {
 //     if (localStorage.token) {
@@ -46,12 +31,13 @@ const http404 = {
 //       next("/");
 //     }
 //   }
+// DashboardCourses
 
 const routes = [
     {
-        path: "/checkout",
-        name: "SignupForm",
-        component: () => import("../views/SignupCheckout"),
+        path: "/checkOut",
+        name: "CheckOut",
+        component: () => import("../views/CheckOutPage"),
     },
     {
         path: "/",
@@ -74,24 +60,24 @@ const routes = [
         component: () => import("../views/CourseList"),
     },
     {
-        path: "/material",
+        path: "/course/:courseId",
         name: "MaterialOverview",
-        component: CourseOverview,
+        component: ()=>import('../views/CourseOverview'),
     },
     {
         path: "/admin",
         name: "DashboardHome",
-        component: DashboardHome,
+        component: ()=>import("../views/DashboardHome.vue"),
     },
     {
         path: "/admin/dashboard/courses",
         name: "Courses",
-        component: DashboardCourses,
+        component: ()=>import("../views/course-management/DashboardCourses.vue"),
     },
     {
         path: "/admin/dashboard/settings",
         name: "Settings",
-        component: DashboardSettings,
+        component: ()=>import("../views/DashboardSettings.vue"),
     },
     {
         path: "/admin/dashboard/course",
@@ -100,6 +86,7 @@ const routes = [
     },
     {
         path: "/admin/dashboard/get-course/:id",
+		name:"GetSingleCourse",
         component: DashboardViewCourse,
     },
     {
@@ -150,7 +137,7 @@ const routes = [
     {
         path: "/admin/dashboard/lecturercourses",
         name: "LecturerCourses",
-        component: LecturerCourses,
+        component: ()=>import("@/views/course-management/LecturerCourses"),
     },
     {
         path: "/admin/dashboard/studentlist",
@@ -160,7 +147,7 @@ const routes = [
     {
         path: "/userdashboard",
         name: "UserDasboard",
-        component: UserDasboard,
+        component: ()=>import("@/views/account-management/UserDashboard.vue"),
     },
     {
         path: "/waitingscreen",
@@ -182,10 +169,11 @@ const routes = [
         name: "LoginSignUpPage",
         component: LoginSignUpPage,
     },
+    
     {
-        path: "/**/",
-        name: "404FallBack",
-        component: http404,
+        path: "/:catchAll(.*)",
+        name: "NotFound",
+        component: ()=>import("@/views/fallback/NotFound.vue"),
     },
 ];
 
