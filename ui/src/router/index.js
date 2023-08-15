@@ -16,6 +16,7 @@ import StudentList from "@/views/StudentList";
 import WaitingsCreen from '@/views/WaitingScreen.vue'
 import LiveClass from '@/views/Liveclass.vue'
 import BundlesPage from '@/views/Bundles'
+import ScheduleManagement from '@/views/ScheduleManagement'
 // import {parseJwt} from '../helpers'
 
 // function beforeRouteEnter (to, from, next) {
@@ -143,6 +144,11 @@ const routes = [
         path: "/admin/dashboard/studentlist",
         name: "StudentList",
         component: StudentList,
+    },
+    {
+        path: "/admin/dashboard/schedule-management",
+        name: "ScheduleManagement",
+        component: ScheduleManagement,
     },
     {
         path: "/userdashboard",
