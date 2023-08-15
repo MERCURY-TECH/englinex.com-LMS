@@ -14,8 +14,8 @@
             <colorAdder/>
            </div>
            <div class="col-md-6">
-            <tags/>
-            <levels/>
+            <TagsManager/>
+            <LevelsManager/>
            </div>
           </div>
         </div>
@@ -28,8 +28,8 @@ import DashboardTemplate from '../components/DashboardTemplate.vue';
 import RoleCRUD from '@/components/misc/role-management/RoleCRUD.vue'
 import AdminManager from '@/components/misc/role-management/AdminManager.vue'
 import colorAdder from '@/components/misc/Setting/AddColor.vue'
-import tags from '@/components/misc/Setting/Tags.vue'
-import levels from '@/components/misc/Setting/Levels.vue'
+import TagsManager from '@/components/misc/Setting/TagsManager.vue'
+import LevelsManager from '@/components/misc/Setting/LevelsManager.vue'
 
 </script>
 

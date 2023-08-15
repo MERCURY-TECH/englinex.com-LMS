@@ -16,8 +16,9 @@
                             class="bi bi-pencil-fill"></i></button>
                     <button @click="deleteAccount" class="btn btn-outline-danger ms-auto border-0"><i
                             class="bi bi-trash-fill"></i></button>
-                    <button @click="() => toggle = !toggle" class="btn btn-outline-primary ms-auto border-0"><i
-                            class="bi bi-toggle-fill"></i></button>
+                    <button @click="() => toggle = !toggle" class="btn btn-outline-primary ms-auto border-0">
+                        <i class="bi bi-caret-down"></i>
+                    </button>
                 </div>
 
             </div>

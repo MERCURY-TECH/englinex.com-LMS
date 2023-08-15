@@ -42,7 +42,7 @@ export default function(repository:any){
                 let message: any = { success: true };
                 try {
                     console.log(req.body)
-                    message.message = { courses : await repository.createCourseMaterialColor([...req.body]) }
+                    message.message = { colors : await repository.createCourseMaterialColor([...req.body]) }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
