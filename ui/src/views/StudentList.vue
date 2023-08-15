@@ -8,17 +8,18 @@
               <div class="col-md-10">
                 <tabsWrapper>
                 <tab title="Subscribed" class="">
-                   <div class="" v-for="i in 6" :key="i">
+                    <LoaderSpinner v-if="userStore.students"/>
+                   <div class="" v-for="student in userStore.students" :key="student._id">
                 
                     <div class="d-flex  p-2 tabs-content card border-0 mb-4">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex">
-                                <img src="https://github.com/mdo.png" alt="" width="45" height="45" class="rounded-circle me-2">
+                                <!-- <img src="https://github.com/mdo.png" alt="" width="45" height="45" class="rounded-circle me-2"> -->
                                 <div class="d-flex flex-column ms-2">
-                                    <span class="fw-bold user-details">John Doe</span>
-                                    <span class=" user-details">johndoes@yahoo.com</span> 
-                                    <span class=" user-details">+237600976534</span>
-                                    <span class=" user-details" style="color: #a29f9f;">#65trurgrvrr55ee6</span>
+                                    <span class="fw-bold user-details">{{ student.firstname }}, {{ student.lastname }}</span>
+                                    <span class=" user-details">{{ student.username }}</span> 
+                                    <span class=" user-details">{{ student.telephone }}</span>
+                                    <span class=" user-details" style="color: #a29f9f;">#{{ student._id }}</span>
                                 </div>
                             </div>
                             <button class="btn text-white btn-sm" style="background-color: #9F1FED;">Suspend Student</button>
@@ -74,22 +75,21 @@
        
     </DashboardTemplate>
 </template>
-<script>
+<script setup>
 import DashboardTemplate from '@/components/DashboardTemplate.vue'
 import tab from '@/components/userdashbaordtabs/Tabs.vue'
 import tabsWrapper from '@/components/userdashbaordtabs/Tabswrapper.vue'
-export default {
-    components:{
-        DashboardTemplate,
-        tab,
-        tabsWrapper
-    },
-    data() {
-        return {
-         
-        }
-    },
-}
+import LoaderSpinner from  "@/components/misc/LoaderSpinner.vue"
+// import { ref } from 'vue';
+import {useUserStore} from '@/stores/userStore';
+// import Swal from 'sweetalert2';
+import {onMounted} from 'vue';
+const userStore = useUserStore();
+
+onMounted(async () => {
+    await userStore.getUsersPerAccountType('student')
+})
+
 </script>
 <style>
 .serch-box:hover{
