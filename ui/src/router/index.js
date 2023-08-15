@@ -1,149 +1,191 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import DashboardHome from '../views/DashboardHome.vue'
-import DashboardCourses from '../views/DashboardCourses.vue'
-import DashboardSettings from '../views/DashboardSettings.vue'
-import DashboardViewCourse from '../views/DashboardViewCourse'
-import DashboardCreateCourse from '../views/DashboardCreateCourse'
-import DashboardEditCourse from '../views/DashboardEditCourse'
-import DashboardCreateCourseSection from '../views/DashboardCreateCourseSection'
-import DashboardEditCourseSection from '../views/DashboardEditCourseSection'
-import DashboardCreateSectionMaterial from '../views/DashboardCreateSectionMaterial'
-import DashboardEditSectionMaterial from '../views/DashboardEditSectionMaterial'
-import LoginForm from '../views/LoginForm'
-import SignupCheckout from '../views/SignupCheckout'
-import HomePage from '../views/HomePage'
-import AboutPage from '../views/AboutPage'
-import FAQPage from '../views/FAQPage'
-import CourseList from '../views/CourseList'
-import CourseOverview from '../views/CourseOverview'
-import Signup from '@/views/Signup'
-import PlatformBundles from '@/views/PlatformBundles'
-import PlatformTransaction from "@/views/PlatformTransactions"
-import PlatformTeachers from '@/views/PlatformTeachers'
-import UserDasboard from '@/views/UserDashboard'
+import { createRouter, createWebHistory } from "vue-router";
+import DashboardViewCourse from "../views/course-management/DashboardViewCourse";
+import DashboardCreateCourse from "../views/course-management/DashboardCreateCourse";
+import DashboardEditCourse from "../views/course-management/DashboardEditCourse";
+import DashboardCreateCourseSection from "../views/course-management/DashboardCreateCourseSection";
+import DashboardEditCourseSection from "../views/course-management/DashboardEditCourseSection";
+import DashboardCreateSectionMaterial from "../views/course-management/DashboardCreateSectionMaterial";
+import DashboardEditSectionMaterial from "../views/course-management/DashboardEditSectionMaterial";
+import HomePage from "../views/HomePage";
+import PlatformBundles from "@/views/PlatformBundles";
+import PlatformTransaction from "@/views/PlatformTransactions";
+import PlatformTeachers from "@/views/PlatformTeachers";
 
+import LoginSignUpPage from "@/views/auth/LoginSignUpPage";
+import StudentList from "@/views/StudentList";
+import WaitingsCreen from '@/views/WaitingScreen.vue'
+import LiveClass from '@/views/Liveclass.vue'
+import BundlesPage from '@/views/Bundles'
+import ScheduleManagement from '@/views/ScheduleManagement'
+// import {parseJwt} from '../helpers'
+
+// function beforeRouteEnter (to, from, next) {
+//     if (localStorage.token) {
+//       const jwtPayload = parseJwt(localStorage.token);
+//       if (jwtPayload.exp < Date.now()/1000) {
+//           // token expired
+//           deleteTokenFromLocalStorage();
+//           next("/");
+//       }
+//       next();
+//     } else {
+//       next("/");
+//     }
+//   }
+// DashboardCourses
 
 const routes = [
     {
-        path: '/login',
-        name: 'LoginForm',
-        component: LoginForm
+        path: "/checkOut",
+        name: "CheckOut",
+        component: () => import("../views/CheckOutPage"),
     },
     {
-        path: '/signup',
-        name: 'Signup',
-        component: Signup
+        path: "/",
+        name: "HomeView",
+        component: HomePage,
     },
     {
-        path: '/checkout',
-        name: 'SignupForm',
-        component: SignupCheckout
+        path: "/about-us",
+        name: "AboutUs",
+        component: () => import("../views/AboutPage"),
     },
     {
-        path: '/',
-        name: 'HomeView',
-        component: HomePage
+        path: "/FAQ",
+        name: "FAQ",
+        component: () => import("../views/FAQPage"),
     },
     {
-        path: '/about-us',
-        name: 'AboutUs',
-        component: AboutPage
+        path: "/all-materials",
+        name: "MaterialsList",
+        component: () => import("../views/CourseList"),
     },
     {
-        path: '/FAQ',
-        name: 'FAQ',
-        component: FAQPage
+        path: "/course/:courseId",
+        name: "MaterialOverview",
+        component: ()=>import('../views/CourseOverview'),
     },
     {
-        path: '/all-materials',
-        name: 'MaterialsList',
-        component: CourseList
+        path: "/admin",
+        name: "DashboardHome",
+        component: ()=>import("../views/DashboardHome.vue"),
     },
     {
-        path: '/material',
-        name: 'MaterialOverview',
-        component: CourseOverview
+        path: "/admin/dashboard/courses",
+        name: "Courses",
+        component: ()=>import("../views/course-management/DashboardCourses.vue"),
     },
     {
-        path: '/dashboard/',
-        name: 'DashboardHome',
-        component: DashboardHome
+        path: "/admin/dashboard/settings",
+        name: "Settings",
+        component: ()=>import("../views/DashboardSettings.vue"),
     },
     {
-        path: '/dashboard/courses',
-        name: 'Courses',
-        component: DashboardCourses
+        path: "/admin/dashboard/course",
+        name: "ViewCourse",
+        component: DashboardViewCourse,
     },
     {
-        path: '/dashboard/settings',
-        name: 'Settings',
-        component: DashboardSettings
+        path: "/admin/dashboard/get-course/:id",
+		name:"GetSingleCourse",
+        component: DashboardViewCourse,
     },
     {
-        path: '/dashboard/course',
-        name: 'ViewCourse',
-        component: DashboardViewCourse
+        path: "/admin/dashboard/create-course",
+        name: "CreateCourse",
+        component: DashboardCreateCourse,
     },
     {
-        path: '/dashboard/get-course/:id',
-        component: DashboardViewCourse
+        path: "/admin/dashboard/edit-course/:id",
+        name: "EditCourse",
+        component: DashboardEditCourse,
     },
     {
-        path: '/dashboard/create-course',
-        name: 'CreateCourse',
-        component: DashboardCreateCourse
+        path: "/admin/dashboard/create-course-section/:courseId",
+        name: "CreateCourseSection",
+        component: DashboardCreateCourseSection,
     },
     {
-        path: '/dashboard/edit-course/:id',
-        name: 'EditCourse',
-        component: DashboardEditCourse
+        path: "/admin/dashboard/edit-course-section/:sectionId",
+        name: "EditCourseSection",
+        component: DashboardEditCourseSection,
     },
     {
-        path: '/dashboard/create-course-section/:courseId',
-        name: 'CreateCourseSection',
-        component: DashboardCreateCourseSection
+        path: "/admin/dashboard/create-section-material/:sectionId",
+        name: "CreateSectionMaterial",
+        component: DashboardCreateSectionMaterial,
     },
     {
-        path: '/dashboard/edit-course-section/:sectionId',
-        name: 'EditCourseSection',
-        component: DashboardEditCourseSection
+        path: "/admin/dashboard/edit-section-material/:materialId",
+        name: "EditSectionMaterial",
+        component: DashboardEditSectionMaterial,
     },
     {
-        path: '/dashboard/create-section-material/:sectionId',
-        name: 'CreateSectionMaterial',
-        component: DashboardCreateSectionMaterial
+        path: "/admin/dashboard/platformbundles",
+        name: "PlatformBundles",
+        component: PlatformBundles,
     },
     {
-        path: '/dashboard/edit-section-material/:materialId',
-        name: 'EditSectionMaterial',
-        component: DashboardEditSectionMaterial
+        path: "/admin/dashboard/platformtransactions",
+        name: "PlatformTransaction",
+        component: PlatformTransaction,
     },
     {
-        path: '/dashboard/platformbundles',
-        name: 'PlatformBundles',
-        component: PlatformBundles
+        path: "/admin/dashboard/platformteachers",
+        name: "PlatformTeachers",
+        component: PlatformTeachers,
     },
     {
-        path: '/dashboard/platformtransactions',
-        name: 'PlatformTransaction',
-        component: PlatformTransaction
+        path: "/admin/dashboard/lecturercourses",
+        name: "LecturerCourses",
+        component: ()=>import("@/views/course-management/LecturerCourses"),
     },
     {
-        path: '/dashboard/platformteachers',
-        name: 'PlatformTeachers',
-        component: PlatformTeachers
+        path: "/admin/dashboard/studentlist",
+        name: "StudentList",
+        component: StudentList,
     },
     {
-        path: '/userdashboard',
-        name: 'UserDasboard',
-        component: UserDasboard
+        path: "/admin/dashboard/schedule-management",
+        name: "ScheduleManagement",
+        component: ScheduleManagement,
     },
-
-]
+    {
+        path: "/userdashboard",
+        name: "UserDasboard",
+        component: ()=>import("@/views/account-management/UserDashboard.vue"),
+    },
+    {
+        path: "/waitingscreen",
+        name: "WaitingsCreen",
+        component: WaitingsCreen,
+    },
+    {
+        path: "/liveclass",
+        name: "LiveClass",
+        component: LiveClass,
+    },
+    {
+        path: "/bundles",
+        name: "BundlesPage",
+        component: BundlesPage,
+    },
+    {
+        path: "/auth",
+        name: "LoginSignUpPage",
+        component: LoginSignUpPage,
+    },
+    
+    {
+        path: "/:catchAll(.*)",
+        name: "NotFound",
+        component: ()=>import("@/views/fallback/NotFound.vue"),
+    },
+];
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
-})
+    routes,
+});
 
-export default router
+export default router;

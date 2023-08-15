@@ -61,7 +61,7 @@ let userSchema = new mongoose.Schema({
         require:[true, 'please provide a password']
     },
     address :{
-        countr:String,
+        country:String,
         City:String
     },
     EnglishProficiency:{type:String, enum:[...Object.values(EnglishProficiency)]},

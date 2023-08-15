@@ -43,7 +43,7 @@ export default function(repository:any){
                 let message: any = { success: true };
                 try {
                     console.log(req.body)
-                    message.message = { courses : await repository.createCourseContentLevel({levels:[...req.body]}) }
+                    message.message = { levels : await repository.createCourseContentLevel({levels:[...req.body]}) }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
