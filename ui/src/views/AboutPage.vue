@@ -15,16 +15,6 @@
                 </div>
            </div>
           </div>
-           <div class="d-block d-md-none d-flex align-items-center justify-content-center rounded-pill py-3 px-5" style="background-color: #F7EBFF; width: 20rem; height: 20rem;" >
-                 <div class="d-flex align-items-center justify-content-center rounded-pill  p-3" style="background-color: #E5BBFF;width: 18rem; height: 18rem;">
-                  <div class="d-flex align-items-center justify-content-center rounded-pill px-5 py-3 " style="background-color: #A01FEF;width: 16rem; height: 16rem;">
-                  
-                     <h3 class="h2 text-white fw-bold text-center">
-                       NICE TO MEET YOU
-                     </h3>
-                  </div>
-                </div>
-           </div>
           </div>
           <div class="col-md-7">
             <p class="h2" style="font-family: 'Raleway', sans-serif;">By Professional English Speakers <br> For All Learners</p>
@@ -35,22 +25,21 @@
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-            <p class="px-md-5 mx-md-5">
-             
-              
-            </p>
             <div class="d-flex flex-column flex-md-row align=items-center justify-content-center pb-3 px-2">
-              <a href="" class="btn btn-lg text-light pe-3 py-2 text-center" style="background: #490194; z-index: 122;">Get Started <span style="opacity: 0;">ffffffff</span></a>
-              <a href="" class="btn btn-lg btn-light primary-text primary-border px-5 mt-2" style="margin-left: -10px; background: #fff;">See Pricing</a>
+              <a href="" class="btn btn-lg text-light pe-3 py-2 text-center" style="background: #490194; z-index: 122;">Get Started </a>
+              <!-- <a href="" class="btn btn-lg btn-light primary-text primary-border px-5 mt-2" style="margin-left: -10px; background: #fff;">See Pricing</a> -->
+
             </div>
           </div>
         </div>
       </div>
     </section>
     <section style="overflow: hidden;">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="p-md-5" style="background: #A01FEF;">
+
+      <div class="row px-md-5">
+        <div class="col-md-6 px-md-5">
+          <div class="p-md-5 card" style="background: #A01FEF;">
+
             <div class="pt-4">
               <p class="h1 text-light text-center" style="text-decoration: underline; font-family: Raleway, sans-serif;"> Our Vision </p>
             </div>

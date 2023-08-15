@@ -1,11 +1,6 @@
 <template>
   <div v-if="!props.contenttodisplay" class="col-md-3">
-    <div class="h-100 rounded-2 file-drag" style="
-              background-color: rgba(0, 0, 0, 0.5);
-              background-blend-mode: multiply;
-              background-size: cover;
-              background-position: center;
-            ">
+    <div class="h-100 rounded-2 file-drag" style=" background-color: rgba(0, 0, 0, 0.5); background-blend-mode: multiply; background-size: cover; background-position: center; ">
       <p class="p-3 mt-1 text-light row">
         <span class="col">
           <span class="h4">

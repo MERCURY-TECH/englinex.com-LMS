@@ -39,7 +39,7 @@ export default function(repository:any){
         },
         {
             actionName: 'register-or-signup-teacher',
-            actionScope: routeSecurityLevel.public,
+            actionScope: routeSecurityLevel.forbiden,
             method: httpverbs.post,
             routeDescription: 'route used for the registration of teachers, this route is only available to all users. req.body : {firstname, lastname, email, telephone, password}, be aware that the username is the email',
             route: '/signup-teacher',
@@ -48,6 +48,78 @@ export default function(repository:any){
                 try {
                     let lecturer = await repository.createTeacherAccount(req.body as IUser)
                     message.message = { lecturer };
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
+            actionName: 'update-user-account',
+            actionScope: routeSecurityLevel.forbiden,
+            method: httpverbs.post,
+            routeDescription: 'No Doc',
+            route: '/update/user/:userId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    let userId = req.params.userId;
+                    let user = await repository.updateUserAccountByID(userId, req.body as IUser)
+                    message.message = { user:{...user, ...req.body}  };
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
+            actionName: 'delete-user-account',
+            actionScope: routeSecurityLevel.forbiden,
+            method: httpverbs.delete,
+            routeDescription: 'No Doc',
+            route: '/delete/user/:userId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    await repository.deleteAccount(req.params.userId)
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
+            actionName: 'toggle-suspend-user',
+            actionScope: routeSecurityLevel.forbiden,
+            method: httpverbs.patch,
+            routeDescription: 'no doc',
+            route: '/suspend-user/:userId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    let user = await repository.toggleSuspendUserByID(req.params.userId)
+                    message.message = { user };
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
+            actionName: 'register-or-signup-admin',
+            actionScope: routeSecurityLevel.public,
+            method: httpverbs.post,
+            routeDescription: 'route used for the registration of teachers, this route is only available to all users. req.body : {firstname, lastname, email, telephone, password}, be aware that the username is the email',
+            route: '/signup-admin',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    let admin = await repository.createAdminAccount(req.body as IUser)
+                    message.message = { admin };
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false

@@ -42,9 +42,9 @@
       <div class="col-md-9">
         <div class="bg-light rounded-2 shadow-sm border-bottom border-start">
           <div class="row p-3" v-if="loaded">
-            <div class="col-12 col-md-3 mb-3" v-for="course in courseStore.courses" :key="course._id">
-              <CourseCard :course="course" />
-            </div>
+            <div class="col-12 col-md-3 mb-3"  v-for="course in courseStore.courses" :key="course._id" >
+                <CourseCard v-if="course.isPublic" :course="course" />
+              </div>
           </div>
           
           <div v-else class="p-5 text-centered">

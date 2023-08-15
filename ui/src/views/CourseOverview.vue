@@ -1,6 +1,6 @@
 <template>
-    <section class="p-3">
-      <div class="row col-md-12">
+    <section  class="px-5 py-2">
+      <div class="row col-md-12 px-5">
         <MeterialListNavigation @content="sendContentToDisplay" :course="course" />
         <CourseContentDisplayer :contenttodisplay="contentToDisplay" :course="course"/>
       </div>
@@ -13,7 +13,6 @@ import { ref,onMounted } from "vue";
 import { useCourseStore } from "@/stores/courseStore";
 import CourseContentDisplayer from "@/components/misc/course-management/courseContentDisplayer.vue";
 import MeterialListNavigation from '@/components/misc/course-management/MeterialListNavigation.vue'
-
 const routerObj = useRouter();
 const courseStore = useCourseStore();
 const course = ref({});
@@ -29,7 +28,7 @@ function sendContentToDisplay(content){
 
 </script>
 
-<style>
+<style scoped>
 .file-drag {
   background-image: url(@/assets/woman-teaching.jpg);
 }

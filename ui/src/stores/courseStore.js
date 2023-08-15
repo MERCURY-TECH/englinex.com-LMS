@@ -26,7 +26,7 @@ export const useCourseStore = defineStore('courseStore', {
             let courseToRank = this.courses.find(courseItem=>courseItem._id === courseId);
             let rankingRange ={};
             if(courseToRank != undefined){
-                if(! courseToRank.content.length) return {min:{ranking:0,title:'no level accosiated'},max:{ranking:0,title:'no level accosiated'}}
+                if(! courseToRank.content.length) return {min:{ranking:0,title:'no level'},max:{ranking:0,title:'no level'}}
                 courseToRank.content.forEach(section=>{
                     rankingRange[section.contentLevel.ranking] = section.contentLevel
                 })

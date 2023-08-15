@@ -58,6 +58,40 @@ export default function (repository: any) {
             }
         },
         {
+            actionName: 'get-role',
+            actionScope: routeSecurityLevel.forbiden,
+            routeDescription: 'get existing roles',
+            method: httpverbs.get,
+            route: '/roles',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    message.message = {roles:await repository.getAllRole()}
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
+            actionName: 'get-user-role',
+            actionScope: routeSecurityLevel.protected,
+            routeDescription: 'get user role',
+            method: httpverbs.get,
+            route: '/roles/:userId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    message.message = {userRole:await repository.getUserRole(req.params.userId)}
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
             actionName: 'update-role',
             actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'update a role',

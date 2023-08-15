@@ -94,9 +94,7 @@
 </script>
 <style scoped>
 footer{
-  position: relative;
-  top: 30vh;
-  width: 100vw;
+  margin-top:30px
 }
 </style>
 

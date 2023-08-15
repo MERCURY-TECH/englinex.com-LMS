@@ -109,6 +109,13 @@ const getRoleBySID={
     },
     error: function (err: any): void { console.log(err.message) }
 }
+const getAllRole={
+    name: "getAllRole",
+    callback: async function () {
+        return await Role.find();
+    },
+    error: function (err: any): void { console.log(err.message) }
+}
 
 const assignRoleToUser = {
     name: "assignRoleToUser",
@@ -126,7 +133,13 @@ const getActionList = {
     error: function (err: any): void { console.log(err.message) }
 }
 
+const getUserRole = {
+    name: "getUserRole",
+    callback: async function (UserID:string) {
+        return await UserPermission.findOne({UserID}).populate(['Role']);
+    },
+    error: function (err: any): void { console.log(err.message) }
+}
 
 
-
-export default [ updateRole, deletePermissionRole, createPermissionStructure,createRole, assignRoleToUser,updatePermissionRole, deleteRole,getActionList, getRoleBySID]
+export default [ updateRole, deletePermissionRole, createPermissionStructure,createRole, assignRoleToUser,updatePermissionRole, deleteRole,getActionList, getRoleBySID, getAllRole, getUserRole]
