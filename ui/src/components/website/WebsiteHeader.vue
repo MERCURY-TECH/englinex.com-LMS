@@ -34,20 +34,9 @@
                   <li><a class="dropdown-item" href="#">Something else here</a></li> -->
               </ul>
             </li>
-            <li class="nav-item dropdown header-link">
-              <a class="nav-link header-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <span class="primary-text primary-dropdown-arrow"><small><i class="bi-chevron-down"></i></small></span>
-                Plans & Pricing
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
+           
+            <li class="nav-item header-link">
+              <router-link class="nav-link" aria-current="page" :to="{ name: 'BundlesPage' }">Plans & Pricing</router-link>
             </li>
             <li class="nav-item header-link">
               <router-link class="nav-link" aria-current="page" :to="{ name: 'FAQ' }">FAQ</router-link>

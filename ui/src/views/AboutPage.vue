@@ -24,18 +24,22 @@
             consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
             <div class="d-flex flex-column flex-md-row align=items-center justify-content-center pb-3 px-2">
               <a href="" class="btn btn-lg text-light pe-3 py-2 text-center" style="background: #490194; z-index: 122;">Get Started </a>
               <!-- <a href="" class="btn btn-lg btn-light primary-text primary-border px-5 mt-2" style="margin-left: -10px; background: #fff;">See Pricing</a> -->
+
             </div>
           </div>
         </div>
       </div>
     </section>
     <section style="overflow: hidden;">
+
       <div class="row px-md-5">
         <div class="col-md-6 px-md-5">
           <div class="p-md-5 card" style="background: #A01FEF;">
+
             <div class="pt-4">
               <p class="h1 text-light text-center" style="text-decoration: underline; font-family: Raleway, sans-serif;"> Our Vision </p>
             </div>
