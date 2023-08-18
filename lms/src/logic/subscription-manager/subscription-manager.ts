@@ -40,6 +40,7 @@ export default class SubscriptionManager {
     }
 
     public subscriptionValidator(studentId:string){
+        console.log(this.subscriptions[studentId])
         if(this.subscriptions[studentId]){
             let subscription:ISubscription = this.subscriptions[studentId];
             if((new Date(subscription.endDate as Date))>(new Date())) return true;

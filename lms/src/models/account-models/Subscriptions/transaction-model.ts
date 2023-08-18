@@ -20,8 +20,12 @@ const TransactionSchema = new mongoose.Schema({
     bundle: {type: mongoose.Schema.Types.ObjectId,ref: 'Bundle', require:[true, 'you must provide the bundle ID']},
     status: {type:String, enum:['pending', 'failed', 'success'], default:'pending', required:[true,'please provide the Transaction payment status']},
     callbackLink:{type:String},
+    address:{
+        country:String,
+        city:String,
+    },
     providerTransactionResponse:{type:String}
-});
+},{ timestamps: true });
 
 TransactionSchema.pre('save',function(next:any){
     

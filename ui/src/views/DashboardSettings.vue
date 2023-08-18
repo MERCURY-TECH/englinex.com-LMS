@@ -18,17 +18,6 @@
             <LevelsManager/>
            </div>
           </div>
-          <p class="mt-3">Course Elements</p>
-          <hr>
-          <div class="row">
-           <div class="col-md-6">
-            <colorAdder/>
-           </div>
-           <div class="col-md-6">
-            <tags/>
-            <levels/>
-           </div>
-          </div>
         </div>
     </div>
   </DashboardTemplate>

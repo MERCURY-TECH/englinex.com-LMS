@@ -6,9 +6,10 @@
 * @email `ngumbukafon@gmail.com`
 */
 
+//subscriptionWorker
 
 import path from 'path';
-import { IUser, subscriptionWorker, connectUser, generateToken, serializeUserDataResponse, encrytpUserPassword } from '../../../logic';
+import { IUser,  connectUser, generateToken, serializeUserDataResponse, encrytpUserPassword } from '../../../logic';
 import { upload } from '../../../logic/image-upload';
 import { routeSecurityLevel } from '../../../logic/lms-interfaces';
 import httpverbs from '../HTTPVERB';
@@ -25,8 +26,10 @@ export default function(repository:any){
             route: '/signup',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
-                try {
-                    let registerUser = await repository.registerUsers(req.body as IUser);
+            try {
+                    let user:IUser = req.body;
+                    user.password =  await encrytpUserPassword(req.body.password);
+                    let registerUser = await repository.registerUsers(user);
 					let token = generateToken({ ...registerUser }, process.env.Token_sercret, 60 * 60 * 60 * 24);
                     await repository.initiateAccountActivation({user:registerUser._id})
                     message.message = { token, users:registerUser };
@@ -46,7 +49,9 @@ export default function(repository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let lecturer = await repository.createTeacherAccount(req.body as IUser)
+                    let user:IUser = req.body;
+                    user.password =  await encrytpUserPassword(req.body.password);
+                    let lecturer = await repository.createTeacherAccount(user as IUser)
                     message.message = { lecturer };
                 } catch (error: any) {
                     message.errorMessage = error.message;
@@ -65,8 +70,10 @@ export default function(repository:any){
                 let message: any = { success: true };
                 try {
                     let userId = req.params.userId;
-                    let user = await repository.updateUserAccountByID(userId, req.body as IUser)
-                    message.message = { user:{...user, ...req.body}  };
+                    let userUpdated = req.body;
+                    userUpdated.password ? userUpdated.password=  await encrytpUserPassword(userUpdated.password):'';
+                    let user = await repository.updateUserAccountByID(userId, userUpdated as IUser)
+                    message.message = { user:{...user, ...userUpdated}  };
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -118,7 +125,9 @@ export default function(repository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let admin = await repository.createAdminAccount(req.body as IUser)
+                    let user:IUser = req.body;
+                    user.password =  await encrytpUserPassword(req.body.password);
+                    let admin = await repository.createAdminAccount(user as IUser)
                     message.message = { admin };
                 } catch (error: any) {
                     message.errorMessage = error.message;

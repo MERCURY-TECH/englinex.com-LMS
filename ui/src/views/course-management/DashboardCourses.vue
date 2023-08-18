@@ -199,6 +199,7 @@ import router from "@/router";
 import { ref, onMounted } from "vue";
 import { useCourseStore } from "@/stores/courseStore";
 import Swal from "sweetalert2";
+import { actionNotificationWrapperWithComfirmationModal } from '@/helpers';
 
 let courseStore = useCourseStore();
 let loader = ref(false);
@@ -218,30 +219,14 @@ onMounted(async () => {
 const viewCourse = id => {
   router.push({ name: "GetSingleCourse", params: { id } });
 };
-
-const deleteCourse = async courseId => {
+async function deleteCourse(courseId){
   loader.value = true;
-  let modalValue = await new Swal({
-    title: "Delete this Course?",
-    text: "Are you sure? You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#490194",
-    confirmButtonText: "Yes, Delete it!",
-  });
-  if (modalValue.value) {
-    console.log(courseId);
-    let statusObj = await courseStore.deleteCourse(courseId);
-    if (statusObj.success) {
-      Swal.fire(statusObj.message);
-      Swal.update({ icon: "success" });
-    } else {
-      Swal.fire(statusObj.message);
-      Swal.update({ icon: "error" });
-      router.push({ name: "DashboardHome" });
-    }
-  }
-  loader.value = false;
+    actionNotificationWrapperWithComfirmationModal(async ()=>await courseStore.deleteCourse(courseId),{
+        title:'Delete this Course?',
+        text:"Are you sure? You won't be able to revert this!",
+        btnText:'Yes, Delete it!'
+    })
+    loader.value = false;
 }
 </script>
 

@@ -22,7 +22,7 @@
     </DashboardTemplate>
 </template>
 <script setup>
-import DashboardTemplate from "../components/DashboardTemplate.vue";
+import DashboardTemplate from "@/components/DashboardTemplate.vue";
 import BundleList from '@/components/misc/bundle-management/BundleList.vue'
 import BundleForm from '@/components/misc/bundle-management/BundleForm.vue'
 import {ref} from 'vue';

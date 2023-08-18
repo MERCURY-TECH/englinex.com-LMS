@@ -17,16 +17,15 @@
                     <div class="card border-0  p-2" style="background-color: #F7EBFF;">
                         <!-- student laft panel -->
                         <div class="d-flex align-items-start justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <img src="https://github.com/mdo.png" alt="" width="45" height="45"
-                                    class="rounded-circle me-2">
-                                <span class="">Jenifer Watson</span>
+                            <div class="d-flex p-2 align-items-center">
+                                <!-- <img src="https://github.com/mdo.png" alt="" width="45" height="45" class="rounded-circle me-2"> -->
+                                <span class="">{{ firstname }}, {{ lastname }}</span>
                             </div>
-                            <div class="">
+                            <div class="p-1">
                                 <span class="" style="font-size: 15px;">Connected as</span> <br>
-                                <span class="fw-bold" style="color: #9F1FED; font-size: 15px;"
-                                    v-if="studentRole">Student</span>
-                                <span class="fw-bold" style="color: #9F1FED; font-size: 15px;" v-else>Lecturer</span>
+                                <span class="fw-bold" style="color: #9F1FED; font-size: 15px;">
+                                    {{ isStudent ? 'Student' : 'Lecturer' }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -34,7 +33,7 @@
                     <form action="">
                         <div class="row mt-2">
                             <div class="col-12">
-                                <input type="text" placeholder="jeniferwatson@gmail.com"
+                                <input :value="username" type="text" placeholder="jeniferwatson@gmail.com"
                                     class="form-control form-control-sm my-2" disabled>
                                 <input type="password" placeholder="new password" class="form-control form-control-sm my-2">
                                 <input type="password" placeholder="confirm password"
@@ -48,171 +47,38 @@
                     <hr>
                     <div class="d-flex justify-content-evenly">
                         <button class="btn btn-outline-primary">Go to Account</button>
-                        <button class="btn text-white" style="background-color: #9F1FED;">Disconnect</button>
+                        <button @click="disconnect" class="btn text-white"
+                            style="background-color: #9F1FED;">Disconnect</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
                 <!-- student card -->
-                <div class="" v-if="studentRole">
+                <div class="" v-if="isStudent">
                     <TabsWrapper class="p-2">
-                        <tab title="My Courses" class="card p-2">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="">
-                                    <span class="" style="color: font-size: 14px;">#Name</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
-                                </div>
-                                <div class="">
-                                    <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total)
-                                        for 3 months</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to
-                                        material</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited
-                                        Courses</span>
-                                </div>
-                                <div class="d-flex">
-                                    <button class="btn btn-sm">
-                                        <span style="font-size: 13px;">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            Cancel Subscription
-                                        </span>
-                                    </button>
-                                    <button class="btn btn-sm">
-                                        <span style="font-size: 13px;">
-                                            <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
-                                            Edit Subscription
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
+                        <tab title="My Courses">
+                            <DashBoardCourseItem v-for="course in registeredCourses" :key="course._id" :course="course" />
                         </tab>
-                        <tab title="Schedules" class="card p-2">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="">
-                                    <span class="" style="color: font-size: 14px;">#Name</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
-                                </div>
-                                <div class="">
-                                    <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total)
-                                        for 3 months</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to
-                                        material</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited
-                                        Courses</span>
-                                </div>
-                                <div class="d-flex">
-                                    <button class="btn btn-sm">
-                                        <span style="font-size: 13px;">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            Cancel Subscription
-                                        </span>
-                                    </button>
-                                    <button class="btn btn-sm">
-                                        <span style="font-size: 13px;">
-                                            <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
-                                            Edit Subscription
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
+                        <tab title="Schedules" class=" p-2">
+                            <DashBoardScheduleManager :courses="registeredCourses" />
                         </tab>
                         <tab title="Subscription" class="card p-2">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="">
-                                    <span class="" style="color: font-size: 14px;">#Name</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
-                                </div>
-                                <div class="">
-                                    <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total)
-                                        for 3 months</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to
-                                        material</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited
-                                        Courses</span>
-                                </div>
-                                <div class="d-flex">
-                                    <button class="btn btn-sm">
-                                        <span style="font-size: 13px;">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            Cancel Subscription
-                                        </span>
-                                    </button>
-                                    <button class="btn btn-sm">
-                                        <span style="font-size: 13px;">
-                                            <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
-                                            Edit Subscription
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
+                            <DashBoardSubscriptionItem v-for="subscription in authStore.subscription"
+                                :subscription="subscription" :key="subscription._id" />
                         </tab>
-
                     </TabsWrapper>
                 </div>
                 <!-- Lecturer card -->
                 <div class="" v-else>
                     <TabsWrapper class="p-2">
                         <tab title="My Courses" class=" p-3 rounded" style="background-color: #d1d1d156;">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="row">
-                                    <span class="col-6 text-truncate" style="color: font-size: 14px;">The Quick brown
-                                        fox</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">#ytitytytgggffnvjuyfgfj</span>
-                                </div>
-
-                                <div class="d-flex">
-                                    <button class="btn btn-sm mx-2" style="background-color: #F7EBFF;">
-                                        <span style="font-size: 13px;">
-                                            View Students
-                                        </span>
-                                    </button>
-                                    <button class="btn btn-sm mx-2" style="background-color: #F7EBFF;">
-                                        <span style="font-size: 13px;">
-
-                                            Go to Class
-                                        </span>
-                                    </button>
-                                </div>
-                                <div class="">
-                                    <router-link to="/" class="nav-link rounded-pill px-1"
-                                        style="border:1px solid #9F1FED;">
-
-                                        <i class="bi bi-chevron-right"></i>
-                                    </router-link>
-                                </div>
-                            </div>
+                            <DashBoardCourseItem :is-lecturer="true"
+                                v-for="schedule in scheduleStore.connectedUserSchedules" :key="schedule.course._id"
+                                :course="schedule.course" />
                         </tab>
-                        <tab title="Schedules" class="card p-2">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="">
-                                    <span class="" style="color: font-size: 14px;">#Name</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">current Subscription</span>
-                                </div>
-                                <div class="">
-                                    <span class="" style="color: #9F1FED; font-size: 14px;">12 classes Left 25 (total)
-                                        for 3 months</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">Unlimited Access to
-                                        material</span> <br>
-                                    <span class="" style="color: #8b8b8b; font-size: 13px;">Register Unlimited
-                                        Courses</span>
-                                </div>
-                                <div class="d-flex">
-                                    <button class="btn btn-sm">
-                                        <span style="font-size: 13px;">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            Cancel Subscription
-                                        </span>
-                                    </button>
-                                    <button class="btn btn-sm">
-                                        <span style="font-size: 13px;">
-                                            <i class="bi bi-pencil-fill" style="color: #9F1FED;"></i>
-                                            Edit Subscription
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
+                        <tab title="Schedules" class=" p-2">
+                            <DashBoardScheduleManager :is-lecturer="true" :courses="registeredCourses" />
                         </tab>
-
                     </TabsWrapper>
                 </div>
             </div>
@@ -223,8 +89,31 @@
 <script setup>
 import Tab from '@/components/userdashbaordtabs/Tabs.vue'
 import TabsWrapper from '@/components/userdashbaordtabs/Tabswrapper.vue'
-import {ref} from 'vue';
+import { useAuthStore } from '@/stores/authStore';
+import { ref, onMounted, computed } from 'vue';
+import router from '@/router';
+import DashBoardCourseItem from './DashBoardCourseItem.vue';
+// import DashBoardScheduleItem from './DashBoardScheduleItem.vue';
+import DashBoardSubscriptionItem from './DashBoardSubscriptionItem.vue';
+import DashBoardScheduleManager from './DashBoardScheduleManager.vue';
+import { useScheduleStore } from '@/stores/scheduleStore';
 
-const studentRole = ref(true)
+const scheduleStore = useScheduleStore();
+const isStudent = ref(true);
+const authStore = useAuthStore();
+const firstname = computed(() => authStore.authUser ? authStore.authUser.firstname : '')
+const lastname = computed(() => authStore.authUser ? authStore.authUser.lastname : '')
+const username = computed(() => authStore.authUser ? authStore.authUser.username : '')
+const registeredCourses = computed(() => authStore.authUser ? authStore.authUser.registeredCourses : '')
+
+onMounted(() => {
+    isStudent.value = authStore.authUser.accountType === 'student' ? true : false
+    if(!isStudent.value) scheduleStore.getSchedulesByLecturerId(authStore.authUser?._id)
+})
+
+function disconnect() {
+    authStore.disconnect();
+    router.push({ name: 'HomeView' })
+}
 
 </script>

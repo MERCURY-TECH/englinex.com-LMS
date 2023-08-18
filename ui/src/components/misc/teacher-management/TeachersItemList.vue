@@ -41,12 +41,8 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
-                        <div class="d-flex">
-                            <router-link class="nav-link rounded-start text-light p-2 bg-secondary w-100"
-                                to="/admin/dashboard/courses">Courses</router-link>
-                            <router-link class="nav-link rounded-end mx-2 text-light p-2 w-100"
-                                style="background-color: #9F1FED;" to="/dashboard/courses">Students</router-link>
-                        </div>
+                        <router-link class="nav-link text-center rounded mx-2 text-light p-2 w-100"
+                                style="background-color: #9F1FED;" :to="{name:'LecturerCourses', params:{lecturerId:props.lecturer._id}}">Courses & Students</router-link>
                     </div>
                 </div>
             </div>
@@ -70,7 +66,6 @@ let userRole = ref(null)
 
 onMounted(async () => {
     userRole.value = await roleStore.getUserRoles(props.lecturer._id)
-    console.log(userRole.value)
 })
 
 async function assignUserRole(e){

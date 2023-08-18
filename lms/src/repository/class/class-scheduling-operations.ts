@@ -16,7 +16,7 @@ import { ILogic } from "../IOperations";
 
 const getAllValidSchedules: ILogic = {
     name: "getAllValidSchedules",
-    callback: async () => await ClassSchedule.find({ datetime: { $gte: new Date() } }).populate(['course', 'student'])
+    callback: async () => await ClassSchedule.find({ datetime: { $gte: new Date() } }).populate(['course', 'student', 'lecturer'])
 }
 
 function isTimeClash(scheduledTime:Date, existingScheduleTime:Date,step:number){
@@ -60,6 +60,7 @@ const getScheduleAssociatedTolecturer: ILogic = {
     name: "getScheduleAssociatedTolecturer",
     callback: async (lecturerId: string) => {
         let lecturersSchedules = (await ClassSchedule.find({lecturer: lecturerId}).where({datetime: { $gte: new Date()}}).populate(['course','student','lecturer','relatedCourseMaterial']).select(['-_id']));
+        console.log(lecturerId, lecturersSchedules)
         return lecturersSchedules;
     }
 }
@@ -75,7 +76,7 @@ const getSchedulesByStudent: ILogic = {
         if (studentId instanceof Array) {
             return await ClassSchedule.find({ datetime: { $gte: new Date() } }).where('student').in([...studentId]).populate(['student', 'course'])
         }
-        return await ClassSchedule.find({ student: studentId }).populate(['student', 'course', 'lecturer','relatedCourseMaterial'])
+        return await ClassSchedule.find({ student: studentId }).and([{ datetime: { $gte: new Date() } }]).populate(['student', 'course', 'lecturer','relatedCourseMaterial'])
     }
 }
 

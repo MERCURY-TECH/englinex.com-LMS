@@ -74,7 +74,6 @@ userSchema.pre('validate', async function (next: any) {
     // @ts-ignore
     this.username = this.email.trim().toLowerCase();
     // @ts-ignore
-    this.password = await encrytpUserPassword(this.password);
     next();
 });
 

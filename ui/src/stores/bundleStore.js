@@ -12,17 +12,16 @@ async function actionWrapper(callback, message, onErrorFunction){
     }
 }
 
-// use this keyword to access state data
 export const useBundleStore = defineStore('bundleStore', {
     state: () => ({
-        // bundles: null,
         bundles: null,
         bundleToEdit:null
     }),
     getters:{
-        // get user registere courses
-        // get user schedules
-        // get user subscription
+        activeBundles(){
+            if(this.bundles) return this.bundles.filter((bundle)=>bundle.constraints.isActive)
+            return []
+        }
     },
     actions:{
 
@@ -31,6 +30,9 @@ export const useBundleStore = defineStore('bundleStore', {
             let response = await axios.get('bundles')
             this.bundles = response.data.message.bundles;
         },'collected bundles with success' )
+       },
+       getBundleById(bundleId){
+        return this.bundles ? this.bundles.find(bundle=>bundle._id === bundleId) :[]
        },
        async createBundle(bundle){
         try {
@@ -54,6 +56,5 @@ export const useBundleStore = defineStore('bundleStore', {
             this.bundles.forEach(bundle => {if(bundle._id === bundleId) bundle = response.data.message});
         },'Bundle updated with success' )
        }
-
     },
 })

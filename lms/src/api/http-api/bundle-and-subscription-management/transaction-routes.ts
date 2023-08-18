@@ -7,7 +7,7 @@
 */
 
 import { getAuthenticatedUser } from '../../../logic';
-import { routeSecurityLevel, IBundle, ITransaction } from '../../../logic/lms-interfaces';
+import { routeSecurityLevel, IBundle, ITransaction, ISubscription } from '../../../logic/lms-interfaces';
 import httpverbs from '../HTTPVERB';
 
 
@@ -36,7 +36,7 @@ export default function(respository:any){
             actionScope: routeSecurityLevel.protected,
             method: httpverbs.post,
             routeDescription: 'route used to initiate a transaction',
-            route: '/transaction/inititae/:transactionId',
+            route: '/transaction/initiate/:transactionId',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
@@ -44,7 +44,12 @@ export default function(respository:any){
                     let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
                     user._doc._id ? collection.student = user._doc._id : '';
                     collection._id = req.params.transactionId;
-                    message.message = {transaction :await respository.initiateTransaction(collection) };
+                    let transaction = await respository.initiateTransaction(collection)
+                    let subscription:any;
+                    if(collection.status === 'success'){
+                        subscription=  await respository.createSubscription({ bundle:collection.bundle, student:collection.student} as ISubscription)
+                    }
+                    message.message = {transaction :transaction, subscription};
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -56,7 +61,7 @@ export default function(respository:any){
             actionName: 'transaction-status-notify',
             actionScope: routeSecurityLevel.public,
             method: httpverbs.post,
-            routeDescription: 'route used to get all lectures and student related to a specific course',
+            routeDescription: 'Route used by service provider to notify on payment success',
             route: '/transaction/notify/:transactionId',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
@@ -76,16 +81,16 @@ export default function(respository:any){
             }
         },
         {
-            actionName: 'get-all-bundles & get-all-bundle-per-search-field',
+            actionName: 'get-all-transactions',
             actionScope: routeSecurityLevel.forbiden,
             method: httpverbs.get,
-            routeDescription: 'route used to get all lectures and student related to a specific course',
-            route: '/bundles',
+            routeDescription: 'no doc',
+            route: '/transactions',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    let bundles = await respository.getAllBundles(req.body as IBundle);
-                    message.message = {bundles}
+                    let transactions = await respository.getAllTransaction();
+                    message.message = {transactions}
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false

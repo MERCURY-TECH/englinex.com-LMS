@@ -23,6 +23,7 @@
 
 <script setup>
 //import axios from 'axios';
+
 import CheckOutForm from '@/components/misc/checkout/CheckOutForm.vue'
 import AuthHandler from '@/components/misc/authentication/AuthHandler.vue';
 

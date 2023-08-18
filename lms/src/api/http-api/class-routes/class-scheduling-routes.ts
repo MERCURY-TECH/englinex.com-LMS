@@ -80,7 +80,8 @@ export default function(repository:any){
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    message.message = { schedule : await repository.getSchedulesByStudent(req.params.studentId) }
+                    let schedules = await repository.getSchedulesByStudent(req.params.studentId)
+                    message.message = { schedules }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -92,13 +93,13 @@ export default function(repository:any){
             actionName: 'get-schedule-by-lecturer',
             actionScope: routeSecurityLevel.protected,
             routeDescription: 'Route used to get lecturer schedule for courses he teaches',
-            middleware:[subscriptionWorker],
+            // middleware:[subscriptionWorker],
             method: httpverbs.get,
             route: '/schedules/lecturer/:lecturerId',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
-                    message.message = { schedule : await repository.getScheduleAssociatedTolecturer(req.params.lecturerId) }
+                    message.message = { schedules : await repository.getScheduleAssociatedTolecturer(req.params.lecturerId) }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false
@@ -111,7 +112,7 @@ export default function(repository:any){
             actionScope: routeSecurityLevel.protected,
             routeDescription: 'Route used to cancel a schedule per student ID',
             middleware:[subscriptionWorker],
-            method: httpverbs.get,
+            method: httpverbs.delete,
             route: '/schedules/cancel/:scheduleId',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
@@ -128,12 +129,29 @@ export default function(repository:any){
             actionName: 'comfirm-class-schedule',
             actionScope: routeSecurityLevel.forbiden,
             routeDescription: 'Route used to comfirm a schedule per student ID',
-            method: httpverbs.get,
+            method: httpverbs.patch,
             route: '/schedules/comfirm/:scheduleId',
             callback: async function (req: any, res: any, next: any) {
                 let message: any = { success: true };
                 try {
                     message.message = { schedule : await repository.comfirmSchedule(req.params.scheduleId) }
+                } catch (error: any) {
+                    message.errorMessage = error.message;
+                    message.success = false
+                }
+                message.success ? res.status(200).json(message) : res.status(403).json(message);
+            }
+        },
+        {
+            actionName: 'assign-Lecturer-To-Schedule',
+            actionScope: routeSecurityLevel.forbiden,
+            routeDescription: 'Route used to Assign lecturer to schedule',
+            method: httpverbs.patch,
+            route: '/schedules/assign/:lecturerId/:scheduleId',
+            callback: async function (req: any, res: any, next: any) {
+                let message: any = { success: true };
+                try {
+                    message.message = { schedule : await repository.assignLecturerToSchedule({filter:{_id:req.params.scheduleId}, update:{lecturer:req.params.lecturerId}}) }
                 } catch (error: any) {
                     message.errorMessage = error.message;
                     message.success = false

@@ -22,8 +22,10 @@
     <div class="pt-5 px-2">
       <p class="row">
         <span class="h3 fw-bold col" style="font-family: 'Raleway', sans-serif">{{ props.course.title }}</span>
-        <router-link :to="{ name: authStore.authUser ?  'UserDasboard' : 'CheckOut'}"
-          class="btn btn-sm primary-button col-auto px-md-4 py-2">Register Course</router-link>
+        <button @click="registerCourse(props.course._id)" 
+          class="btn btn-sm primary-button col-auto px-md-4 py-2">Register Course
+        <LoaderSpinner v-if="onRegistration" />
+        </button> 
       </p>
       <p class="border-start border-warning bg-warning-subtle p-4" style="line-height: -5px">
         <small v-html="props.course.description" style="font-size: 0.8em"> </small>
@@ -58,9 +60,25 @@
 <script setup>
 import { useCourseStore } from "@/stores/courseStore";
 import { useAuthStore } from "@/stores/authStore";
-import { computed } from "vue";
+import LoaderSpinner from "../LoaderSpinner.vue";
+import { computed,ref } from "vue";
+import {actionNotificationWrapper} from '@/helpers/index'
+import router from "@/router";
 const courseStore = useCourseStore();
 const authStore = useAuthStore();
 let props = defineProps(['course', 'contenttodisplay']);
 let levelRange = computed(() => courseStore.evalutaeCourseDifficultyRange(props.course._id))
+const onRegistration = ref(false)
+
+async function registerCourse(courseId){
+  let statusObj = await authStore.registerCourse(courseId);
+  await actionNotificationWrapper(statusObj)
+  if(!statusObj.success){
+    if(authStore.authUser){
+      router.push({ name:'CheckOut'})
+      return;
+    }
+    router.push({ name:'LoginSignUpPage'})
+  }
+}
 </script>

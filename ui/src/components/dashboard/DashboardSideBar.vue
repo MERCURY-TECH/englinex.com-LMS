@@ -47,10 +47,10 @@
                 </router-link>
               </li>
             <li class="nav-item header-link">
-                <a class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" href="./">
+                <router-link class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{name:'ScheduleManagement'}">
                   <i class="bi bi-calendar3 p-left"></i>
                   Schedules
-                </a>
+                </router-link>
               </li>
             <li class="nav-item header-link">
               <router-link class="nav-link d-flex align-items-center gap-2 fw-bold text-dark" :to="{ name: 'Settings' }">

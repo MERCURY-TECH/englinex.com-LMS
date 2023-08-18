@@ -189,18 +189,14 @@ export interface IUser {
   password: string;
   username: any;
   phonenumber: any;
-  adress: any;
+  address: any;
   userRole: any;
   _id: any;
   firstname: String,
   lastname: String,
   email: String,
   telephone: String,
-  biometry?: String,
   profilePicture?: String,
-  isCandidate?: Boolean,
-  voteCount?: Number,
-  manifeste?: String,
   description?: String,
   isActive?: Boolean,
   isSuspended?: Boolean,

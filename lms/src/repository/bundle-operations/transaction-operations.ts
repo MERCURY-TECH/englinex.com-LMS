@@ -40,7 +40,7 @@ const updateTransactionStatus:ILogic = {
 const getAllTransaction:ILogic = {
     name: "getAllTransaction",
     callback: async function () {
-        return await await Transaction.find();
+        return await await Transaction.find().populate(['student', 'bundle']);
     }
 }
 

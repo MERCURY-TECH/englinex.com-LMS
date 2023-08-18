@@ -15,12 +15,14 @@ export function serializeUserDataResponse(user: IUser) {
     typeof user.lastname == undefined ? '' : response.lastname = user.lastname
     typeof user.email == undefined ? '' : response.email = user.email
     typeof user.telephone == undefined ? '' : response.telephone = user.telephone
-    typeof user.isCandidate == undefined ? '' : response.isCandidate = user.isCandidate
-    typeof user.voteCount == undefined ? '' : response.voteCount = user.voteCount
     typeof user._id == undefined ? '' : response._id = user._id
     typeof user.isActive == undefined ? '' : response.isActive = user.isActive
     typeof user.isSuspended == undefined ? '' : response.isSuspended = user.isSuspended
     typeof user.accountType == undefined ? '' : response.accountType = user.accountType
+    typeof user.EnglishProficiency == undefined ? '' : response.EnglishProficiency = user.EnglishProficiency
+    typeof user.LearningGoals == undefined ? '' : response.LearningGoals = user.LearningGoals
+    typeof user.address == undefined ? '' : response.address = user.address
+    typeof user.registeredCourses == undefined ? '' : response.registeredCourses = user.registeredCourses
     return response;
 }
 
@@ -47,7 +49,7 @@ export let verifyToken = function (bearerToken: string, secret: string): Partial
    * @returns {IUser} User Object
 **/
 export const connectUser = async function (username: any, password: string) {
-    const user: IUser = (await User.findOne({ username: username })) as IUser;
+    const user: IUser = (await User.findOne({ username: username }).populate(['registeredCourses'])) as IUser;
     if (user) {
         if (user?.isSuspended) throw new Error('User account suspended');
         const auth = await bcrypt.compare(password, user.password as string)
@@ -129,7 +131,6 @@ function isValidateObjectID(id: string): boolean {
 export async function subscriptionWorker(req: any, res: any, next: any) {
     let message: any = { success: true };
     try {
-        // check user account type
         let user: any = await getAuthenticatedUser(req.headers.authorization.split(' ')[1]);
         if(user._doc.accountType == AccountType.admin) return next();
         if(!(new SubscriptionManager()).subscriptionValidator(user._doc._id)) throw new Error('User has no valid subscription')

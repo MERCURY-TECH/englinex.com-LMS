@@ -1,5 +1,6 @@
 <template>
     <DashboardTemplate>
+        
         <div class="row align-item-center justify-content-center py-3">
             <div class="col-sm-12 col-md-9">
                 <div class="card border-0">
@@ -8,13 +9,13 @@
                     </div>
                     <div class="d-flex align-items-center flex-column flex-md-row justify-content-between border-bottom border-secondary-subtle p-2 mx-3">
                         <div class="d-flex align-items-center">
-                            <img src="https://github.com/mdo.png" alt="" width="40" height="40" class="rounded-circle me-2">
+                            <!-- <img src="https://github.com/mdo.png" alt="" width="40" height="40" class="rounded-circle me-2"> -->
                             <div class="ms-2">
                                 <span class="fw-bold">
-                                    Lecturer Name
+                                    {{ lecturer.firstname }}, {{ lecturer.lastname }}
                                 </span> <br>
                                 <span class="" style="color: #a3a3a3;">
-                                    #64baff31460a735fc4311c20
+                                    #{{ lecturer._id }}
                                 </span> 
                             </div>
                         </div>
@@ -60,26 +61,17 @@
         </div>
     </DashboardTemplate>
 </template>
-<script>
-import DashboardTemplate from '@/components/DashboardTemplate.vue'
-export default {
-    components:{
-        DashboardTemplate
-    },
-    data() {
-        return {
-            lecturers:[
-                {
-                    name:"lecturer Name", id:"64baff31460a735fc4311c20",
-                    courses:[
-                       { name:"Siple volcabulary", students:[
-                        {name:'student Name'}
-                       ]},
-                       
-                    ]
-                }
-            ]
-        }
-    },
-}
+
+<script setup>
+import DashboardTemplate from '@/components/DashboardTemplate.vue';
+import router from '@/router';
+import {ref,onMounted} from 'vue';
+import { useUserStore } from '@/stores/userStore';
+
+const userStore =  useUserStore();
+const lecturerId =  router.currentRoute.value.params.lecturerId;
+const lecturer =  ref('');
+
+onMounted(async ()=>{ lecturer.value = await userStore.getUserById(lecturerId,'lecturer') });
+
 </script>

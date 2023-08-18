@@ -1,10 +1,10 @@
 <template>
-    <div v-if="connectedUser.username" class="card border-0 col-8 p-4" style="background-color: #F7EBFF; height: auto;">
+    <div v-if="connectedUser.username" class="card border-0 col-8 p-4" style="background-color: #F7EBFF;">
         <!-- student laft panel -->
         <div class="d-flex align-items-start justify-content-between">
             <div class="d-flex align-items-center">
-                <img src="https://github.com/mdo.png" alt="" width="45" height="45" class="rounded-circle me-2">
-                <span class="">{{ connectedUser.username }}</span>
+                <!-- <img src="https://github.com/mdo.png" alt="" width="45" height="45" class="rounded-circle me-2"> -->
+                <span class="text-bold">{{ connectedUser.username }}</span>
             </div>
             <div class="">
                 <span class="" style="font-size: 15px;">Connected as</span> <br>
@@ -17,7 +17,7 @@
             <button @click="disconnect" class="btn text-white" style="background-color: #9F1FED;">Disconnect</button>
         </div>
     </div>
-    <div v-if="!connectedUser.username" class="card col-auto col-12 p-4 py-5" style="background-color: #FCF6FF;">
+    <div v-show="!connectedUser.username" class="card col-auto col-12 p-4 py-5" style="background-color: #FCF6FF;">
         <LoginForm v-if="isLogin" />
         <p v-if="isLogin" class="text-muted px-3">
             <small>Forgot your password?<br>
@@ -47,7 +47,7 @@ function disconnect(){
     router.push({name:'HomeView'})
 }
 function navigateToAccount(){
-    router.push({name:'HomeView'})
+    router.push({name:'UserDasboard'})
 }
 const isLogin = ref(true);
 function toggleAuthForm() { isLogin.value = !isLogin.value }

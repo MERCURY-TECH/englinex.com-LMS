@@ -10,10 +10,13 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^38.1.1",
     "@ckeditor/ckeditor5-vue": "^5.1.0",
+    "@popperjs/core": "^2.11.8",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "csvtojson": "^2.0.10",
+    "moment": "^2.29.4",
     "pinia": "^2.1.6",
+    "v-calendar": "^3.0.3",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
     "vue-sweetalert2": "^5.0.5"

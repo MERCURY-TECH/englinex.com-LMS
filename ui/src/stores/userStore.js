@@ -20,8 +20,13 @@ export const useUserStore = defineStore('userStore', {
         admins: null
     }),
     actions: {
+        async getUserById(id,accountType){
+            await this.getUsersPerAccountType(accountType)
+            if(accountType === 'lecturer') return this.lecturers.find(val=>val._id===id) 
+            if(accountType === 'student' ) return this.students.find(val=>val._id===id) 
+            if(accountType === 'admin' ) return this.admins.find(val=>val._id===id)  
+        },
         async getUsersPerAccountType(accountType){
-            
             return actionWrapper(async () => {
                 let response  = await axios.get(`/get-all-users/${accountType}`)
                 if(accountType === 'lecturer') this.lecturers = response.data.message.lecturers
@@ -30,7 +35,6 @@ export const useUserStore = defineStore('userStore', {
             }, 'User Fetched')
         },
         async deleteAccount(accountId, accountType){
-            
             return actionWrapper(async () => {
                 await axios.delete(`delete/user/${accountId}`)
                 if(accountType === 'lecturer') this.lecturers=this.lecturers.filter((val)=>val._id != accountId)
@@ -46,7 +50,8 @@ export const useUserStore = defineStore('userStore', {
         async createTeacher(user){
             return actionWrapper(async () => {
                 let response  = await axios.post(`signup-teacher`,user)
-                return response.data.message
+                this.lecturers.push(response.data.message.lecturer)
+                return response.data.message.lecturer
             }, 'New Teacher Created')
         }, 
         async createAdmin(user){

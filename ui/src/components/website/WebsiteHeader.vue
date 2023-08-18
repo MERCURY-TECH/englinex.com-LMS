@@ -16,8 +16,8 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li @click="navigateToDashBoard" v-if="authStore.authUser" class="nav-item header-link px-4 active">
-              <span class="nav-link active">Welcome {{ authStore.authUser.firstname }}</span>
+            <li @click="navigateToDashBoard" style="cursor: pointer;" v-if="authStore.authUser" class="nav-item header-link px-4 active">
+              <span class="nav-link active">Welcome {{  firstname }}, {{  lastname }}</span>
             </li>
             <li class="nav-item dropdown header-link">
               <a class="nav-link header-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -44,9 +44,9 @@
             <li class="nav-item header-link">
               <router-link class="nav-link" :to="{ name: 'AboutUs' }">About Us</router-link>
             </li>
-            <li class="nav-item header-link">
+            <!-- <li class="nav-item header-link">
               <a class="nav-link">Contact Us</a>
-            </li>
+            </li> -->
             <li v-if="!authStore.authUser" class="nav-item primary-header-link px-md-5 primary-text">
               <router-link class="primary-text fw-bold" :to="{ name: 'LoginSignUpPage' }">Login | Signup</router-link>
             </li>
@@ -66,12 +66,20 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/authStore";
-const authStore = useAuthStore();
+import { computed } from "vue";
 import router from "@/router";
+const authStore = useAuthStore();
+
+const firstname = computed(()=>authStore.authUser ? authStore.authUser.firstname : '') 
+const lastname = computed(()=>authStore.authUser ? authStore.authUser.lastname : '')
+
 function navigateToDashBoard(){
-  if(authStore.authUser.accountType === 'admin') router.push({name:'DashboardHome'});
-  if(authStore.authUser.accountType === 'teacher') router.push({name:'UserDasboard'})
-  if(authStore.authUser.accountType === 'student') router.push({name:'UserDasboard'})
+  if(authStore.authUser !='' && authStore.authUser!=null){
+    if(authStore.authUser.accountType === 'admin') router.push({name:'DashboardHome'});
+  if(authStore.authUser.accountType === 'lecturer' || authStore.authUser.accountType === 'student') router.push({name:'UserDasboard'})
+  }
+
+  
 }
 </script>
 

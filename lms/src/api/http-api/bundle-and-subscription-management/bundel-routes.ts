@@ -89,7 +89,7 @@ export default function(respository:any){
         },
         {
             actionName: 'get-all-bundles & get-all-bundle-per-search-field',
-            actionScope: routeSecurityLevel.forbiden,
+            actionScope: routeSecurityLevel.public,
             method: httpverbs.get,
             routeDescription: 'route used to get all lectures and student related to a specific course',
             route: '/bundles',

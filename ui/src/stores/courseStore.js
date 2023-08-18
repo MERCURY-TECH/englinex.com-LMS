@@ -1,5 +1,6 @@
 import { defineStore } from "pinia/dist/pinia";
 import axios from 'axios';
+// import { actionWrapper } from "@/helpers";
 
 export const useCourseStore = defineStore('courseStore', {
     state: () => ({
@@ -145,7 +146,9 @@ export const useCourseStore = defineStore('courseStore', {
         },
         async createCourse(){
 
-        }
+        },
+        
+       
 
     },
 })
